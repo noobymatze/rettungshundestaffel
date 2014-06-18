@@ -2,14 +2,15 @@
 
 use Illuminate\Auth\UserInterface;
 
-class User extends Eloquent implements UserInterface {
+class Mitglied extends Eloquent implements UserInterface 
+{
 
 	/**
 	 * The database table used by the model.
 	 *
 	 * @var string
 	 */
-	protected $table = 'users';
+	protected $table = 'mitglied';
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -78,5 +79,10 @@ class User extends Eloquent implements UserInterface {
 	{
 		return $this->email;
 	}
+
+    public function hunde() 
+    {
+        return $this->hasMany('Hund', 'mitglied_id', 'id');
+    }
 
 }

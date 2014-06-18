@@ -17,7 +17,6 @@ class ErstelleSuchgebieteTabelle extends Migration {
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('beschreibung');
-            $table->bigInteger('treffpunkt')->unsigned();
             $table->date('created_at');
             $table->date('updated_at')->nullable();
         });

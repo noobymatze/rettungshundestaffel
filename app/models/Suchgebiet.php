@@ -16,4 +16,9 @@ class Suchgebiet extends Eloquent
     {
         return $this->belongsToMany('Koordinate', 'suchgebiet_hat_koordinaten', 'suchgebiet_id', 'koordinate_id');
     }
+
+    public function personen()
+    {
+        return $this->hasMany('Person', 'suchgebiet_id');
+    }
 }

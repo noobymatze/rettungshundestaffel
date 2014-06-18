@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Auth\UserInterface;
-
 class Suchart extends Eloquent
 {
     protected $table = 'suchart';

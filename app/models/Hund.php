@@ -1,8 +1,5 @@
 <?php
 
-
-use Illuminate\Auth\UserInterface;
-
 class Hund extends Eloquent 
 {
     protected $table = 'hund';

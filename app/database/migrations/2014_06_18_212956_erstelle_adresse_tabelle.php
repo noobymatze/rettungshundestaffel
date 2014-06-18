@@ -17,7 +17,7 @@ class ErstelleAdresseTabelle extends Migration {
             $table->bigIncrements('id');
             $table->string('strasse');
             $table->integer('hausnummer');
-            $table->string('zusatz');
+            $table->string('zusatz')->nullable();
             $table->string('postleitzahl');
             $table->string('ort');
         });

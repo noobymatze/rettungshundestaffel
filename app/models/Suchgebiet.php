@@ -21,4 +21,13 @@ class Suchgebiet extends Eloquent
     {
         return $this->hasMany('Person', 'suchgebiet_id');
     }
+
+    public function landschaftseigenschaften()
+    {
+        return $this->belongsToMany(
+            'Landschaftseigenschaft', 
+            'suchgebiet_hat_landschaftseigenschaft',
+            'suchgebiet_id',
+            'Landschaftseigenschaft_id');
+    }
 }

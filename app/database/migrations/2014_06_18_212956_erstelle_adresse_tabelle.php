@@ -24,7 +24,7 @@ class ErstelleAdresseTabelle extends Migration {
 
         Schema::table('person', function($table)
         {
-            $table->bigInteger('adresse_id')->unsigned();
+            $table->bigInteger('adresse_id')->unsigned()->nullable();
             $table->foreign('adresse_id')
                 ->references('id')
                 ->on('adresse');

@@ -85,4 +85,12 @@ class Mitglied extends Eloquent implements UserInterface
         return $this->hasMany('Hund', 'mitglied_id', 'id');
     }
 
+    public function termine()
+    {
+        return $this
+            ->belongsToMany(
+                'Termin', 'mitglied_hat_termin', 'mitglied_id', 'termin_id')
+            ->withPivot('status', 'status_geaendert_am');
+    }
+
 }

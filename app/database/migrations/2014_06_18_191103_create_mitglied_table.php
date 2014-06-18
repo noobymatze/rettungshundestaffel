@@ -15,12 +15,12 @@ class CreateMitgliedTable extends Migration {
         Schema::create('mitglied', function ($table) 
         {
             $table->bigIncrements('id');
-            $table->string('vorname');
-            $table->string('nachname');
+            $table->string('vorname')->nullable();
+            $table->string('nachname')->nullable();
             $table->string('email');
             $table->string('passwort');
-            $table->string('telefon');
-            $table->string('mobil');
+            $table->string('telefon')->nullable();
+            $table->string('mobil')->nullable();
             $table->enum('rolle', array('Mitglied', 'Staffelleitung'));
         });
 

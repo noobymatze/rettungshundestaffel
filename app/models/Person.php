@@ -11,4 +11,9 @@ class Person extends Eloquent
     {
         return $this->belongsTo('Suchgebiet');
     }
+
+    public function adresse() 
+    {
+        return $this->hasOne('Adresse');
+    }
 }

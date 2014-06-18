@@ -17,4 +17,9 @@ class Hund extends Eloquent
     {
         return $this->belongsTo('Mitglied');
     }
+
+    public function sucharten() 
+    {
+        return $this->belongsToMany('Suchart', 'hund_hat_suchart', 'hund_id', 'suchart_id');
+    }
 }

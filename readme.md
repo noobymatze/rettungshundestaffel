@@ -1,21 +1,25 @@
-## Laravel PHP Framework
+# Rescue dog squad
 
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/version.png)](https://packagist.org/packages/laravel/framework) [![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.png)](https://packagist.org/packages/laravel/framework) [![Build Status](https://travis-ci.org/laravel/framework.png)](https://travis-ci.org/laravel/framework) [![License](https://poser.pugx.org/laravel/framework/license.png)](https://packagist.org/packages/laravel/framework)
+The goal of this project is to provide a small web application for
+centralization of decentralized communication information of the members of dog squads. 
+The project will be developed in close cooperation with a specific squad, 
+as to get a feel for the problems they face in the communication of training
+dates and other information. This is to tie the design to the needs of the
+squad and have them be happy campers, when the project reaches its 1.0
+release.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, and caching.
+To get started with the project, you need a PHP server and either
+[MySQL](http://www.mysql.com) or [MariaDB](https://mariadb.org). 
+Follow up with cloning the repository, set the root of your chosen server to
+the public directory of our application and cd into the directory. Now
+adjust the database configuration, and run the following command in the root
+directory of the application:
 
-Laravel aims to make the development process a pleasing one for the developer without sacrificing application functionality. Happy developers make the best code. To this end, we've attempted to combine the very best of what we have seen in other web frameworks, including frameworks implemented in other languages, such as Ruby on Rails, ASP.NET MVC, and Sinatra.
+    > php artisan migrate
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+This command should set up the database nice and clean, so you can visit
+[localhost](http://localhost) and start watching around.
 
-## Official Documentation
+The whole project emerged from the required semester project of the applied
+computer science bachelors program of the [FH Flensburg](http://www.fh-flensburg.de).
 
-Documentation for the entire framework can be found on the [Laravel website](http://laravel.com/docs).
-
-### Contributing To Laravel
-
-**All issues and pull requests should be filed on the [laravel/framework](http://github.com/laravel/framework) repository.**
-
-### License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)

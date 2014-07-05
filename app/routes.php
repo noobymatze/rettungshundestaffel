@@ -16,3 +16,5 @@ Route::get('/', function()
     return View::make('home')
         ->with('title', 'Eugen');
 });
+
+Route::get('/login', 'LoginController@renderLogin');

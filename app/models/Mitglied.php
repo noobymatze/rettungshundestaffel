@@ -12,6 +12,10 @@ class Mitglied extends Eloquent implements UserInterface
 	 */
 	protected $table = 'mitglied';
 
+    public $timestamps = false;
+
+    protected $fillable = array('vorname', 'nachname', 'email', 'passwort', 'telefon', 'rolle');
+
 	/**
 	 * The attributes excluded from the model's JSON form.
 	 *

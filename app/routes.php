@@ -11,10 +11,15 @@
 |
 */
 
-Route::get('/', function()
+Route::group(array('before' => 'auth'), function () 
 {
-    return View::make('home')
-        ->with('title', 'Eugen');
+    Route::get('/', function()
+    {
+        return View::make('home')
+            ->with('title', 'Eugen');
+    });
+
 });
 
 Route::get('/login', 'LoginController@renderLogin');
+Route::post('/login', 'LoginController@login');

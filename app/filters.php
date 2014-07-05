@@ -35,6 +35,7 @@ App::after(function($request, $response)
 
 Route::filter('auth', function()
 {
+    Log::info('Test');
 	if (Auth::guest()) return Redirect::guest('login');
 });
 
@@ -77,4 +78,10 @@ Route::filter('csrf', function()
 	{
 		throw new Illuminate\Session\TokenMismatchException;
 	}
+});
+
+Route::filter('authentication', function () {
+    if(!Auth::check()) {
+        Redirect::to('/login');
+    }
 });

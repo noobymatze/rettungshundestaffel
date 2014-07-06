@@ -24,17 +24,17 @@ class LoginController extends Controller {
         $validator = Validator::make(Input::all(), $rules);
 
         if ($validator->fails()) {
-            return Redirect::to('/login')
+            return Redirect::to('mobile/login')
                 ->withErrors($validator)
                 ->withInput(Input::except('passwort'));
         }
 
         if ($this->mitgliederService->authenticate(Input::get('email'), Input::get('passwort'))) 
         {
-            return Redirect::to('/');
+            return Redirect::to('mobile/');
         }
 
-        return Redirect::to('/login')
+        return Redirect::to('mobile/login')
             ->withErrors(array(
                 'email' => 'E-Mail oder', 
                 'passwort' => 'Passwort war nicht korrekt.'));
@@ -43,7 +43,7 @@ class LoginController extends Controller {
     public function ausloggen()
     {
         Auth::logout();
-        return Redirect::to('/');
+        return Redirect::to('mobile/');
     }
 
 }

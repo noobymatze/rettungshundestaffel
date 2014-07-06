@@ -1,4 +1,9 @@
-@extends('layouts.master')
+@extends('layouts.desktop')
+
+<!-- Die Sidebar überschreiben (entfernen), weil im Login nicht gebraucht wird. -->
+@section('sidebar')
+    
+@stop
 
 @section('content')
 

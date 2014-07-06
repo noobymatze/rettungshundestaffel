@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.desktop')
 
 @section('content')
     <h1 class="ui header">{{ $title }}</h1>

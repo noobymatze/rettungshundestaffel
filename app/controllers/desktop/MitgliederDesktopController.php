@@ -4,7 +4,7 @@
  * Kümmert sich um alle Mitglieder in der desktop variante der 
  * Anwendung.
  */
-class MitgliederController extends Controller {
+class MitgliederDesktopController extends Controller {
 
     public function __construct(MitgliederService $mitgliederService) 
     {
@@ -16,10 +16,10 @@ class MitgliederController extends Controller {
      *
      * @return {View} 
      */
-    public function home() 
+    public function uebersicht() 
     {
-        return View::make('home')
-            ->with('title', 'Test')
-            ->with('mitglieder', $mitgliederService->all())
+        return View::make('mitglieder.desktop.uebersicht')
+            ->with('title', 'Mitglieder')
+            ->with('mitglieder', $this->mitgliederService->all());
     }
 }

@@ -13,12 +13,7 @@
 
 Route::group(array('before' => 'auth'), function () 
 {
-    Route::get('/', function()
-    {
-        return View::make('home')
-            ->with('title', 'Eugen');
-    });
-
+    Route::get('/mitglieder', 'MitgliederDesktopController@uebersicht');
 });
 
 Route::get('/login', 'LoginController@renderLogin');

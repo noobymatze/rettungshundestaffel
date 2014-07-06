@@ -23,7 +23,8 @@ class LoginController extends Controller {
 
         $validator = Validator::make(Input::all(), $rules);
 
-        if ($validator->fails()) {
+        if ($validator->fails()) 
+        {
             return Redirect::to('/login')
                 ->withErrors($validator)
                 ->withInput(Input::except('passwort'));
@@ -31,7 +32,7 @@ class LoginController extends Controller {
 
         if ($this->mitgliederService->authenticate(Input::get('email'), Input::get('passwort'))) 
         {
-            return Redirect::to('/');
+            return Redirect::to('/mitglieder');
         }
 
         return Redirect::to('/login')

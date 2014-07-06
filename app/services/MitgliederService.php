@@ -38,5 +38,22 @@ class MitgliederService {
     {
         return Mitglied::all();
     }
+	
+	/**
+	 * 
+	 * @param array $mitglied
+	 * @return boolean
+	 */
+	public function erstelleMitglied($mitglied)
+	{
+		if(Mitglied::where('email', '=', $mitglied['email'])->count() != 0)
+		{
+			return false;
+		}
+		
+		$mitglied['passwort'] = Hash::make($mitglied['passwort']);
+		Mitglied::create($mitglied);
+		return true;
+	}
 
 }

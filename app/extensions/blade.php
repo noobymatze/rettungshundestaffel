@@ -8,7 +8,7 @@
  *
  * Wenn nun ein Fehler für email registriert wurde, sieht das
  * daraus resultierende HTML so aus:
- * <div class="error"></div>
+ * <div class="has-error"></div>
  *
  * ansonsten:
  * <div class=""></div>
@@ -17,6 +17,6 @@
 Blade::extend(function($view, $compiler) 
 {
     $pattern = $compiler->createMatcher('hasError');
-    return preg_replace($pattern, '<?php echo $errors->has($2) ? "error" : ""; ?>', $view);
+    return preg_replace($pattern, '<?php echo $errors->has($2) ? "has-error" : ""; ?>', $view);
 });
 

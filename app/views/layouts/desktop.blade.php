@@ -47,11 +47,11 @@
             </div>
         </div>
        
-        <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
-        <link rel="stylesheet" href="stylesheets/main.css">
-        <link rel="stylesheet" href="stylesheets/simple-sidebar.css">
-        <script src="javascripts/jquery-2.1.1.min.js"></script>
-        <script src="javascripts/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="{{ URL::asset('stylesheets/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ URL::asset('stylesheets/main.css') }}">
+        <link rel="stylesheet" href="{{ URL::asset('stylesheets/simple-sidebar.css') }}">
+        <script src="{{ URL::asset('javascripts/jquery-2.1.1.min.js') }}"></script>
+        <script src="{{ URL::asset('javascripts/bootstrap.min.js') }}"></script>
 
     </body>
 </html>

@@ -38,5 +38,17 @@ class MitgliederService {
     {
         return Mitglied::all();
     }
+	
+	/**
+	 * 
+	 * @param array $mitglied
+	 * @return {boolean}, falls das Mitglied angelegt worden ist, ansonsten false.
+	 */
+	public function erstelleMitglied($mitglied)
+	{
+		$mitglied['passwort'] = Hash::make($mitglied['passwort']);
+		Mitglied::create($mitglied);
+		return true;
+	}
 
 }

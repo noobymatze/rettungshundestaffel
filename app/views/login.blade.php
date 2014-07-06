@@ -1,21 +1,25 @@
 @extends('layouts.desktop')
 
-<!-- Die Sidebar überschreiben (entfernen), weil im Login nicht gebraucht wird. -->
+{{-- Empty Title --}}
+@section('title')
+@stop
+
+{{-- Die Sidebar überschreiben (entfernen), weil im Login nicht gebraucht wird. --}}
 @section('sidebar')
     
 @stop
 
 @section('content')
 
-{{ Form::model($mitglied, array('action' => 'LoginController@login', 'class' => 'col-md-6')) }}
+{{ Form::model($mitglied, array('action' => 'LoginController@login', 'class' => 'form col-md-6')) }}
 
     <section class="form-group @hasError('email')">
-        {{ Form::label('email', 'E-Mail:') }}
-        {{ Form::text('email') }}
+        {{ Form::label('email', 'E-Mail:', array('class', 'control-label') }}
+        {{ Form::email('email', array('class', 'form-control') }}
     </section>
     <section class="form-group @hasError('passwort')">
         {{ Form::label('passwort', 'Passwort:', array('class', 'control-label') }}
-        {{ Form::password('passwort') }}
+        {{ Form::password('passwort', array('class', 'form-control') }}
     </section>
 
     @if($errors->has()) 

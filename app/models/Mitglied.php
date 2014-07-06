@@ -23,6 +23,29 @@ class Mitglied extends Eloquent implements UserInterface
 	 */
 	protected $hidden = array('password');
 
+    /**
+     * Liefert den vollen Namen dieses Mitglieds zurück.
+     *
+     * @return {string} 
+     */
+    public function vollerName() 
+    {
+        return $this->vorname.' '.$this->nachname;
+    }
+
+    public function hunde() 
+    {
+        return $this->hasMany('Hund', 'mitglied_id', 'id');
+    }
+
+    public function termine()
+    {
+        return $this
+            ->belongsToMany(
+                'Termin', 'mitglied_hat_termin', 'mitglied_id', 'termin_id')
+            ->withPivot('status', 'status_geaendert_am');
+    }
+
 	/**
 	 * Get the unique identifier for the user.
 	 *
@@ -83,18 +106,5 @@ class Mitglied extends Eloquent implements UserInterface
 	{
 		return $this->email;
 	}
-
-    public function hunde() 
-    {
-        return $this->hasMany('Hund', 'mitglied_id', 'id');
-    }
-
-    public function termine()
-    {
-        return $this
-            ->belongsToMany(
-                'Termin', 'mitglied_hat_termin', 'mitglied_id', 'termin_id')
-            ->withPivot('status', 'status_geaendert_am');
-    }
 
 }

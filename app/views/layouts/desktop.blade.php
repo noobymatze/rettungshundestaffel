@@ -80,6 +80,5 @@
         <link rel="stylesheet" href="stylesheets/simple-sidebar.css">
         <script src="javascripts/jquery-2.1.1.min.js"></script>
         <script src="javascripts/bootstrap.min.js"></script>
-
     </body>
 </html>

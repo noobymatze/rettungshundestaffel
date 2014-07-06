@@ -7,14 +7,14 @@
 
 @section('content')
 
-{{ Form::model($mitglied, array('action' => 'LoginController@login', 'class' => 'ui form segment')) }}
+{{ Form::model($mitglied, array('action' => 'LoginController@login', 'class' => 'col-md-6')) }}
 
-    <section class="field @hasError('email')">
+    <section class="form-group @hasError('email')">
         {{ Form::label('email', 'E-Mail:') }}
         {{ Form::text('email') }}
     </section>
-    <section class="field @hasError('passwort')">
-        {{ Form::label('passwort', 'Passwort:') }}
+    <section class="form-group @hasError('passwort')">
+        {{ Form::label('passwort', 'Passwort:', array('class', 'control-label') }}
         {{ Form::password('passwort') }}
     </section>
 

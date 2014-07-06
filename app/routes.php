@@ -20,4 +20,9 @@ Route::group(array('before' => 'auth'), function ()
 
 Route::get('/login', 'LoginController@renderLogin');
 Route::post('/login', 'LoginController@login');
+Route::get('/ausloggen', 'LoginController@ausloggen');
+
+//Route::get('mobile/login', 'LoginControllerMobile@renderLogin');
+//Route::post('mobile/login', 'LoginControllerMobile@login');
+//Route::get('mobile/ausloggen', 'LoginControllerMobile@ausloggen');
 

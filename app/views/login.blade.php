@@ -11,24 +11,27 @@
 
 @section('content')
 
-{{ Form::model($mitglied, array('action' => 'LoginController@login', 'class' => 'form col-md-6')) }}
-
-    <section class="form-group @hasError('email')">
-        {{ Form::label('email', 'E-Mail:', array('class', 'control-label') }}
-        {{ Form::email('email', array('class', 'form-control') }}
+{{ Form::model($mitglied, array('action' => 'LoginController@login', 'class' => 'form-horizontal col-md-5')) }}
+    <section class="form-group row @hasError('email') has-feedback">
+        {{ Form::label('email', 'E-Mail:*', array('class' => 'col-md-2')) }}
+        <span class="col-md-6">
+            {{ Form::email('email', null, array('class' => 'form-control')) }}
+            {{ Form::feedback($errors->has('email')) }}
+        </span>
     </section>
-    <section class="form-group @hasError('passwort')">
-        {{ Form::label('passwort', 'Passwort:', array('class', 'control-label') }}
-        {{ Form::password('passwort', array('class', 'form-control') }}
+    <section class="form-group row @hasError('passwort') has-feedback">
+        {{ Form::label('passwort', 'Passwort:*', array('class' => 'col-md-2')) }}
+        <span class="col-md-6">
+            {{ Form::password('passwort', array('class' => 'form-control')) }}
+            {{ Form::feedback($errors->has('passwort')) }}
+        </span>
     </section>
 
-    @if($errors->has()) 
-        @foreach($errors->all() as $message)
-            <p>{{ $message }}</p>
-        @endforeach
-    @endif
-
-    {{ Form::submit('Anmelden', array('class' => 'ui green submit button')) }}
+    <section class="form-group row">
+        <div class="col-md-8">
+            <button class="btn btn-primary col-md-12">Anmelden</button>
+        </div>
+    </section>
 {{ Form::close() }}
 
 @stop

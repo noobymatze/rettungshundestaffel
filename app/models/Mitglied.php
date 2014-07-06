@@ -1,15 +1,15 @@
 <?php
 
 use Illuminate\Auth\UserInterface;
+use Illuminate\Auth\UserTrait;
 
-class Mitglied extends Eloquent implements UserInterface 
+use Illuminate\Auth\Reminders\RemindableInterface;
+use Illuminate\Auth\Reminders\RemindableTrait;
+
+class Mitglied extends Eloquent implements UserInterface, RemindableInterface
 {
+    use UserTrait, RemindableTrait;
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
 	protected $table = 'mitglied';
 
     public $timestamps = false;
@@ -21,7 +21,7 @@ class Mitglied extends Eloquent implements UserInterface
 	 *
 	 * @var array
 	 */
-	protected $hidden = array('password');
+	protected $hidden = array('password', 'remember_token');
 
     /**
      * Liefert den vollen Namen dieses Mitglieds zurück.
@@ -33,11 +33,21 @@ class Mitglied extends Eloquent implements UserInterface
         return $this->vorname.' '.$this->nachname;
     }
 
+    /**
+     * Liefert die Hunde des derzeitigen Mitglieds zurück.
+     *
+     * @return {array} Hunde des Mitglieds.
+     */
     public function hunde() 
     {
         return $this->hasMany('Hund', 'mitglied_id', 'id');
     }
 
+    /**
+     * Liefert die Termine dieses Mitglieds zurück.
+     *
+     * @return {array} Termine des Mitglieds.
+     */
     public function termine()
     {
         return $this
@@ -47,16 +57,6 @@ class Mitglied extends Eloquent implements UserInterface
     }
 
 	/**
-	 * Get the unique identifier for the user.
-	 *
-	 * @return mixed
-	 */
-	public function getAuthIdentifier()
-	{
-		return $this->getKey();
-	}
-
-	/**
 	 * Get the password for the user.
 	 *
 	 * @return string
@@ -64,47 +64,6 @@ class Mitglied extends Eloquent implements UserInterface
 	public function getAuthPassword()
 	{
 		return $this->passwort;
-	}
-
-	/**
-	 * Get the token value for the "remember me" session.
-	 *
-	 * @return string
-	 */
-	public function getRememberToken()
-	{
-		return $this->remember_token;
-	}
-
-	/**
-	 * Set the token value for the "remember me" session.
-	 *
-	 * @param  string  $value
-	 * @return void
-	 */
-	public function setRememberToken($value)
-	{
-		$this->remember_token = $value;
-	}
-
-	/**
-	 * Get the column name for the "remember me" token.
-	 *
-	 * @return string
-	 */
-	public function getRememberTokenName()
-	{
-		return 'remember_token';
-	}
-
-	/**
-	 * Get the e-mail address where password reminders are sent.
-	 *
-	 * @return string
-	 */
-	public function getReminderEmail()
-	{
-		return $this->email;
 	}
 
 }

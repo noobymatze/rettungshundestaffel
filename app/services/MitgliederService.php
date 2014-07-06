@@ -42,15 +42,10 @@ class MitgliederService {
 	/**
 	 * 
 	 * @param array $mitglied
-	 * @return boolean
+	 * @return {boolean}, falls das Mitglied angelegt worden ist, ansonsten false.
 	 */
 	public function erstelleMitglied($mitglied)
 	{
-		if(Mitglied::where('email', '=', $mitglied['email'])->count() != 0)
-		{
-			return false;
-		}
-		
 		$mitglied['passwort'] = Hash::make($mitglied['passwort']);
 		Mitglied::create($mitglied);
 		return true;

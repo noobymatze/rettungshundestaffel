@@ -36,13 +36,14 @@ class MitgliederDesktopController extends Controller {
 	}
 	
 	/**
+	 * Erstellt ein neues Mitglied.
 	 * 
-	 * @return type
+	 * @return entweder die selbe Seite mit Fehlermeldungen oder die Mitgliederübersicht
 	 */
 	public function erstelleMitglied()
 	{
 		$rules = array(
-			'email' => 'required|email',
+			'email' => 'required|email|unique:mitglied,email',
 			'passwort' => 'required',
 			'passwort2' => 'required'
 		);
@@ -56,6 +57,7 @@ class MitgliederDesktopController extends Controller {
 					->withInput(Input::except('passwort', 'passwort2'));
 		}
 		
+		// Passwörter vergleichen
 		if(Input::get('passwort') != Input::get('passwort2'))
 		{
 			return Redirect::to('mitglieder/anlegen')
@@ -65,16 +67,17 @@ class MitgliederDesktopController extends Controller {
 					));
 		}
 		
+		// Neues Mitglied erstellen
 		$mitglied = array(
 			'email' => Input::get('email'),
-			'passwort' => Input::get('passwort')
+			'passwort' => Input::get('passwort'),
+			'rolle' => Input::get('rolle')
 		);
 		
-		
-		
+		// Falls alles geklappt hat, auf die Mitgliederübersicht umleiten
 		if($this->mitgliederService->erstelleMitglied($mitglied))
 		{
-			return uebersicht();
+			return Redirect::to('mitglieder');
 		}
 	}
 }

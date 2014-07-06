@@ -79,7 +79,27 @@ App::down(function()
 */
 
 require app_path().'/filters.php';
-require app_path().'/blade-templates.php';
-require app_path().'/services.php';
 
+/*
+|--------------------------------------------------------------------------
+| Require Blade and HTML extensions
+|--------------------------------------------------------------------------
+|
+| Here we will load extensions for the blade templating engine itself, as 
+| well as the HTML class for defining macros of our own.
+|
+*/
+require app_path().'/extensions/blade.php';
+require app_path().'/extensions/html.php';
+
+/*
+|--------------------------------------------------------------------------
+| Require services.
+|--------------------------------------------------------------------------
+|
+| Next up is the loading of all the services needed for our 
+| application.
+|
+*/
+require app_path().'/services.php';
 

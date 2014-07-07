@@ -70,6 +70,8 @@ class MitgliederService {
 		return Mitglied
 				::where('vorname', 'LIKE', '%'.$name[0].'%')
 				->orWhere('nachname', 'LIKE', '%'.$name[1].'%')
+				->orWhere('email', 'LIKE', '%'.$name[0].'%')
+				->orWhere('telefon', 'LIKE', '%'.$name[0].'%')
 				->get();
 	}
 

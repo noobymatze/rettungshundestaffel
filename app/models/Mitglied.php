@@ -33,6 +33,17 @@ class Mitglied extends Eloquent implements UserInterface, RemindableInterface
         return $this->vorname.' '.$this->nachname;
     }
 
+    public function profilbild() 
+    {
+        if ($this->profilbild) 
+        {
+            return $this->profilbild;
+        }
+
+        return URL::asset('images/Fachhochschule_Flensburg.svg');
+    }
+
+
     /**
      * Liefert die Hunde des derzeitigen Mitglieds zurück.
      *

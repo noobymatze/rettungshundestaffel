@@ -1,13 +1,18 @@
 @extends('layouts.desktop')
 
+@section('title')
+Mitglieder
+@stop
+
 @section('content')
-    <h1 class="ui header">{{ $title }}</h1>
     @foreach($mitglieder as $mitglied)
-        <section class="mitglied">
-            <img class="" src="{{ $mitglied->profilbild }}"/>
-            <section class="">
-                {{ $mitglied->vollerName() }}
-            </section>
+    <section class="media mitglied col-md-4">
+        <img class="pull-left col-md-4 media-object" src="{{ $mitglied->profilbild() }}"/>
+        <section class="media-body">
+            <h3 class="media-heading">{{ $mitglied->vollerName() }}</h3>
+            <span class="row col-md-12">{{ $mitglied->email }}</span>
+            <span class="row col-md-12"><span class="glyphicon glyphicon-earphone"></span> {{ $mitglied->telefon }}</span>
         </section>
+    </section>
     @endforeach
 @stop

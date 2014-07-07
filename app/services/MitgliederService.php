@@ -50,5 +50,16 @@ class MitgliederService {
 		Mitglied::create($mitglied);
 		return true;
 	}
+	
+	/**
+	 * Liefert eine Liste von 
+	 * @param {string} suchbegriff Der Begriff, nach dem 
+	 *
+	 * @return {Collection} 
+	 */
+	public function sucheNachVornameOderNachname($suchbegriff)
+	{
+		
+	}
 
 }

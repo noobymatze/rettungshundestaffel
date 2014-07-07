@@ -59,7 +59,18 @@ class MitgliederService {
 	 */
 	public function sucheNachVornameOderNachname($suchbegriff)
 	{
+		$name = explode(' ', trim($suchbegriff));
 		
+		if (count($name) < 2) 
+		{
+			// Setze den Nachnamen ebenfalls auf $suchbegriff
+			$name[] = $suchbegriff; 
+		}
+		
+		return Mitglied
+				::where('vorname', 'LIKE', '%'.$name[0].'%')
+				->orWhere('nachname', 'LIKE', '%'.$name[1].'%')
+				->get();
 	}
 
 }

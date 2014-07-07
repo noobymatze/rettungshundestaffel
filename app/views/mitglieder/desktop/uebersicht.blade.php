@@ -6,11 +6,12 @@ Mitglieder
 
 @section('content')
     {{ Form::open(array('action' => 'MitgliederDesktopController@filtereUebersicht', 'name' => 'uebersicht-suche', 'class' => 'form row')) }}
-        <span class="col-md-3">
-            {{ Form::text('suchbegriff', $suchbegriff, array('class' => 'form-control', 'placeholder' => 'Suche...')) }} 
-            {{ Form::feedback(true, 'search') }}
+        <span class="input-group col-md-3">
+            {{ Form::text('suchbegriff', $suchbegriff, array('class' => 'form-control', 'placeholder' => 'Suche...')) }}
+            <div class="input-group-btn">
+                <button class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+            </div>
         </span>
-        <button class="btn btn-default col-md-1 glyphicon glyphicon-search"></button>
     {{ Form::close() }}
 
 

@@ -1,5 +1,8 @@
 @import "http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400";
 
+/* ================================================
+   Allgemeine Regeln:
+   ================================================*/
 html {
     font-size: 62.5%;
 }
@@ -8,14 +11,27 @@ body {
     font-size: 1.8em;
     font-family: 'Source Sans Pro', sans-serif;
     line-height: 150%;
-	background-image: url('../images/background.png');
+	background: white;
+	/*background-image: url('../images/background.png');*/
 }
 
+/* ================================================
+   Bootstrap extensions:
+   ================================================*/
+.line-border-bottom {
+	border-bottom: 1px solid #eee;
+}
+
+/* ================================================
+   Eigene Klassen:
+   ================================================*/
 .mitglied {
     color: #333 !important;
     padding: 30px 10px;
     font-weight: 300;
-    border-bottom: 1px solid #eee;
     margin-top: 0px;    
 }
 
+.mitglied .btn {
+	margin-top: 10px;
+}

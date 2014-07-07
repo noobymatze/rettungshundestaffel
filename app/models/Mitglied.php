@@ -40,7 +40,7 @@ class Mitglied extends Eloquent implements UserInterface, RemindableInterface
             return $this->profilbild;
         }
 
-        return URL::asset('images/Fachhochschule_Flensburg.svg');
+        return 'http://famgroup.ru/avatars/small/missing.png?1345203819';
     }
 
 

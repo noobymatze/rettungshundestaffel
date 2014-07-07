@@ -50,5 +50,29 @@ class MitgliederService {
 		Mitglied::create($mitglied);
 		return true;
 	}
+	
+	/**
+	 * Liefert eine Liste von 
+	 * @param {string} suchbegriff Der Begriff, nach dem 
+	 *
+	 * @return {Collection} 
+	 */
+	public function sucheNachVornameOderNachname($suchbegriff)
+	{
+		$name = explode(' ', trim($suchbegriff));
+		
+		if (count($name) < 2) 
+		{
+			// Setze den Nachnamen ebenfalls auf $suchbegriff
+			$name[] = $suchbegriff; 
+		}
+		
+		return Mitglied
+				::where('vorname', 'LIKE', '%'.$name[0].'%')
+				->orWhere('nachname', 'LIKE', '%'.$name[1].'%')
+				->orWhere('email', 'LIKE', '%'.$name[0].'%')
+				->orWhere('telefon', 'LIKE', '%'.$name[0].'%')
+				->get();
+	}
 
 }

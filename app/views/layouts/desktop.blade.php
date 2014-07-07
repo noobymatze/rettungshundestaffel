@@ -18,7 +18,7 @@
 						<a href=""><i class="glyphicon glyphicon-home"></i> Dashboard</a>
 					</li>
 					<li>
-						<a href="mitglieder"><i class="glyphicon glyphicon-user"></i> Mitglieder</a>
+						<a href="{{ URL::action('MitgliederDesktopController@uebersicht') }}"><i class="glyphicon glyphicon-user"></i> Mitglieder</a>
 					</li>
 					<li>
 						<a href="suchgebiete"><i class="glyphicon glyphicon-tree-conifer"></i> Suchgebiete</a>

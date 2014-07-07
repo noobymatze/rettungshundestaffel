@@ -11,6 +11,13 @@
 |
 */
 
+/*
+| Desktop-Routes
+*/
+Route::get('/login', 'LoginController@renderLogin');
+Route::post('/login', 'LoginController@login');
+Route::get('/ausloggen', 'LoginController@ausloggen');
+
 Route::group(array('before' => 'auth'), function () 
 {
     Route::get('/mitglieder', 'MitgliederDesktopController@uebersicht');
@@ -18,11 +25,10 @@ Route::group(array('before' => 'auth'), function ()
 	Route::post('/mitglieder/anlegen', 'MitgliederDesktopController@erstelleMitglied');
 });
 
-Route::get('/login', 'LoginController@renderLogin');
-Route::post('/login', 'LoginController@login');
-Route::get('/ausloggen', 'LoginController@ausloggen');
-
-//Route::get('mobile/login', 'LoginControllerMobile@renderLogin');
-//Route::post('mobile/login', 'LoginControllerMobile@login');
-//Route::get('mobile/ausloggen', 'LoginControllerMobile@ausloggen');
-
+/*
+| Mobile-Routes
+*/
+Route::get('/mobile/login', 'MLoginController@renderLogin');
+Route::post('/mobile/login', 'MLoginController@login');
+Route::get('/mobile/ausloggen', 'MLoginController@ausloggen');
+Route::get('/mobile/dashboard', array('before' => 'auth', 'uses' => 'MDashboardController@renderDashboard'));

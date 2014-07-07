@@ -86,9 +86,9 @@ class MitgliederDesktopController extends Controller {
 	/**
 	 * Zeigt die Seite eines Mitglieds an.
 	 */
-	public function renderMitglied() 
+	public function renderMitglied($id) 
 	{
-		return View::make('home');
+		return View::make('mitglieder.desktop.details');
 	}
 	
 	/**

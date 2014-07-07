@@ -7,8 +7,8 @@
     </head>
     <body>
 
-		<!-- Sidebar -->
-		@section('sidebar')
+		<!-- Menu -->
+		@section('menubar')
 		@show
 
 		@section('title')

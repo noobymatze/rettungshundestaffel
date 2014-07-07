@@ -70,6 +70,8 @@ class MitgliederDesktopController extends Controller {
 		// Neues Mitglied erstellen
 		$mitglied = array(
 			'email' => Input::get('email'),
+			'vorname' => Input::get('vorname'),
+			'nachname' => Input::get('nachname'),
 			'passwort' => Input::get('passwort'),
 			'rolle' => Input::get('rolle')
 		);

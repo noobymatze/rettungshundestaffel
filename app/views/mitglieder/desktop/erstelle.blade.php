@@ -18,6 +18,20 @@ Neues Mitglied anlegen
 				{{ Form::select('rolle', array('Mitglied' => 'Mitglied', 'Staffelleitung' => 'Staffelleitung'), 'Mitglied', array('class' => 'form-control')) }}
 			</div>
 		</section>
+		
+		<section class="form-group">
+			<label class="col-sm-5 control-label">Vorname:</label>
+			<div class="col-sm-7">
+				{{ Form::text('vorname', null, array('class' => 'form-control')) }}
+			</div>
+		</section>
+		
+		<section class="form-group">
+			<label class="col-sm-5 control-label">Nachname:</label>
+			<div class="col-sm-7">
+				{{ Form::text('nachname', null, array('class' => 'form-control')) }}
+			</div>
+		</section>
 
 		<section class="form-group @hasError('email')">
 			<label class="col-sm-5 control-label">E-Mail:*</label>

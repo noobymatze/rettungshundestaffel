@@ -1,6 +1,6 @@
 <?php
 
-class LoginController extends Controller {
+class MLoginController extends Controller {
 
     public function __construct(MitgliederService $mitgliederService) {
         $this->mitgliederService = $mitgliederService;
@@ -8,10 +8,11 @@ class LoginController extends Controller {
 
     public function renderLogin() 
     {
-        $mitglied = new Mitglied;
+        $mitglied = new Mitglied();
 
-        return View::make('login')
-            ->with('mitglied', $mitglied);
+        return View::make('mlogin')
+            ->with('mitglied', $mitglied)
+            ->with('squadname', 'Flensburg - Tarp');
     }
 
     public function login() 
@@ -31,19 +32,18 @@ class LoginController extends Controller {
 
         if ($this->mitgliederService->authenticate(Input::get('email'), Input::get('passwort'))) 
         {
-            return Redirect::to('mobile/');
+            return Redirect::to('mobile/dashboard');
         }
 
         return Redirect::to('mobile/login')
             ->withErrors(array(
-                'email' => 'E-Mail oder', 
-                'passwort' => 'Passwort war nicht korrekt.'));
+                'autherror' => true));
     }
 
     public function ausloggen()
     {
         Auth::logout();
-        return Redirect::to('mobile/');
+        return Redirect::to('mobile/login');
     }
 
 }

@@ -43,3 +43,44 @@ position: relative;
 .notification-error {
   background: #ed4747;
 }
+
+#nav-bar {
+	display: table;
+	position: fixed;
+	height: 3.5em;
+	width: 100%;
+	bottom: 0px;
+	left: 0px;
+}
+
+#nav-bar p {
+	margin: 0;
+	padding: 0;
+}
+
+#nav-bar a {
+	font-size: 60%;
+    *font-size: 50%; /*IE 6/7 - To reduce IE's oversized button text*/
+    *overflow: visible; /*IE 6/7 - Because of IE's overly large left/right padding on buttons */
+    /*padding: 0.5em 1.5em 0.5em;*/
+    color: #06080a; /* rgba not supported (IE 8) */
+    /* color: rgba(0, 0, 0, 0.80); rgba supported */
+    /* *color: #444; IE 6 & 7 */
+    border: 1px solid #8ea9be; /*IE 6/7/8*/
+    border: none rgba(0, 0, 0, 0); /*IE9 + everything else*/
+    background-color: #a1b8c9;
+    text-decoration: none;
+    border-radius: 0px;
+    -webkit-font-smoothing: antialiased;
+	font-size: 0.7em;
+	vertical-align: middle;
+	margin: 0;
+	display: table-cell;
+	text-align: center;
+	height: 3.5em;
+	width: 20%;
+}
+#nav-bar a.active {
+	background-color: #2C4D63;
+    color: #fbfdfd;
+}

@@ -34,4 +34,3 @@ Blade::extend(function($view, $compiler)
 {
     return str_replace("@ifstaffelleitung", '<?php if(Auth::user()->rolle == "Staffelleitung"): ?>', $view);
 });
-

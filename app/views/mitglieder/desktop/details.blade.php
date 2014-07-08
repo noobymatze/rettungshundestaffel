@@ -1,32 +1,10 @@
 @extends('layouts.desktop')
 
 @section('title')
+Benutzer
 @stop
 
 @section('content')
-<div class="row">
-	<div class="col-md-6">
-		<h1>
-			Benutzer
-			<div class="btn-group pull-right">
-				<!-- Überprüfen, ob es sich um mein Profil handelt, oder ich der Admin bin -->
-				@if(Auth::user()->id === $mitglied->id || Auth::user()->rolle === "Staffelleitung")
-				<button type="button" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span> Profil bearbeiten</button>
-				@endif
-				@ifstaffelleitung
-				<button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
-					<span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu" role="menu">
-					<li><a href="#" data-toggle="modal" data-target="#modalLoeschen"><span class="glyphicon glyphicon-remove"></span> Profil löschen</a></li>
-				</ul>
-				@endif
-			</div>
-		</h1>
-	</div>
-</div>
-
-
 <div class="row">
 	<div class="col-md-6">
 		<div class="panel panel-primary">
@@ -55,6 +33,22 @@
 					</div>
 				</li>
 			</ul>
+			<div class="panel-footer">
+				<div class="btn-group">
+					<!-- Überprüfen, ob es sich um mein Profil handelt, oder ich der Admin bin -->
+					@if(Auth::user()->id === $mitglied->id || Auth::user()->rolle === "Staffelleitung")
+					<a href="#" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span> Profil bearbeiten</a>
+					@endif
+					@ifstaffelleitung
+					<button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="#" data-toggle="modal" data-target="#modalLoeschen"><span class="glyphicon glyphicon-remove"></span> Profil löschen</a></li>
+					</ul>
+					@endif
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
@@ -91,27 +85,43 @@
 					<img class="media-object center-block img-responsive img-thumbnail" src="http://avatarmaker.net/free-avatars/avatars/animals_216/dogs_238/cute_brown_dog_avatar_100x100_31524.jpg" alt="...">
 				<li class="list-group-item">
 					<div class="row">
-						<span class="col-md-4">Rasse:</span>{{ $hund->rasse }}</span>
+						<span class="col-md-4">Rasse:</span><span>{{ $hund->rasse }}</span>
 					</div>
 				</li>
 				<li class="list-group-item">
 					<div class="row">
-						<span class="col-md-4">Alter:</span>{{ $hund->alter }}</span>
+						<span class="col-md-4">Alter:</span><span>{{ $hund->alter }}</span>
 					</div>
 				</li>
 				<li class="list-group-item">
-					<div class="panel panel-info">
-						<div class="panel-heading">Sucharten</div>
-						<ul class="list-group">
+					<div class="row">
+						<span class="col-md-4">Sucharten:</span>
+						<span>
 							@foreach($hund->sucharten as $suchart)
-							<li class="list-group-item">
-								{{ $suchart->name }}
-							</li>
+							@if($suchart->pivot->geprueft == 1)
+							<span class="label label-success">{{ $suchart->name }}</span>
+							@else
+							<span class="label label-default">{{ $suchart->name }}</span>
+							@endif
 							@endforeach
-						</ul>
+						</span>
 					</div>
 				</li>
 			</ul>
+			<div class="panel-footer">
+				<div class="btn-group">
+					<!-- Überprüfen, ob es sich um mein Profil handelt, oder ich der Admin bin -->
+					@if(Auth::user()->id === $mitglied->id || Auth::user()->rolle === "Staffelleitung")
+					<button type="button" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span> Hund bearbeiten</button>
+					<button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="#" data-toggle="modal" data-target="#modalLoeschen"><span class="glyphicon glyphicon-remove"></span> Hund löschen</a></li>
+					</ul>
+					@endif
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

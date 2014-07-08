@@ -8,7 +8,7 @@ class MLoginController extends Controller {
 
     public function renderLogin() 
     {
-        $mitglied = new Mitglied;
+        $mitglied = new Mitglied();
 
         return View::make('mlogin')
             ->with('mitglied', $mitglied)
@@ -37,8 +37,7 @@ class MLoginController extends Controller {
 
         return Redirect::to('mobile/login')
             ->withErrors(array(
-                'email' => 'E-Mail oder', 
-                'passwort' => 'Passwort war nicht korrekt.'));
+                'autherror' => true));
     }
 
     public function ausloggen()

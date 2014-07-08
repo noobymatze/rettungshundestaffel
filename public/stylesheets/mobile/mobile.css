@@ -1,0 +1,45 @@
+body, html {
+	margin: 0;
+	padding: 0;
+}
+
+#login-headline {
+	margin-bottom: 0.2em;
+}
+
+#login-subtitle {
+	color: #ccc;
+	margin-top: 0;
+}
+
+.centered {
+	text-align: center;
+}
+
+#login-form {
+	margin: 1em;
+}
+
+#login-button {
+	margin-top: 1em;
+}
+
+#login-header {
+}
+
+.notification {
+color: white;
+padding: 0.5em;
+position: relative;
+}
+.notification p {
+  margin: 0.5em 0;
+}
+
+.notification-success {
+  background: #47b101;
+}
+
+.notification-error {
+  background: #ed4747;
+}

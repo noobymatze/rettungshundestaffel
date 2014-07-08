@@ -88,7 +88,9 @@ class MitgliederDesktopController extends Controller {
 	 */
 	public function renderMitglied($id) 
 	{
-		return View::make('mitglieder.desktop.details');
+		$mitglied = $this->mitgliederService->holeMitglied($id);
+		return View::make('mitglieder.desktop.details')
+				->with('mitglied', $mitglied);
 	}
 	
 	/**

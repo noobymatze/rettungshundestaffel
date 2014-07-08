@@ -75,4 +75,14 @@ class MitgliederService {
 				->get();
 	}
 
+	/**
+	 * Liefert ein Mitglied mit einer Id aus der Datenbank.
+	 * @param {long} die Mitglied-Id
+	 * @return {Mitglied}
+	 */
+    public function holeMitglied($id)
+    {
+        return Mitglied::find($id);
+    }
+
 }

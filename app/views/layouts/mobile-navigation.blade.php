@@ -1,18 +1,15 @@
-@extends('layouts.mobile-html-skeleton')
+@extends('layouts.mobile-skeleton')
 
 @section('body')
 	@section('header')
-		<header class="pure-g">
-		    <div class="pure-u-1-5">
-		    	links
+		<header id="top-bar" class="pure-g">
+		    <div id="top-bar-left" class="pure-u-1-5">
 		    	@yield('header-left')
 		    </div>
-		    <div class="pure-u-3-5">
-		    	Dashboard
+		    <div id="top-bar-center" class="pure-u-3-5">
 		    	@yield('header-center')
 		    </div>
-		    <div class="pure-u-1-5">
-		    	rechts
+		    <div id="top-bar-right" class="pure-u-1-5">
 		    	@yield('header-right')
 		    </div>
 		</header>
@@ -20,7 +17,7 @@
 	@yield('content')
 	@section('nav-bar')
 		<nav id="nav-bar">
-			<a href="#" class="{{{ $menu == MenuEnum::DASHBOARD ? 'active' : '' }}}">
+			<a href="{{ URL::action('MDashboardController@renderDashboard') }}" class="{{{ $menu == MenuEnum::DASHBOARD ? 'active' : '' }}}">
 				<i class="icon-th-large"></i>
 				<p>Dashboard</p>
 			</a>
@@ -28,7 +25,7 @@
 				<i class="icon-calendar"></i>
 				<p>Termine</p>
 			</a>
-			<a href="#" class="{{{ $menu == MenuEnum::MITGLIEDER ? 'active' : '' }}}">
+			<a href="{{ URL::action('MMitgliederController@renderMitglieder') }}" class="{{{ $menu == MenuEnum::MITGLIEDER ? 'active' : '' }}}">
 				<i class="icon-users"></i>
 				<p>Mitglieder</p>
 			</a>

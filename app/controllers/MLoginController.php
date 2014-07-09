@@ -8,7 +8,7 @@ class MLoginController extends Controller {
 
     public function renderLogin() 
     {
-        $mitglied = new Mitglied();
+        $mitglied = new Mitglied;
 
         return View::make('mlogin')
             ->with('mitglied', $mitglied)

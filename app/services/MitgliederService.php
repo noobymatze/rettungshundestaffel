@@ -38,6 +38,20 @@ class MitgliederService {
     {
         return Mitglied::all();
     }
+
+    /**
+     * Liefert alle Mitglieder bis auf einen zurück. 
+     * Für Pagination können der Start und das Limit 
+     * festgelegt werden.
+     *
+     * @param {integer} id des Users, der ausgeschlossen werden soll
+     * @param {integer} start Ab welchem Mitglied.
+     * @param {integer} limit Wie viele Mitglieder zurückgegeben werden sollen.
+     */
+    public function allExceptFor($id, $start = 0, $limit = FALSE) 
+    {
+        return Mitglied::whereNotIn('id', array($id))->get();
+    }
 	
 	/**
 	 * 

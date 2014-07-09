@@ -1,4 +1,4 @@
-@extends('layouts.mobile-html-skeleton')
+@extends('layouts.mobile-skeleton')
 
 @section('body')
 <section>

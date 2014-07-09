@@ -2,6 +2,9 @@ body, html {
 	margin: 0;
 	padding: 0;
 }
+body {
+	padding-bottom: 3.5em;
+}
 
 #login-headline {
 	margin-bottom: 0.2em;
@@ -44,6 +47,25 @@ position: relative;
   background: #ed4747;
 }
 
+#top-bar {
+	height: 3.5em;
+	text-align: center;
+	background-color: #2C4D63;
+    color: #fbfdfd;
+}
+
+#top-bar-center>h1{
+	font-size: 1.3em;
+}
+
+#top-bar-center p {
+	margin: 0.75em 0;
+}
+
+#top-bar-left p, #top-bar-left p {
+	margin: 1.15em 0;
+}
+
 #nav-bar {
 	display: table;
 	position: fixed;
@@ -53,8 +75,12 @@ position: relative;
 	left: 0px;
 }
 
-#nav-bar p {
-	margin: 0;
+#nav-bar>a>i:before {
+	margin-top: 0.4em;
+}
+
+#nav-bar>a>p {
+	margin: 0.4em 0;
 	padding: 0;
 }
 

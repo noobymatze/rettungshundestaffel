@@ -36,3 +36,4 @@ Route::post('/mobile/login', 'MLoginController@login');
 Route::get('/mobile/ausloggen', 'MLoginController@ausloggen');
 //Route::get('/mobile/dashboard', array('before' => 'auth', 'uses' => 'MDashboardController@renderDashboard'));
 Route::get('/mobile/dashboard', 'MDashboardController@renderDashboard');
+Route::get('/mobile/mitglieder', 'MMitgliederController@renderMitglieder');

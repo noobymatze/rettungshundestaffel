@@ -50,9 +50,34 @@ class MitgliederService {
      */
     public function allExceptFor($id, $start = 0, $limit = FALSE) 
     {
-        return Mitglied::whereNotIn('id', array($id))->get();
+        return Mitglied::whereNotIn('id', array($id))->take($limit)->get();
     }
-	
+
+    /**
+     * Liefert alle Mitglieder bis auf einen zurück. 
+     * Die Mitglieder werden nach ihrem Anfangsbuchstaben im
+     * Vornamen gruppiert (Array) zurückgeliefert.
+     * Für Pagination können der Start und das Limit 
+     * festgelegt werden.
+     *
+     * @param {integer} id des Users, der ausgeschlossen werden soll
+     * @param {integer} start Ab welchem Mitglied.
+     * @param {integer} limit Wie viele Mitglieder zurückgegeben werden sollen.
+     */
+    public function allGroupedExeptForOne($id, $start = 0, $limit = FALSE)
+    {
+        $usersGrouped = array();
+        $users = Mitglied::select(DB::raw('*, substring(vorname, 1, 1) as firstletter'))->orderBy('vorname')->take($limit)->get();
+        
+        foreach ($users as $user)
+        {
+            if (!isset($usersGrouped[$user->firstletter]))
+                $usersGrouped[$user->firstletter] = array();
+            array_push($usersGrouped[$user->firstletter], $user);
+        }
+        return $usersGrouped;
+	}
+
 	/**
 	 * 
 	 * @param array $mitglied

@@ -4,7 +4,6 @@
 	<h1>Mitglieder</h1>
 @stop
 @section('content')
-	<p>Ich</p>
 	<style>
 	.user-list>li {
 		overflow: visible;
@@ -55,19 +54,34 @@
 		padding: 0;
 		margin: 0;
 	}
+	.user-list>li {
+		background-color: #f6f6f6;
+		border-color: #ddd;
+		border-width: 1px 0;
+		border-style: solid;
+	}
+	.letter {
+		font-size: .9em;
+		margin: 0.4em 0em 0.4em 0.4em;
+		padding: 0;
+		color: #333;
+	}
 	</style>
-	<ul class="user-list">
-		@foreach ($others as $user)
-			<li>
-				<a>
-					<img class="pure-img" src="http://placehold.it/100x100">
-					<h2>{{{ $user->vollerName() }}}</h2>
-					<p>Telefon: {{{ $user->telefon or '-' }}}</p>
-					<i class="icon-th-large"></i>
-				</a>
-			</li>
-		@endforeach
-	</ul>
+	@foreach ($others as $letter => $firstLetterGroup)
+		<h2 class="letter">{{{ $letter }}}</h2>
+		<ul class="user-list">
+			@foreach ($firstLetterGroup as $user)
+				<li>
+					<a>
+						<img class="pure-img" src="http://placehold.it/100x100">
+						<h2>{{{ $user->vollerName() }}}</h2>
+						<p>Telefon: {{{ $user->telefon or '-' }}}</p>
+						<i class="icon-th-large"></i>
+					</a>
+				</li>
+			@endforeach
+		</ul>
+	@endforeach
 
 	<!--<ul data-role="listview" data-inset="true">
     <li><a href="#">

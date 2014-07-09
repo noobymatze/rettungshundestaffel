@@ -13,7 +13,7 @@ class MMitgliederController extends Controller {
     {
     	$id = Auth::id();
     	$me = $this->mitgliederService->holeMitglied($id);
-    	$others = $this->mitgliederService->allExceptFor($id);
+    	$others = $this->mitgliederService->allGroupedExeptForOne($id);
 
         return View::make('mitglieder.mobile.mitglieder')
         	->with('menu', MenuEnum::MITGLIEDER)

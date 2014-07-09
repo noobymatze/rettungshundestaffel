@@ -33,7 +33,7 @@
 				<i class="icon-map"></i>
 				<p>Suchgebiete</p>
 			</a>
-			<a href="#" class="{{{ $menu == MenuEnum::WEITERES ? 'active' : '' }}}">
+			<a href="{{ URL::action('MWeiteresController@renderWeiteres') }}" class="{{{ $menu == MenuEnum::WEITERES ? 'active' : '' }}}">
 				<i class="icon-ellipsis"></i>
 				<p>Weiteres</p>
 			</a>

@@ -1,7 +1,7 @@
-@extends('layouts.mobile-navigation-skeleton')
+@extends('layouts.mobile-navigation')
 
 @section('header-center')
-	<p>Dashboard</p>
+	<h1>Dashboard</h1>
 @stop
 @section('content')
 	<p>Dashboard!</p>

@@ -10,8 +10,8 @@ form.search-form {
 	padding-right: 5em;
 	height: 3em;
 }
-.search-form>button, #search-button {
-	padding-left: 1.2em;
+.search-form>input[type="submit"], #search-button {
+	padding-left: 0.8em;
 	position: absolute;
 	right: 0;
 	top: 0;
@@ -24,16 +24,26 @@ form.search-form {
 	}
 }
 
-.search-form>input {
+.search-form>input[type="text"] {
 	margin-right: 5em;
 	height: 3.75em;
 	width: 100%;
 }
 </style>
+{{ Form::open(
+	array('action' => array(
+		'MMitgliederController@renderMitglieder'),
+		'class' => 'pure-form search-form',
+		'method' => 'GET')
+) }}
+    {{ Form::text('suchbegriff', null, array('placeholder' => 'Name', 'class' => 'pure-input-rounded')) }}
+    {{ Form::submit('Suchen', array('id' => 'search-button', 'class' => 'pure-button')) }}
+{{ Form::close() }}
+<!--
 <form class="pure-form search-form">
     <input type="text" class="pure-input-rounded">
     <button id="search-button" type="submit" class="pure-button">Suche</button>
-</form>
+</form>-->
 <style>
 	.user-list>li {
 		overflow: visible;

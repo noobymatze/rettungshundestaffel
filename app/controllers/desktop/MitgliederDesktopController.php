@@ -20,7 +20,7 @@ class MitgliederDesktopController extends Controller {
     {
         return View::make('mitglieder.desktop.uebersicht')
 			->with('suchbegriff', null)
-            ->with('mitglieder', $this->mitgliederService->all());
+            ->with('mitglieder', $this->mitgliederService->holeAlle());
     }
 	
 	/**

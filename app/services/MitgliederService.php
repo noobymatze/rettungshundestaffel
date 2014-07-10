@@ -6,6 +6,8 @@
  */
 class MitgliederService {
 
+    const SEITEN_GROESSE = 9;
+
     /**
      * Authentifiziert ein Mitglied anhand der E-Mail
      * und des Passworts. Diese müssen gesetzt und 
@@ -27,16 +29,14 @@ class MitgliederService {
     }
 
     /**
-     * Liefert alle Mitglieder zurück. 
-     * Für Pagination können der Start und das Limit 
-     * festgelegt werden.
+     * Liefert alle Mitglieder mit der in MitgliederService::SEITEN_GROESSE,
+     * definierten Pagination Konstante.
      *
-     * @param {integer} start Ab welchem Mitglied.
-     * @param {integer} limit Wie viele Mitglieder zurückgegeben werden sollen.
+     * @return Illuminate\Database\Eloquent\Collection Eine Collection von Mitgliedern.
      */
-    public function all($start = 0, $limit = FALSE) 
+    public function holeAlle() 
     {
-        return Mitglied::all();
+        return Mitglied::paginate(MitgliederService::SEITEN_GROESSE);
     }
 
     /**
@@ -111,7 +111,7 @@ class MitgliederService {
 				->orWhere('nachname', 'LIKE', '%'.$name[1].'%')
 				->orWhere('email', 'LIKE', '%'.$name[0].'%')
 				->orWhere('telefon', 'LIKE', '%'.$name[0].'%')
-				->get();
+                ->paginate(MitgliederService::SEITEN_GROESSE);
 	}
 
 	/**

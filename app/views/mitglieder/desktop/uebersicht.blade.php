@@ -5,7 +5,8 @@ Mitglieder
 @stop
 
 @section('content')
-    {{ Form::open(array('action' => 'MitgliederDesktopController@filtereUebersicht', 'name' => 'uebersicht-suche', 'class' => 'form row')) }}
+<section class="row">
+    {{ Form::open(array('action' => 'MitgliederDesktopController@filtereUebersicht', 'name' => 'uebersicht-suche', 'class' => 'form col-md-6')) }}
         <span class="input-group col-md-3">
             {{ Form::text('suchbegriff', $suchbegriff, array('class' => 'form-control', 'placeholder' => 'Suche...')) }}
             <div class="input-group-btn">
@@ -14,7 +15,10 @@ Mitglieder
         </span>
     {{ Form::close() }}
 
-
+    <section class="col-md-6">
+        {{ $mitglieder->links() }}
+    </section>
+</section>
     @for ($i = 0; $i < $mitglieder->count(); $i+=3) 
     <section class="row">
         @foreach($mitglieder->slice($i, 3) as $mitglied) 

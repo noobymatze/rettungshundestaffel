@@ -23,6 +23,7 @@ Route::group(array('before' => 'auth'), function ()
     Route::get('/mitglieder', 'MitgliederDesktopController@uebersicht');
 	Route::get('/mitglieder/anlegen', 'MitgliederDesktopController@renderErstelleMitglied');
 	Route::get('/mitglieder/{id}', 'MitgliederDesktopController@renderMitglied');
+	Route::get('/mitglieder/{id}/bearbeiten', 'MitgliederDesktopController@renderMitgliedBearbeiten');
 	Route::post('/mitglieder', 'MitgliederDesktopController@filtereUebersicht');
 	Route::post('/mitglieder/anlegen', 'MitgliederDesktopController@erstelleMitglied');
 });

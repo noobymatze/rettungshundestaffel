@@ -106,4 +106,15 @@ class MitgliederDesktopController extends Controller {
 			->with('mitglieder', 
 				$this->mitgliederService->sucheNachVornameOderNachname($suchbegriff));
 	}
+
+	/**
+	 * Stellt die Seite für das Bearbeiten eines Mitglieds das.
+	 * @param type $id
+	 */
+	public function renderMitgliedBearbeiten($id)
+	{
+		$mitglied = $this->mitgliederService->holeMitglied($id);
+		return View::make('mitglieder.desktop.bearbeiten')
+				->with('mitglied', $mitglied);
+	}
 }

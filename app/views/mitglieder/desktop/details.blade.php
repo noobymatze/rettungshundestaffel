@@ -37,7 +37,7 @@ Benutzer
 				<div class="btn-group">
 					<!-- Überprüfen, ob es sich um mein Profil handelt, oder ich der Admin bin -->
 					@if(Auth::user()->id === $mitglied->id || Auth::user()->rolle === "Staffelleitung")
-					<a href="#" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span> Profil bearbeiten</a>
+					<a href="{{ URL::action('MitgliederDesktopController@renderMitgliedBearbeiten', [$mitglied->id]) }}" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span> Profil bearbeiten</a>
 					@endif
 					@ifstaffelleitung
 					<button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">

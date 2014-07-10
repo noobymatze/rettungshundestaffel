@@ -67,6 +67,17 @@ class MitgliederService {
     public function allGroupedExeptForOne($id, $start = 0, $limit = FALSE)
     {
         $usersGrouped = array();
+        /*
+        $users = Mitglied::all();
+        foreach ($users as $user)
+        {
+            $firstLetter = strtoupper(substr($user->vorname, 0, 1));
+            if (!isset($usersGrouped[$firstLetter]))
+                $usersGrouped[$firstLetter] = array();
+            array_push($usersGrouped[$firstLetter], $user);
+        }
+        return $usersGrouped;
+        */
         $users = Mitglied::select(DB::raw('*, substring(vorname, 1, 1) as firstletter'))->orderBy('vorname')->take($limit)->get();
         
         foreach ($users as $user)

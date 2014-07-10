@@ -67,6 +67,33 @@ class Mitglied extends Eloquent implements UserInterface, RemindableInterface
             ->withPivot('status', 'status_geaendert_am');
     }
 
+    /**
+     * Liefert eine Liste von Suchtypen, in denen das
+     * Mitglied Hunde hat, die dort eine Prüfung abgelegt
+     * haben, die gültig ist (nicht abgelaufen).
+     *
+     * @return {Collection} 
+     */
+    public function holeGueltigePruefungen()
+    {
+        $retSuchtypen = array();
+        $suchtypen = Mitglied::join('hund', 'mitglied.id', '=', 'hund.mitglied_id')
+            ->join('hund_hat_suchart', 'hund.id', '=', 'hund_hat_suchart.hund_id')
+            ->join('suchart', 'hund_hat_suchart.suchart_id', '=', 'suchart.id')
+            ->select('suchart.suchtyp')
+            ->distinct()
+            ->where('mitglied.id', '=', $this->id)->get();
+        foreach ($suchtypen as $suchtyp)
+        {
+            $retSuchtypen[$suchtyp->suchtyp] = 1;
+        }
+        return $retSuchtypen;
+            //return '<pre>'.var_dump($this->id).'</pre>';
+            //->get();
+        //return $this->hasMany('Hund', 'mitglied_id', 'id')->belongsToMany('Suchart', 'hund_hat_suchart', 'hund_id', 'suchart_id');
+        //return Mitglied::select(DB::raw(' DISTINCT suchart.suchtyp FROM staffel.mitglied inner join staffel.hund on mitglied_id = mitglied.id inner join staffel.hund_hat_suchart on hund.id = hund_hat_suchart.hund_id inner join staffel.suchart on hund_hat_suchart.suchart_id = suchart.id where geprueft_bis > now() && mitglied.id = ' . $this->id . ';'));
+    }
+
 	/**
 	 * Get the password for the user.
 	 *

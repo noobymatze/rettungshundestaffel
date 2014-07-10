@@ -60,7 +60,7 @@ Benutzer
 			Hunde
 			<!-- Überprüfen, ob es sich um mein Profil handelt, oder ich der Admin bin -->
 			@if(Auth::user()->id === $mitglied->id || Auth::user()->rolle === "Staffelleitung")
-			<a href="{{ URL::action('MitgliederDesktopController@renderErstelleHund', [$mitglied->id]) }}" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus"></span> Hund hinzufügen</a>
+			<a href="{{ URL::action('HundeDesktopController@renderBearbeiten', [$mitglied->id]) }}" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus"></span> Hund hinzufügen</a>
 			@endif
 		</h1>
 		<!-- Falls der Benutzer keine Hunde hat -->

@@ -6,6 +6,8 @@ class Hund extends Eloquent
 
     protected $fillable = array('name', 'rasse', 'alter');
 
+    public $timestamps = false;
+
     /**
      * Stellt die Beziehung zu der Mitgliedertabelle dar.
      *
@@ -22,4 +24,5 @@ class Hund extends Eloquent
                 'Suchart', 'hund_hat_suchart', 'hund_id', 'suchart_id')
             ->withPivot('geprueft', 'geprueft_am', 'geprueft_bis');
     }
+
 }

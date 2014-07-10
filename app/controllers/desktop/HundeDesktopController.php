@@ -2,17 +2,12 @@
 
 class HundeDesktopController extends Controller {
 
-    public function __construct(HundeService $hundeService)
+    public function __construct(MitgliederService $mitgliederService, HundeService $hundeService)
     {
         $this->hundeService = $hundeService;
+        $this->mitgliederService = $mitgliederService;
 
-        $this->beforeFilter(function ($route) {
-            $mitglied_id = intval($route->getParameter('mitglied_id'));
-            if (Auth::user()->id !== $mitglied_id) 
-            {
-                return Redirect::to('/mitglieder');
-            }
-        }, ['on' => 'speichere']);
+        $this->beforeFilter('@filtereAuthentifiziertIstNichtMitglied');
     }
 
     /**
@@ -24,8 +19,10 @@ class HundeDesktopController extends Controller {
     public function speichere($mitglied_id, $hund_id = null) 
     {
         $mitglied_id = intval($mitglied_id);
-        $regeln = array('name' => 'required');
+
+        $regeln = array('name' => 'required', 'alter' => 'numeric');
         $validator = Validator::make(Input::all(), $regeln);
+
         if ($validator->fails()) 
         {
             return View::make('mitglieder.desktop.bearbeite-hund')
@@ -41,11 +38,14 @@ class HundeDesktopController extends Controller {
 
         $hund->name = Input::get('name');
         $hund->rasse = Input::get('rasse');
-        $hund->profilbild = Input::get('profilbild');
+        $hund->alter = Input::get('alter');
+        $hund->bild = Input::get('bild');
         $hund->mitglied_id = $mitglied_id;
 
+        $this->hundeService->speichere($hund);
+
         return View::make('mitglieder.desktop.details')
-                ->with('mitglied', $mitglied);
+                ->with('mitglied', $this->mitgliederService->lade($mitglied_id));
     }
 
     /**
@@ -83,7 +83,7 @@ class HundeDesktopController extends Controller {
         $mitglied_id = intval($route->getParameter('mitglied_id'));
         if (Auth::user()->id !== $mitglied_id) 
         {
-            return Redirect::to('/mitglieder');
+            return Redirect::action('MitgliederDesktopController@uebersicht');
         }
     }
 }

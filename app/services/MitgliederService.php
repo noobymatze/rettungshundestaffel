@@ -116,10 +116,12 @@ class MitgliederService {
 
 	/**
 	 * Liefert ein Mitglied mit einer Id aus der Datenbank.
-	 * @param {long} die Mitglied-Id
-	 * @return {Mitglied}
+     * 
+	 * @param int $id Die ID des Mitglieds, das geladen werden soll.
+     * 
+	 * @return Mitglied 
 	 */
-    public function holeMitglied($id)
+    public function lade($id)
     {
         return Mitglied::find($id);
     }

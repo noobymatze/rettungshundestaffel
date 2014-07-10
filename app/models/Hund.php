@@ -20,6 +20,6 @@ class Hund extends Eloquent
         return $this
             ->belongsToMany(
                 'Suchart', 'hund_hat_suchart', 'hund_id', 'suchart_id')
-            ->withPivot('geprueft', 'geprueft_am', 'geprueft_bis');
+            ->withPivot('geprueft_am', 'geprueft_bis');
     }
 }

@@ -14,7 +14,6 @@
 		    </div>
 		</header>
 	@show
-	@yield('content')
 	@section('nav-bar')
 		<nav id="nav-bar">
 			<a href="{{ URL::action('MDashboardController@renderDashboard') }}" class="{{{ $menu == MenuEnum::DASHBOARD ? 'active' : '' }}}">
@@ -39,4 +38,5 @@
 			</a>
 		</nav>
 	@show
+	@yield('content')
 @stop

@@ -11,9 +11,12 @@ class MMitgliederController extends Controller {
 
     public function renderMitglieder()
     {
+        $suchbegriff = Input::get('suchbegriff');
+
     	$id = Auth::id();
     	$me = $this->mitgliederService->holeMitglied($id);
-    	$others = $this->mitgliederService->allGroupedExeptForOne($id);
+
+    	$others = $this->mitgliederService->allGroupedExeptForOne($id, $suchbegriff);
 
         return View::make('mitglieder.mobile.mitglieder')
         	->with('menu', MenuEnum::MITGLIEDER)

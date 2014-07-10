@@ -10,7 +10,7 @@ Neues Mitglied anlegen
 		<p>Bitte geben Sie die Daten des neuen Benutzers ein.</p>
 	</div>
 	<div class="col-md-6">
-		{{ Form::model($mitglied, array('action' => 'MitgliederDesktopController@erstelleMitglied', 'class' => 'form-horizontal')) }}
+		{{ Form::model($mitglied, array('action' => 'MitgliederDesktopController@erstelle', 'class' => 'form-horizontal')) }}
 
 		<section class="form-group">
 			<label class="col-sm-5 control-label">Rolle:*</label>

@@ -147,7 +147,7 @@ Benutzer
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
-				<a href="{{ URL::action('HundeDesktopController@loesche', [$mitglied->id, $hund->id]) }}" class="btn btn-danger">Löschen</a>
+				<a href="#" class="btn btn-danger">Löschen</a>
 			</div>
 		</div>
 	</div>

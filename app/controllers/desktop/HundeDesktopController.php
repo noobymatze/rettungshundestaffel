@@ -5,21 +5,25 @@ class HundeDesktopController extends Controller {
     public function __construct(HundeService $hundeService)
     {
         $this->hundeService = $hundeService;
+
+        $this->beforeFilter(function ($route) {
+            $mitglied_id = intval($route->getParameter('mitglied_id'));
+            if (Auth::user()->id !== $mitglied_id) 
+            {
+                return Redirect::to('/mitglieder');
+            }
+        }, ['on' => 'speichere']);
     }
 
     /**
      * Speichert den Hund als Teil des Mitglieds.
      * 
      * @param string $mitglied_id Die ID des zum Hunde zugehörigen Mitglieds.
+     * @param string $hund_id Optionale ID des Hundes, der bearbeitet werden soll.
      */
-    public function speichere($mitglied_id) 
+    public function speichere($mitglied_id, $hund_id = null) 
     {
-        $mitglied_id = intval($id);
-        if (Auth::user()->id !== $mitglied_id) 
-        {
-            return Redirect::to('/mitglieder');
-        }
-
+        $mitglied_id = intval($mitglied_id);
         $regeln = array('name' => 'required');
         $validator = Validator::make(Input::all(), $regeln);
         if ($validator->fails()) 
@@ -30,13 +34,14 @@ class HundeDesktopController extends Controller {
         }
 
         $hund = new Hund;
-        if (Input::has('hund_id')) 
+        if (isset($hund_id)) 
         {
-            $hund = $this->hundeService->lade($id);
+            $hund = $this->hundeService->lade($hund_id);
         }
 
         $hund->name = Input::get('name');
-        $hund->rasse = 
+        $hund->rasse = Input::get('rasse');
+        $hund->profilbild = Input::get('profilbild');
         $hund->mitglied_id = $mitglied_id;
 
         return View::make('mitglieder.desktop.details')
@@ -46,20 +51,39 @@ class HundeDesktopController extends Controller {
     /**
      * Rendert das Template erstelle-hund in Mitglieder.
      * 
-     * @return Illuminate\View\View Gerendertes erstelle Hund Template.
+     * @param string $mitglied_id Die ID des Mitglieds, für das ein Hund bearbeitet werden soll.
+     * @param string|null $hund_id Die Hunde ID oder null, wenn ein neuer Hund gelegt 
+     * werden soll.
+     * 
+     * @return Response Gerendertes erstelle Hund Template.
      */
-    public function renderErstelleHund($id) 
+    public function renderBearbeiten($mitglied_id, $hund_id = null)
     {
-        if (Auth::user()->id !== intval($id))
+        $hund = new Hund;
+        if (isset($hund_id)) 
         {
-            return Redirect::to('/mitglieder');
+            $hund = $this->hundeService->lade(intval($hund_id));
         }
 
-        $hund = new Hund;
-
+        $mitglied = Auth::user();
         return View::make('mitglieder.desktop.bearbeite-hund')
-                ->with('mitglied', Auth::user())
+                ->with('mitglied', $mitglied)
                 ->with('hund', $hund);
     }
 
+    /**
+     * Prüft, ob das angemeldete Mitglied auch dem Mitglied im Parameter 
+     * entspricht. Ansonsten sollen diese Routen gar nicht zugänglich sein.
+     * 
+     * @param Route $route 
+     * @return Response|void Wird auf /mitglieder redirected.
+     */
+    public function filtereAuthentifiziertIstNichtMitglied($route) 
+    {
+        $mitglied_id = intval($route->getParameter('mitglied_id'));
+        if (Auth::user()->id !== $mitglied_id) 
+        {
+            return Redirect::to('/mitglieder');
+        }
+    }
 }

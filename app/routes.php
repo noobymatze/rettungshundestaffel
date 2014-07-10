@@ -26,7 +26,7 @@ Route::group(array('before' => 'auth'), function ()
 
     Route::get('/mitglieder/{mitglied_id}/hunde/anlegen', 'HundeDesktopController@renderBearbeiten');
     Route::get('/mitglieder/{mitglied_id}/hunde/{hund_id}/bearbeiten', 'HundeDesktopController@renderBearbeiten');
-    Route::post('/mitglieder/{mitglied_id}/hunde/{hunde_id}', 'HundeDesktopController@speichere');
+    Route::post('/mitglieder/{mitglied_id}/hunde/{hunde_id?}', 'HundeDesktopController@speichere');
 
 	Route::post('/mitglieder', 'MitgliederDesktopController@filtereUebersicht');
 	Route::post('/mitglieder/anlegen', 'MitgliederDesktopController@erstelleMitglied');

@@ -85,3 +85,11 @@ Route::filter('authentication', function () {
         Redirect::to('/login');
     }
 });
+
+Route::filter('staffelleitung', function () 
+{
+    if(!Auth::user()->rolle === "Staffelleitung") 
+    {
+        Redirect::back();
+    }
+});

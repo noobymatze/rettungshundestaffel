@@ -83,10 +83,12 @@ class MitgliederService {
                     ->orWhere('nachname', 'LIKE', '%'.$name[1].'%')
                     ->orWhere('email', 'LIKE', '%'.$name[0].'%')
                     ->orWhere('telefon', 'LIKE', '%'.$name[0].'%')
+                    ->orderBy('vorname')
                     ->get();
         }
         else
-            $users = Mitglied::all();
+            $users = Mitglied::all()
+                ->sortBy('vorname');
         foreach ($users as $user)
         {
             $firstLetter = strtoupper(substr($user->vorname, 0, 1));

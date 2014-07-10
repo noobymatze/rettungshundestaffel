@@ -15,7 +15,7 @@ Benutzer
 			</div>
 			<ul class="list-group">
 				<li class="list-group-item">
-                    <img class="media-object center-block img-responsive img-thumbnail" src="@image64($mitglied->profilbild)" alt="...">
+                    <img class="media-object center-block img-responsive img-thumbnail" src="{{ $mitglied->profilbild() }}" alt="...">
 				<li class="list-group-item">
 					<div class="row">
 						<span class="col-md-4">E-Mail:</span><span class="col-md-8"><span class="glyphicon glyphicon-envelope"></span> {{ $mitglied->email }}</span>
@@ -87,7 +87,7 @@ Benutzer
 			</div>
 			<ul class="list-group">
 				<li class="list-group-item">
-					<img class="media-object center-block img-responsive img-thumbnail" src="@image64($hund->bild)" alt="...">
+					<img class="media-object center-block img-responsive img-thumbnail" src="{{ $hund->bild() }}" alt="...">
 				<li class="list-group-item">
 					<div class="row">
 						<span class="col-md-4">Rasse:</span><span>{{ $hund->rasse }}</span>

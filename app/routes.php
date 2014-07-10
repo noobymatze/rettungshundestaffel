@@ -21,11 +21,17 @@ Route::get('/ausloggen', 'LoginController@ausloggen');
 Route::group(array('before' => 'auth'), function () 
 {
     Route::get('/mitglieder', 'MitgliederDesktopController@uebersicht');
-	Route::get('/mitglieder/anlegen', 'MitgliederDesktopController@renderErstelleMitglied');
-	Route::get('/mitglieder/{id}', 'MitgliederDesktopController@renderMitglied');
+	Route::get('/mitglieder/{id}', 'MitgliederDesktopController@renderMitglied')->where('id', '[0-9]+');
+	Route::post('/mitglieder/{id}', 'MitgliederDesktopController@aktualisiere')->where('id', '[0-9]+');
 	Route::get('/mitglieder/{id}/bearbeiten', 'MitgliederDesktopController@renderMitgliedBearbeiten');
 	Route::post('/mitglieder', 'MitgliederDesktopController@filtereUebersicht');
-	Route::post('/mitglieder/anlegen', 'MitgliederDesktopController@erstelleMitglied');
+
+	Route::group(array('before' => 'staffelleitung'), function()
+	{
+		Route::get('/mitglieder/anlegen', 'MitgliederDesktopController@renderErstelleMitglied');
+		Route::post('/mitglieder/anlegen', 'MitgliederDesktopController@erstelleMitglied');
+	});
+
 });
 
 /*

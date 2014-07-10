@@ -83,11 +83,10 @@ class MitgliederService {
 	 * @param array $mitglied
 	 * @return {boolean}, falls das Mitglied angelegt worden ist, ansonsten false.
 	 */
-	public function erstelleMitglied($mitglied)
+	public function speichere($mitglied)
 	{
 		$mitglied['passwort'] = Hash::make($mitglied['passwort']);
-		Mitglied::create($mitglied);
-		return true;
+        $mitglied->save();
 	}
 	
 	/**
@@ -119,9 +118,9 @@ class MitgliederService {
 	 * @param {long} die Mitglied-Id
 	 * @return {Mitglied}
 	 */
-    public function holeMitglied($id)
+    public function hole($id)
     {
         return Mitglied::find($id);
     }
-
+	
 }

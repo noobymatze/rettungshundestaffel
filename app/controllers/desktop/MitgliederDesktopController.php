@@ -106,4 +106,24 @@ class MitgliederDesktopController extends Controller {
 			->with('mitglieder', 
 				$this->mitgliederService->sucheNachVornameOderNachname($suchbegriff));
 	}
+
+    /**
+     * Rendert das Template erstelle-hund in Mitglieder.
+     * 
+     * @return Illuminate\View\View Gerendertes erstelle Hund Template.
+     */
+    public function renderErstelleHund($id) 
+    {
+        if (Auth::user()->id !== intval($id))
+        {
+            return Redirect::to('/mitglieder');
+        }
+
+        $hund = new Hund;
+
+        return View::make('mitglieder.desktop.bearbeite-hund')
+                ->with('mitglied', Auth::user())
+                ->with('hund', $hund);
+    }
+
 }

@@ -188,7 +188,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	<?php $pruefungen = $user->holeGueltigePruefungen(); ?>
 	<li>
 		<a>
-			<img class="pure-img" src="{{ URL::asset('images/guy.jpg') }}">
+			<img class="pure-img" src="{{{ $user->profilbild() }}}">
 			<!--<div class="img-overlay">-->
 			<!--</div>-->
 			<h2>{{{ $user->vollerName() }}}

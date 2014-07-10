@@ -14,12 +14,13 @@ class LoescheSuchartenUndGeprueft extends Migration {
 	 */
 	public function up()
 	{
-        Schema::table('suchart', function (Blueprint $table) 
-        {
-            $table->dropColumn('suchtyp');
-        });
+        // Delete everything from a table 'hund_hat_suchart'
+        DB::table('hund_hat_suchart')->delete();
 
+        // Delete everything from a table 'suchart'
         DB::table('suchart')->delete();
+
+        // Füge der Tabelle 'suchart' Suchtypen-Einträge hinzu
         foreach($this->suchtypen as $suchtyp) 
         {
             Suchart::create(['name' => $suchtyp]);
@@ -38,10 +39,14 @@ class LoescheSuchartenUndGeprueft extends Migration {
 	 */
 	public function down()
 	{
+        Schema::table('hund_hat_suchart', function($table)
+        {
+            $table->integer('geprueft');
+        });
+
         Schema::table('suchart', function(Blueprint $table)
         {
             $table->enum('suchtyp', $this->suchtypen);
         });
 	}
-
 }

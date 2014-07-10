@@ -21,6 +21,7 @@ class MMitgliederController extends Controller {
         return View::make('mitglieder.mobile.mitglieder')
         	->with('menu', MenuEnum::MITGLIEDER)
         	->with('me', $me)
-        	->with('others', $others);
+        	->with('others', $others)
+            ->with('suchbegriff', $suchbegriff);
     }
 }

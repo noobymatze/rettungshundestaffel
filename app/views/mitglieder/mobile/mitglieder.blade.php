@@ -36,7 +36,7 @@ form.search-form {
 		'class' => 'pure-form search-form',
 		'method' => 'GET')
 ) }}
-    {{ Form::text('suchbegriff', null, array('placeholder' => 'Name', 'class' => 'pure-input-rounded')) }}
+    {{ Form::text('suchbegriff', null, array('placeholder' => 'Name...', 'class' => 'pure-input-rounded')) }}
     {{ Form::submit('Suchen', array('id' => 'search-button', 'class' => 'pure-button')) }}
 {{ Form::close() }}
 <!--
@@ -166,7 +166,21 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	top: 0;
 	bottom: 0;
 }
+.hinweis-paragraph {
+	font-size: 0.9em;
+	color: #333;
+	margin-left: 0.3em;
+}
+.einzug-links {
+	margin-left: 0.3em;
+}
 </style>
+@if (count($others) < 1 && isset($suchbegriff))
+	<p class="hinweis-paragraph">Keine Ergebnisse für die Suche nach "{{{ $suchbegriff }}}".</p>
+	<a href="{{ URL::action('MMitgliederController@renderMitglieder') }}" class="pure-button pure-button-primary einzug-links">Zurück</a>
+@elseif (isset($suchbegriff))
+	<p class="hinweis-paragraph">Ergebnisse für die Suche nach "{{{ $suchbegriff }}}":</p>
+@endif
 @foreach ($others as $letter => $firstLetterGroup)
 <h2 class="letter">{{{ $letter }}}</h2>
 <ul class="user-list">

@@ -37,7 +37,7 @@ class HundeDesktopController extends Controller {
         $bild = null;
         if (Input::hasFile('bild')) 
         {
-            $bild = Input::file('bild');
+            $bild = File::get(Input::file('bild')->getRealPath());
         }
 
         $hund = new Hund;
@@ -49,7 +49,7 @@ class HundeDesktopController extends Controller {
         $hund->name = Input::get('name');
         $hund->rasse = Input::get('rasse');
         $hund->alter = Input::get('alter');
-        $hund->bild = File::get($bild->getRealPath());
+        $hund->bild = $bild;
         $hund->mitglied_id = $mitglied_id;
 
         $this->hundeService->speichere($hund);

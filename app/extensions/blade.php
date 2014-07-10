@@ -38,5 +38,5 @@ Blade::extend(function($view, $compiler)
 Blade::extend(function($view, $compiler) 
 {
     $pattern = $compiler->createMatcher('image64');
-    return preg_replace($pattern, '<?php echo data:image;base64,$2; ?>', $view);
+    return preg_replace($pattern, '<?php echo "data:image;base64,$1"; ?>', $view);
 });

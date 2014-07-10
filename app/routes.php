@@ -25,8 +25,11 @@ Route::group(array('before' => 'auth'), function ()
 	Route::get('/mitglieder/{id}', 'MitgliederDesktopController@renderMitglied');
 
     Route::get('/mitglieder/{mitglied_id}/hunde/anlegen', 'HundeDesktopController@renderBearbeiten');
-    Route::get('/mitglieder/{mitglied_id}/hunde/{hund_id}/bearbeiten', 'HundeDesktopController@renderBearbeiten');
-    Route::post('/mitglieder/{mitglied_id}/hunde/{hunde_id?}', 'HundeDesktopController@speichere');
+    Route::get('/mitglieder/{mitglied_id}/hunde/{hund_id}/bearbeiten', ['as' => 'hund-bearbeiten', 'uses' => 'HundeDesktopController@renderBearbeiten']);
+    Route::post('/mitglieder/{mitglied_id}/hunde/{hund_id?}', 'HundeDesktopController@speichere')
+            ->where('hund_id', '[0-9]+');
+    Route::get('/mitglieder/{mitglied_id}/hunde/{hund_id}', 'HundeDesktopController@loesche')
+            ->where('hund_id', '[0-9]+');
 
 	Route::post('/mitglieder', 'MitgliederDesktopController@filtereUebersicht');
 	Route::post('/mitglieder/anlegen', 'MitgliederDesktopController@erstelleMitglied');

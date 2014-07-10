@@ -6,7 +6,7 @@ Hund anlegen
 
 @section('content')
 
-{{ Form::model($hund, array('action' => ['HundeDesktopController@speichere', $mitglied->id], 'class' => 'form-horizontal col-md-6', 'files' => true)) }}
+{{ Form::model($hund, array('action' => ['HundeDesktopController@speichere', $mitglied->id, $hund->id], 'class' => 'form-horizontal col-md-6', 'files' => true)) }}
 {{ Form::hidden('id') }}
 
 <section class="form-group">

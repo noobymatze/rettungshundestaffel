@@ -20,14 +20,24 @@ class HundeDesktopController extends Controller {
     {
         $mitglied_id = intval($mitglied_id);
 
-        $regeln = array('name' => 'required', 'alter' => 'numeric');
-        $validator = Validator::make(Input::all(), $regeln);
+        $regeln = array(
+            'name' => 'required', 
+            'alter' => 'numeric',
+            'bild' => 'mimes:png,jpg,jpeg,gif'
+        );
 
+        $validator = Validator::make(Input::all(), $regeln);
         if ($validator->fails()) 
         {
-            return View::make('mitglieder.desktop.bearbeite-hund')
+            return Redirect::back()
                     ->withInput(Input::all())
                     ->withErrors($validator);
+        }
+
+        $bild = null;
+        if (Input::hasFile('bild')) 
+        {
+            $bild = Input::file('bild');
         }
 
         $hund = new Hund;
@@ -39,13 +49,12 @@ class HundeDesktopController extends Controller {
         $hund->name = Input::get('name');
         $hund->rasse = Input::get('rasse');
         $hund->alter = Input::get('alter');
-        $hund->bild = Input::get('bild');
+        $hund->bild = File::get($bild->getRealPath());
         $hund->mitglied_id = $mitglied_id;
 
         $this->hundeService->speichere($hund);
 
-        return View::make('mitglieder.desktop.details')
-                ->with('mitglied', $this->mitgliederService->lade($mitglied_id));
+        return Redirect::action('MitgliederDesktopController@renderMitglied', [$mitglied_id]);
     }
 
     /**
@@ -85,5 +94,17 @@ class HundeDesktopController extends Controller {
         {
             return Redirect::action('MitgliederDesktopController@uebersicht');
         }
+    }
+
+    /**
+     * Loescht einen Hund aus der Datenbank und leitet zurück auf die Mitliederseite.
+     * 
+     * @param string $hund_id
+     */
+    public function loesche($mitglied_id, $hund_id) 
+    {
+        $this->hundeService->loesche(intval($hund_id));
+
+        return Redirect::action('MitgliederDesktopController@renderMitglied', [$mitglied_id]);
     }
 }

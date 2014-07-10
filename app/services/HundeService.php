@@ -28,4 +28,14 @@ class HundeService {
     {
         return Hund::find($id);
     }
+
+    /**
+     * Loesche den Hund mit der ID.
+     * 
+     * @param int $id Die ID des Hundes, der gelöscht werden soll.
+     */
+    public function loesche($id) 
+    {
+        Hund::destroy($id);
+    }
 }

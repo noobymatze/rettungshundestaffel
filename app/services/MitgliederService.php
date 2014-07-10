@@ -64,11 +64,29 @@ class MitgliederService {
      * @param {integer} start Ab welchem Mitglied.
      * @param {integer} limit Wie viele Mitglieder zurückgegeben werden sollen.
      */
-    public function allGroupedExeptForOne($id, $start = 0, $limit = FALSE)
+    public function allGroupedExeptForOne($id, $suchbegriff, $start = 0, $limit = FALSE)
     {
         $usersGrouped = array();
-        /*
-        $users = Mitglied::all();
+
+        if (isset($suchbegriff))
+        {
+            $name = explode(' ', trim($suchbegriff));
+        
+            if (count($name) < 2) 
+            {
+                // Setze den Nachnamen ebenfalls auf $suchbegriff
+                $name[] = $suchbegriff; 
+            }
+            
+            $users = Mitglied
+                    ::where('vorname', 'LIKE', '%'.$name[0].'%')
+                    ->orWhere('nachname', 'LIKE', '%'.$name[1].'%')
+                    ->orWhere('email', 'LIKE', '%'.$name[0].'%')
+                    ->orWhere('telefon', 'LIKE', '%'.$name[0].'%')
+                    ->get();
+        }
+        else
+            $users = Mitglied::all();
         foreach ($users as $user)
         {
             $firstLetter = strtoupper(substr($user->vorname, 0, 1));
@@ -76,8 +94,10 @@ class MitgliederService {
                 $usersGrouped[$firstLetter] = array();
             array_push($usersGrouped[$firstLetter], $user);
         }
+
         return $usersGrouped;
-        */
+        
+        /*
         $users = Mitglied::select(DB::raw('*, substring(vorname, 1, 1) as firstletter'))->orderBy('vorname')->take($limit)->get();
         
         foreach ($users as $user)
@@ -87,6 +107,7 @@ class MitgliederService {
             array_push($usersGrouped[$user->firstletter], $user);
         }
         return $usersGrouped;
+        */
 	}
 
 	/**

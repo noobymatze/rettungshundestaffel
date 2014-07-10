@@ -10,7 +10,7 @@ Benutzerdaten bearbeiten
 		{{ Form::model($mitglied, array('action' => array('MitgliederDesktopController@aktualisiere', $mitglied->id), 'class' => 'form-horizontal', 'files' => true)) }}
 		<section class="form-group">
 			<div class="col-sm-7 col-sm-offset-5">
-				<img class="media-object center-block img-responsive img-thumbnail" src="data:image;base64,{{ $mitglied->profilbild() }}" alt="...">
+				<img class="media-object center-block img-responsive img-thumbnail" src="{{ $mitglied->profilbild() }}" alt="...">
 			</div>
 		</section>
 		<section class="form-group">

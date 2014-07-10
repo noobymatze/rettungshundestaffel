@@ -37,9 +37,9 @@ class Mitglied extends Eloquent implements UserInterface, RemindableInterface
     {
         if ($this->profilbild) 
         {
-            return base64_encode($this->profilbild);
+            return 'data:image;base64,' . base64_encode($this->profilbild);
         }
-        return 'http://famgroup.ru/avatars/small/missing.png?1345203819';
+        return URL::asset('images/kein_bild.png');
     }
 	
 	public function profilbildextension()

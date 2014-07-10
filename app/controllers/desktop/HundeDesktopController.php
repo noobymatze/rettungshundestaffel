@@ -90,7 +90,7 @@ class HundeDesktopController extends Controller {
     public function filtereAuthentifiziertIstNichtMitglied($route) 
     {
         $mitglied_id = intval($route->getParameter('mitglied_id'));
-        if (Auth::user()->id !== $mitglied_id) 
+        if (Auth::user()->id != $mitglied_id) 
         {
             return Redirect::action('MitgliederDesktopController@uebersicht');
         }

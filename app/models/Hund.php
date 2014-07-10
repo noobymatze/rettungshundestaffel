@@ -24,5 +24,14 @@ class Hund extends Eloquent
                 'Suchart', 'hund_hat_suchart', 'hund_id', 'suchart_id')
             ->withPivot('geprueft_am', 'geprueft_bis');
     }
+	
+	public function bild()
+	{
+		if ($this->bild) 
+        {
+            return 'data:image;base64,' . base64_encode($this->bild);
+        }
+        return URL::asset('images/kein_bild_hund.gif');
+	}
 
 }

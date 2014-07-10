@@ -218,4 +218,18 @@ class MitgliederDesktopController extends Controller {
 						->with('mitglied', $mitglied);
 	}
 
+    /**
+     * Löscht das Mitglied aus der Datenbank.
+     * 
+     * @param string $id 
+     * @return Mitgliederuebersicht.
+     */
+    public function loesche($id) 
+    {
+        $mitglied_id = intval($id);
+        $this->mitgliederService->loesche($id);
+
+        return Redirect::action('MitgliederDesktopController@uebersicht');
+    }
+
 }

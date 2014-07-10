@@ -35,6 +35,7 @@ Route::group(array('before' => 'auth'), function ()
 
 	Route::group(array('before' => 'staffelleitung'), function()
 	{
+        Route::get('/mitglieder/{id}/loesche', 'MitgliederDesktopController@loesche');
 		Route::get('/mitglieder/anlegen', 'MitgliederDesktopController@renderErstelleMitglied');
 		Route::post('/mitglieder/anlegen', 'MitgliederDesktopController@erstelleMitglied');
 	});

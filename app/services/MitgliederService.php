@@ -159,4 +159,13 @@ class MitgliederService {
         return Mitglied::find($id);
     }
 	
+    /**
+     * Löscht das Mitglied mit der gegebenen ID aus der Datenbank.
+     * 
+     * @param int $id Die ID.
+     */
+    public function loesche($id) 
+    {
+        Mitglied::destroy($id);
+    }
 }

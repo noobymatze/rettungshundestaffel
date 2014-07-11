@@ -53,7 +53,7 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
-							<a href="ausloggen" class="btn btn-primary">Ausloggen</a>
+							<a href="{{ URL::action('LoginController@ausloggen') }}" class="btn btn-primary">Ausloggen</a>
 						</div>
 					</div><!-- /.modal-content -->
 				</div><!-- /.modal-dialog -->

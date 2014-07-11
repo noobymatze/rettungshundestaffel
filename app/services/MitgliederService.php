@@ -119,7 +119,21 @@ class MitgliederService {
 	 */
 	public function speichere($mitglied)
 	{
-		$mitglied['passwort'] = Hash::make($mitglied['passwort']);
+		// Überprüfen, ob das Mitglied schon in der DB ist
+		if($mitglied->id != null)
+		{
+			// Nur dann das Passwort hashen, wenn das Passwort geändert wurde, ansonsten so lassen
+			$mitgliedAlt = $this->lade($mitglied->id);
+			if($mitglied['passwort'] != $mitgliedAlt->passwort)
+			{
+				$mitglied['passwort'] = Hash::make($mitglied['passwort']);
+			}
+		}
+		// Das Mitglied ist neu und das Passwort muss immer gehasht werden
+		else 
+		{
+			$mitglied['passwort'] = Hash::make($mitglied['passwort']);
+		}
         $mitglied->save();
 	}
 	

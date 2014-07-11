@@ -49,8 +49,10 @@ Route::get('/mobile/login', 'MLoginController@renderLogin');
 Route::get('/mobile', 'MLoginController@renderLogin');
 Route::post('/mobile/login', 'MLoginController@login');
 Route::get('/mobile/ausloggen', 'MLoginController@ausloggen');
-//Route::get('/mobile/dashboard', array('before' => 'auth', 'uses' => 'MDashboardController@renderDashboard'));
-Route::get('/mobile/dashboard', 'MDashboardController@renderDashboard');
-Route::get('/mobile/mitglieder', 'MMitgliederController@renderMitglieder');
-Route::get('/mobile/weiteres', 'MWeiteresController@renderWeiteres');
-Route::get('/mobile/mitglieder/{id}', 'MMitgliederController@renderMitglied');
+
+Route::group(array('before' => 'auth.mobile'), function () {
+	Route::get('/mobile/dashboard', 'MDashboardController@renderDashboard');
+	Route::get('/mobile/mitglieder', 'MMitgliederController@renderMitglieder');
+	Route::get('/mobile/weiteres', 'MWeiteresController@renderWeiteres');
+	Route::get('/mobile/mitglieder/{id}', 'MMitgliederController@renderMitglied');
+});

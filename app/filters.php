@@ -38,6 +38,11 @@ Route::filter('auth', function()
 	if (Auth::guest()) return Redirect::guest('login');
 });
 
+Route::filter('auth.mobile', function()
+{
+	if (Auth::guest()) return Redirect::guest('mobile/login');
+});
+
 
 Route::filter('auth.basic', function()
 {

@@ -40,7 +40,8 @@ class Mitglied extends Eloquent implements UserInterface, RemindableInterface
             return $this->profilbild;
         }
 
-        return 'http://famgroup.ru/avatars/small/missing.png?1345203819';
+        return URL::asset('images/guy.jpg');
+        //return 'http://famgroup.ru/avatars/small/missing.png?1345203819';
     }
 
 
@@ -80,12 +81,13 @@ class Mitglied extends Eloquent implements UserInterface, RemindableInterface
         $suchtypen = Mitglied::join('hund', 'mitglied.id', '=', 'hund.mitglied_id')
             ->join('hund_hat_suchart', 'hund.id', '=', 'hund_hat_suchart.hund_id')
             ->join('suchart', 'hund_hat_suchart.suchart_id', '=', 'suchart.id')
-            ->select('suchart.suchtyp')
+            ->select('suchart.name')
             ->distinct()
             ->where('mitglied.id', '=', $this->id)->get();
+        Log::info($suchtypen);
         foreach ($suchtypen as $suchtyp)
         {
-            $retSuchtypen[$suchtyp->suchtyp] = 1;
+            $retSuchtypen[$suchtyp->name] = 1;
         }
         return $retSuchtypen;
             //return '<pre>'.var_dump($this->id).'</pre>';

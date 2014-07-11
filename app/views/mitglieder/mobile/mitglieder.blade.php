@@ -24,10 +24,11 @@ form.search-form {
 	}
 }
 
-.search-form>input[type="text"] {
+form.search-form>input[type="text"] {
 	margin-right: 5em;
-	height: 3.75em;
+	height: 3em;
 	width: 100%;
+	border-radius: 0;
 }
 </style>
 {{ Form::open(
@@ -36,7 +37,7 @@ form.search-form {
 		'class' => 'pure-form search-form',
 		'method' => 'GET')
 ) }}
-    {{ Form::text('suchbegriff', null, array('placeholder' => 'Name...', 'class' => 'pure-input-rounded')) }}
+    {{ Form::text('suchbegriff', null, array('placeholder' => 'Name...')) }}
     {{ Form::submit('Suchen', array('id' => 'search-button', 'class' => 'pure-button')) }}
 {{ Form::close() }}
 <!--
@@ -52,6 +53,8 @@ form.search-form {
 		overflow: visible;
 	}
 	.user-list>li>a {
+		text-decoration: none;
+		color:#333;
 		display: block;
 		position: relative;
 		overflow: hidden;
@@ -174,6 +177,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 .einzug-links {
 	margin-left: 0.3em;
 }
+.vorname {
+	font-weight: bold;
+}
+.nachname {
+	font-weight: normal;
+}
 </style>
 @if (count($others) < 1 && isset($suchbegriff))
 	<p class="hinweis-paragraph">Keine Ergebnisse für die Suche nach "{{{ $suchbegriff }}}".</p>
@@ -187,11 +196,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 	@foreach ($firstLetterGroup as $user)
 	<?php $pruefungen = $user->holeGueltigePruefungen(); ?>
 	<li>
-		<a>
+		<a href="{{ URL::action('MMitgliederController@renderMitglied', array('mitglied_id' => $user->id)) }}">
 			<img class="pure-img" src="{{{ $user->profilbild() }}}">
-			<!--<div class="img-overlay">-->
-			<!--</div>-->
-			<h2>{{{ $user->vollerName() }}}
+			<h2><span class="vorname">{{{ $user->vorname }}}</span> <span class="nachname">{{{ $user->nachname }}}</span>
 			@if (isset($pruefungen['Mantrailing']))
 				<span class="trail-circle">M</span>
 			@endif
@@ -202,7 +209,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 				<span class="truemmer-circle">T</span>
 			@endif			
 			</h2>
-			<p>0173-8463748</p>
+			<p class="telefon">
+			@if (isset($user->mobil))
+				{{{ $user->mobil }}}
+			@elseif (isset($user->telefon))
+				{{{ $user->telefon }}}
+			@else
+				-
+			@endif
+			</p>
 			<i class="icon-th-large"></i>
 		</a>
 	</li>

@@ -38,3 +38,4 @@ Route::get('/mobile/ausloggen', 'MLoginController@ausloggen');
 Route::get('/mobile/dashboard', 'MDashboardController@renderDashboard');
 Route::get('/mobile/mitglieder', 'MMitgliederController@renderMitglieder');
 Route::get('/mobile/weiteres', 'MWeiteresController@renderWeiteres');
+Route::get('/mobile/mitglieder/{id}', 'MMitgliederController@renderMitglied');

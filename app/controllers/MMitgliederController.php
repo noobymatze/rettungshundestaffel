@@ -24,4 +24,13 @@ class MMitgliederController extends Controller {
         	->with('others', $others)
             ->with('suchbegriff', $suchbegriff);
     }
+
+    public function renderMitglied($mitglied_id)
+    {
+        $mitglied = $this->mitgliederService->holeMitglied($mitglied_id);
+
+        return View::make('mitglieder.mobile.mitglied')
+            ->with('menu', MenuEnum::MITGLIEDER)
+            ->with('mitglied', $mitglied);
+    }
 }

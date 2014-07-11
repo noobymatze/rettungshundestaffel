@@ -211,14 +211,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 			</h2>
 			<p class="telefon">
 			@if (isset($user->mobil))
-				{{{ $user->mobil }}}
+				{{{ $user->mobil }}}</p>
+				<i onclick="window.open('tel:{{{$user->mobil}}}')" class="icon-phone"></i>
 			@elseif (isset($user->telefon))
-				{{{ $user->telefon }}}
+				{{{ $user->telefon }}}</p>
+				<i onclick="window.open('tel:{{{$user->telefon}}}')" class="icon-phone"></i>
 			@else
-				-
+				-</p>
 			@endif
-			</p>
-			<i class="icon-th-large"></i>
 		</a>
 	</li>
 	@endforeach

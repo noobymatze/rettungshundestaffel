@@ -216,13 +216,16 @@
 		<div>
 			<h2>Mobil</h2>
 			<p>{{{ $mitglied->mobil or '-' }}}</p>
-			<i class="icon-th-large"></i>
-			<i class="icon-th-large"></i>
+			@if (isset($mitglied->mobil))
+				<i onclick="window.open('tel:{{{$mitglied->mobil}}}')" class="icon-phone"></i>
+			@endif
 		</div>
 		<div>
 			<h2>Festnetz</h2>
 			<p>{{{ $mitglied->telefon or '-' }}}</p>
-			<i class="icon-th-large"></i>
+			@if (isset($mitglied->telefon))
+				<i onclick="window.open('tel:{{{$mitglied->telefon}}}')" class="icon-phone"></i>
+			@endif
 		</div>
 	</address>
 	<!--<address class="info-div">

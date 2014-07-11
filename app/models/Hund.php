@@ -17,11 +17,6 @@ class Hund extends Eloquent
         return $this->belongsTo('Mitglied');
     }
 
-    public function bild()
-    {
-        return URL::asset('images/dog.jpg');
-    }
-
     public function sucharten() 
     {
         return $this

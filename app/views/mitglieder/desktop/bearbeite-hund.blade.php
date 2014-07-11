@@ -9,38 +9,45 @@ Hund anlegen
 {{ Form::model($hund, array('action' => ['HundeDesktopController@speichere', $mitglied->id, $hund->id], 'class' => 'form-horizontal col-md-6', 'files' => true)) }}
 {{ Form::hidden('id') }}
 
-<section class="form-group">
-    <label class="control-label col-md-5 @hasError('name') has-feedback">Name:*</label>
+<section class="form-group @hasError('name')">
+    <label class="control-label col-md-5">Name:*</label>
     <span class="col-md-7">
-        {{ Form::text('name', null, array('class' => 'form-control')) }}
-        {{ Form::feedback($errors->has('name')) }}
+        {{ Form::text('name', null, ['required' => 'true', 'class' => 'form-control']) }}
     </span>
 </section>
 
-<section class="form-group">
-    <label class="control-label col-md-5 @hasError('rasse') has-feedback">Rasse:</label>
+<section class="form-group @hasError('rasse')">
+    <label class="control-label col-md-5">Rasse:</label>
     <span class="col-md-7">
         {{ Form::text('rasse', null, array('class' => 'form-control')) }}
-        {{ Form::feedback($errors->has('name')) }}
     </span>
 </section>
 
 <section class="form-group">
-    <label class="control-label col-md-5 @hasError('alter') has-feedback">Alter:</label>
+    <label class="control-label col-md-5">Alter:</label>
     <span class="col-md-7">
         {{ Form::text('alter', null, array('class' => 'form-control')) }}
-        {{ Form::feedback($errors->has('alter')) }}
     </span>
 </section>
 
 <section class="form-group">
-    <label class="control-label col-md-5 @hasError('bild') has-feedback">Bild:</label>
+    <label class="control-label col-md-5">Bild:</label>
     <span class="col-md-7">
-        <span class="btn btn-primary btn-file">
-            Suche Bild {{ Form::file('bild', null, array('class' => 'form-control')) }}
-        </span>
+        {{ Form::file('bild', null, array('class' => 'form-control')) }}
     </span>
 </section>
+
+@if($errors->has())
+<section class="form-group">
+    <div class="col-sm-offset-5 col-sm-7">
+        <div class="alert alert-danger" role="alert">
+            @foreach($errors->all() as $message)
+            <p>{{ $message }}</p>
+            @endforeach
+        </div>
+    </div>
+</section>
+@endif
 
 <section class="form-group">
     <div class="col-md-5"></div>

@@ -19,7 +19,6 @@ class HundeDesktopController extends Controller {
     public function speichere($mitglied_id, $hund_id = null) 
     {
         $mitglied_id = intval($mitglied_id);
-
         $regeln = array(
             'name' => 'required', 
             'alter' => 'numeric',
@@ -34,12 +33,6 @@ class HundeDesktopController extends Controller {
                     ->withErrors($validator);
         }
 
-        $bild = null;
-        if (Input::hasFile('bild')) 
-        {
-            $bild = File::get(Input::file('bild')->getRealPath());
-        }
-
         $hund = new Hund;
         if (isset($hund_id)) 
         {
@@ -49,8 +42,12 @@ class HundeDesktopController extends Controller {
         $hund->name = Input::get('name');
         $hund->rasse = Input::get('rasse');
         $hund->alter = Input::get('alter');
-        $hund->bild = $bild;
         $hund->mitglied_id = $mitglied_id;
+
+        if (Input::hasFile('bild')) 
+        {
+            $hund->bild = File::get(Input::file('bild')->getRealPath());
+        }
 
         $this->hundeService->speichere($hund);
 

@@ -31,6 +31,7 @@ class Hund extends Eloquent
         {
             return 'data:image;base64,' . base64_encode($this->bild);
         }
+
         return URL::asset('images/kein_bild_hund.gif');
 	}
 

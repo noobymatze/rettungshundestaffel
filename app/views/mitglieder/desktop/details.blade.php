@@ -15,7 +15,12 @@ Benutzer
 			</div>
 			<ul class="list-group">
 				<li class="list-group-item">
-					<img class="media-object center-block img-responsive img-thumbnail" src="http://famgroup.ru/avatars/small/missing.png?1345203819" alt="...">
+                    <img class="media-object center-block img-responsive img-thumbnail" src="{{ $mitglied->profilbild() }}" alt="...">
+				<li class="list-group-item">
+					<div class="row">
+						<span class="col-md-4">E-Mail:</span><span class="col-md-8"><span class="glyphicon glyphicon-envelope"></span> {{ $mitglied->email }}</span>
+					</div>
+				</li>
 				<li class="list-group-item">
 					<div class="row">
 						<span class="col-md-4">Rolle:</span><span class="col-md-8"><span class="glyphicon glyphicon-user"></span> {{ $mitglied->rolle }}</span>
@@ -37,7 +42,7 @@ Benutzer
 				<div class="btn-group">
 					<!-- Überprüfen, ob es sich um mein Profil handelt, oder ich der Admin bin -->
 					@if(Auth::user()->id === $mitglied->id || Auth::user()->rolle === "Staffelleitung")
-					<a href="#" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span> Profil bearbeiten</a>
+					<a href="{{ URL::action('MitgliederDesktopController@renderMitgliedBearbeiten', [$mitglied->id]) }}" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span> Profil bearbeiten</a>
 					@endif
 					@ifstaffelleitung
 					<button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
@@ -60,11 +65,11 @@ Benutzer
 			Hunde
 			<!-- Überprüfen, ob es sich um mein Profil handelt, oder ich der Admin bin -->
 			@if(Auth::user()->id === $mitglied->id || Auth::user()->rolle === "Staffelleitung")
-			<a href="#" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus"></span> Hund hinzufügen</a>
+			<a href="{{ URL::action('HundeDesktopController@renderBearbeiten', [$mitglied->id]) }}" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus"></span> Hund hinzufügen</a>
 			@endif
 		</h1>
 		<!-- Falls der Benutzer keine Hunde hat -->
-		@if($mitglied->hunde->count() <= 1)
+		@if($mitglied->hunde->count() < 1)
 		<div class="alert alert-info" role="alert">Der Benutzer hat noch keine Hunde hinzugefügt.</div>
 		@endif
 	</div>
@@ -82,7 +87,7 @@ Benutzer
 			</div>
 			<ul class="list-group">
 				<li class="list-group-item">
-					<img class="media-object center-block img-responsive img-thumbnail" src="http://avatarmaker.net/free-avatars/avatars/animals_216/dogs_238/cute_brown_dog_avatar_100x100_31524.jpg" alt="...">
+					<img class="media-object center-block img-responsive img-thumbnail" src="{{ $hund->bild() }}" alt="...">
 				<li class="list-group-item">
 					<div class="row">
 						<span class="col-md-4">Rasse:</span><span>{{ $hund->rasse }}</span>
@@ -112,7 +117,8 @@ Benutzer
 				<div class="btn-group">
 					<!-- Überprüfen, ob es sich um mein Profil handelt, oder ich der Admin bin -->
 					@if(Auth::user()->id === $mitglied->id || Auth::user()->rolle === "Staffelleitung")
-					<button type="button" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span> Hund bearbeiten</button>
+                    <a type="button" class="btn btn-warning" href="{{ URL::route('hund-bearbeiten', [$mitglied->id, $hund->id]) }}">
+                        <span class="glyphicon glyphicon-edit"></span> Hund bearbeiten</a>
 					<button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
 						<span class="caret"></span>
 					</button>
@@ -141,7 +147,7 @@ Benutzer
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
-				<a href="ausloggen" class="btn btn-danger">Löschen</a>
+				<a href="{{ URL::action('MitgliederDesktopController@loesche', [$mitglied->id]) }}" class="btn btn-danger">Löschen</a>
 			</div>
 		</div>
 	</div>

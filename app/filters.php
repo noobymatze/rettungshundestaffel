@@ -35,7 +35,6 @@ App::after(function($request, $response)
 
 Route::filter('auth', function()
 {
-    Log::info('Test');
 	if (Auth::guest()) return Redirect::guest('login');
 });
 
@@ -88,8 +87,8 @@ Route::filter('authentication', function () {
 
 Route::filter('staffelleitung', function () 
 {
-    if(!Auth::user()->rolle === "Staffelleitung") 
+    if(Auth::user()->rolle != "Staffelleitung") 
     {
-        Redirect::back();
+        return Redirect::back();
     }
 });

@@ -117,11 +117,10 @@ class MitgliederService {
 	 * @param array $mitglied
 	 * @return {boolean}, falls das Mitglied angelegt worden ist, ansonsten false.
 	 */
-	public function erstelleMitglied($mitglied)
+	public function speichere($mitglied)
 	{
 		$mitglied['passwort'] = Hash::make($mitglied['passwort']);
-		Mitglied::create($mitglied);
-		return true;
+        $mitglied->save();
 	}
 	
 	/**
@@ -150,12 +149,23 @@ class MitgliederService {
 
 	/**
 	 * Liefert ein Mitglied mit einer Id aus der Datenbank.
-	 * @param {long} die Mitglied-Id
-	 * @return {Mitglied}
+     * 
+	 * @param int $id Die ID des Mitglieds, das geladen werden soll.
+     * 
+	 * @return Mitglied 
 	 */
-    public function holeMitglied($id)
+    public function lade($id)
     {
         return Mitglied::find($id);
     }
-
+	
+    /**
+     * Löscht das Mitglied mit der gegebenen ID aus der Datenbank.
+     * 
+     * @param int $id Die ID.
+     */
+    public function loesche($id) 
+    {
+        Mitglied::destroy($id);
+    }
 }

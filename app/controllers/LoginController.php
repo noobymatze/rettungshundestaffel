@@ -44,7 +44,7 @@ class LoginController extends Controller {
     public function ausloggen()
     {
         Auth::logout();
-        return Redirect::to('/');
+        return Redirect::action('LoginController@renderLogin');
     }
 
 }

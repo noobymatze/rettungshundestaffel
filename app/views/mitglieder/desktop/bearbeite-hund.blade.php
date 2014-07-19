@@ -37,6 +37,22 @@ Hund anlegen
     </span>
 </section>
 
+
+@foreach($sucharten as $suchart)
+    <section class="form-group">
+        <label class="control-label col-md-5">{{ $suchart->name }}: </label>
+        <span class="col-md-1">
+            {{ Form::checkbox($suchart->name, $suchart->name, $hund->sucharten->contains($suchart), ['class' => 'checkbox-bottom']) }}
+        </span>
+        <div class="col-md-3 input-group">
+            {{ Form::text($suchart->name . '_bis', 
+                        $hund->getSuchartGeprueftBis($suchart->id), 
+                        ['class' => 'form-control', 'placeholder' => 'Geprüft bis...']) }}
+            <span class="glyphicon glyphicon-calendar input-group-addon"></span>
+        </div>
+    </section>
+@endforeach
+
 @if($errors->has())
 <section class="form-group">
     <div class="col-sm-offset-5 col-sm-7">

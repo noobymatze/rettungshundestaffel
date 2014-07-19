@@ -35,4 +35,16 @@ class Hund extends Eloquent
         return URL::asset('images/kein_bild_hund.gif');
 	}
 
+    public function getSuchartGeprueftBis($suchart_id) 
+    {
+        $sucharten = $this->sucharten
+                ->filter(function($suchart) use ($suchart_id) {
+                    return $suchart->id == $suchart_id;
+                });
+        if($sucharten->count() > 0) {
+            return DateTime::createFromFormat("Y-m-d", $sucharten[0]->pivot->geprueft_bis)->format('d.m.Y');
+        }
+
+        return null;
+    }
 }

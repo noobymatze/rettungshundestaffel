@@ -138,26 +138,33 @@ class MitgliederService {
 	}
 	
 	/**
-	 * Liefert eine Liste von 
-	 * @param {string} suchbegriff Der Begriff, nach dem 
+     * Liefert eine mit oder-Kriterien nach vorname, nachname, email und 
+     * telefon gefilterte Liste von Mitgliedern zurück.
+     * 
+     * @param string|null $suchbegriff Der Suchbegriff, nach dem die oben
+     * genannten Attribute gefiltert werden sollen.
 	 *
-	 * @return {Collection} 
+	 * @return Collection 
 	 */
-	public function sucheNachVornameOderNachname($suchbegriff)
+	public function sucheNach($suchbegriff)
 	{
-		$name = explode(' ', trim($suchbegriff));
-		
-		if (count($name) < 2) 
-		{
-			// Setze den Nachnamen ebenfalls auf $suchbegriff
-			$name[] = $suchbegriff; 
-		}
-		
-		return Mitglied
-				::where('vorname', 'LIKE', '%'.$name[0].'%')
-				->orWhere('nachname', 'LIKE', '%'.$name[1].'%')
-				->orWhere('email', 'LIKE', '%'.$name[0].'%')
-				->orWhere('telefon', 'LIKE', '%'.$name[0].'%')
+        if (!isset($suchbegriff)) 
+        {
+            return Mitglied::paginate(MitgliederService::SEITEN_GROESSE);
+        }
+
+        $vollerName = explode(' ', $suchbegriff);
+        $email = $vollerName[0];
+        $telefon = $vollerName[0];
+        if (count($suchbegriff) < 2) 
+        {
+            array_push($vollerName, $vollerName[0]);
+        }
+
+		return Mitglied::where('vorname', 'LIKE', '%'.$vollerName[0].'%')
+				->orWhere('nachname', 'LIKE', '%'.$vollerName[1].'%')
+				->orWhere('email', 'LIKE', '%'.$email.'%')
+				->orWhere('telefon', 'LIKE', '%'.$telefon.'%')
                 ->paginate(MitgliederService::SEITEN_GROESSE);
 	}
 

@@ -12,15 +12,18 @@ class MitgliederDesktopController extends Controller {
 	}
 
 	/**
-	 * Stellt die Heimseite dar.
+	 * Stellt alle Mitglieder dar.
 	 *
-	 * @return {View} 
+	 * @return Response
 	 */
 	public function uebersicht()
 	{
+        $suchbegriff = Input::get('suchbegriff');
+        $mitglieder = $this->mitgliederService->sucheNach($suchbegriff);
+
 		return View::make('mitglieder.desktop.uebersicht')
-						->with('suchbegriff', null)
-						->with('mitglieder', $this->mitgliederService->holeAlle());
+						->with('suchbegriff', $suchbegriff)
+						->with('mitglieder', $mitglieder);
 	}
 
 	/**
@@ -177,19 +180,6 @@ class MitgliederDesktopController extends Controller {
 	}
 
 	/**
-	 * Filtert die Uebersicht der Mitglieder nach den eingegebenen 
-	 * Kriterien.
-	 */
-	public function filtereUebersicht()
-	{
-		$suchbegriff = Input::get('suchbegriff');
-
-		return View::make('mitglieder.desktop.uebersicht')
-						->with('suchbegriff', $suchbegriff)
-						->with('mitglieder', $this->mitgliederService->sucheNachVornameOderNachname($suchbegriff));
-	}
-
-	/**
 	 * Stellt die Seite für das Bearbeiten eines Mitglieds das.
 	 * @param type $id
 	 */
@@ -204,14 +194,23 @@ class MitgliederDesktopController extends Controller {
      * Löscht das Mitglied aus der Datenbank.
      * 
      * @param string $id 
-     * @return Mitgliederuebersicht.
+     * @return Reponse Redirect auf die uebersicht.
      */
     public function loesche($id) 
     {
         $mitglied_id = intval($id);
-        $this->mitgliederService->loesche($id);
+        $this->mitgliederService->loesche($mitglied_id);
 
         return Redirect::action('MitgliederDesktopController@uebersicht');
+    }
+
+    public function liste() 
+    {
+        $suchbegriff = Input::get('suchbegriff');
+        $mitglieder = $this->mitgliederService->sucheNach($suchbegriff);
+
+        return View::make('desktop.mitglieder.liste')
+                ->with('mitglieder', $mitglieder);
     }
 
 }

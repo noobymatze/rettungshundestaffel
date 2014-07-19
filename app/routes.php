@@ -17,6 +17,7 @@
 Route::get('/login', 'LoginController@renderLogin');
 Route::post('/login', 'LoginController@login');
 Route::get('/ausloggen', 'LoginController@ausloggen');
+Route::get('/suchgebiete', 'SuchgebieteDesktopController@renderSuchgebiete');
 
 Route::group(array('before' => 'auth'), function () 
 {

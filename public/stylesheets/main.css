@@ -1,4 +1,4 @@
-@import "http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400";
+@import "http://fonts.googleapis.com/css?family=Noto+Sans";
 
 /* ================================================
    Allgemeine Regeln:
@@ -8,9 +8,9 @@ html {
 }
 
 body {
-    /*font-size: 1.8em;*/
-    font-family: 'Source Sans Pro', sans-serif;
-    line-height: 150%;
+    font-size: 1.6em;
+    font-family: 'Noto Sans', sans-serif;
+  line-height: 150%;
 	background-color: #f9f9f9;
 	/*background-image: url('../images/background.png');*/
 }
@@ -41,6 +41,14 @@ body {
     background: white;
     cursor: inherit;
     display: block;
+}
+
+.control-label {
+    font-weight: normal;
+}
+
+.checkbox-bottom {
+    vertical-align: bottom;
 }
 
 /* ================================================

@@ -22,6 +22,8 @@ Route::get('/suchgebiete', 'SuchgebieteDesktopController@renderSuchgebiete');
 Route::group(array('before' => 'auth'), function () 
 {
     Route::get('/mitglieder', 'MitgliederDesktopController@uebersicht');
+	Route::get('/mitglieder/liste', 'MitgliederDesktopController@liste');
+
     Route::get('/mitglieder/{mitglied_id}/hunde/anlegen', 'HundeDesktopController@renderBearbeiten');
     Route::get('/mitglieder/{mitglied_id}/hunde/{hund_id}/bearbeiten', ['as' => 'hund-bearbeiten', 'uses' => 'HundeDesktopController@renderBearbeiten']);
     Route::post('/mitglieder/{mitglied_id}/hunde/{hund_id?}', 'HundeDesktopController@speichere')
@@ -32,7 +34,6 @@ Route::group(array('before' => 'auth'), function ()
 	Route::get('/mitglieder/{id}', 'MitgliederDesktopController@renderMitglied')->where('id', '[0-9]+');
 	Route::post('/mitglieder/{id}', 'MitgliederDesktopController@aktualisiere')->where('id', '[0-9]+');
 	Route::get('/mitglieder/{id}/bearbeiten', 'MitgliederDesktopController@renderMitgliedBearbeiten');
-	Route::post('/mitglieder', 'MitgliederDesktopController@filtereUebersicht');
 
 	Route::group(array('before' => 'staffelleitung'), function()
 	{

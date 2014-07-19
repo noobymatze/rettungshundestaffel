@@ -2,10 +2,11 @@
 
 class HundeDesktopController extends Controller {
 
-    public function __construct(MitgliederService $mitgliederService, HundeService $hundeService)
+    public function __construct(MitgliederService $mitgliederService, HundeService $hundeService, SuchartenService $suchartenService)
     {
         $this->hundeService = $hundeService;
         $this->mitgliederService = $mitgliederService;
+        $this->suchartenService = $suchartenService;
 
         $this->beforeFilter('@filtereAuthentifiziertIstNichtMitglied');
     }
@@ -18,13 +19,21 @@ class HundeDesktopController extends Controller {
      */
     public function speichere($mitglied_id, $hund_id = null) 
     {
-        $mitglied_id = intval($mitglied_id);
-        $regeln = array(
-            'name' => 'required', 
-            'alter' => 'numeric',
-            'bild' => 'mimes:png,jpg,jpeg,gif'
-        );
+        $datums_format = 'd.m.Y';
+        $sucharten_liste = $this->suchartenService->holeAlle();
 
+        // Regeln werden dynamisch in der Form: 'Flaechensuche_bis' => 'date_format:dd.mm.YYYY'
+        // zusammengebaut.
+        $regeln = [];
+        $regeln['name'] = 'required';
+        $regeln['alter'] = 'numeric';
+        $regeln['bild'] = 'mimes:png,jpg,jpeg,gif';
+
+        foreach($sucharten_liste->toArray() as $suchart) {
+            $regeln[$suchart['name'] . '_bis'] = 'date_format:' . $datums_format;
+        }
+
+        $mitglied_id = intval($mitglied_id);
         $validator = Validator::make(Input::all(), $regeln);
         if ($validator->fails()) 
         {
@@ -39,6 +48,7 @@ class HundeDesktopController extends Controller {
             $hund = $this->hundeService->lade($hund_id);
         }
 
+        // Default Einstellungen:
         $hund->name = Input::get('name');
         $hund->rasse = Input::get('rasse');
         $hund->alter = Input::get('alter');
@@ -49,7 +59,18 @@ class HundeDesktopController extends Controller {
             $hund->bild = File::get(Input::file('bild')->getRealPath());
         }
 
+        // Sucharten:
+        $sucharten = $sucharten_liste->filter(function ($suchart) { 
+            return Input::has($suchart->name); 
+        });
+
         $this->hundeService->speichere($hund);
+        $hund->sucharten()->sync($sucharten);
+
+        foreach($hund->sucharten as $suchart) {
+            $suchart->pivot->geprueft_bis = Input::get($suchart->name . '_bis');
+            $suchart->pivot->save();
+        }
 
         return Redirect::action('MitgliederDesktopController@renderMitglied', [$mitglied_id]);
     }
@@ -71,8 +92,10 @@ class HundeDesktopController extends Controller {
             $hund = $this->hundeService->lade(intval($hund_id));
         }
 
+        $sucharten = $this->suchartenService->holeAlle();
         $mitglied = Auth::user();
         return View::make('mitglieder.desktop.bearbeite-hund')
+                ->with('sucharten', $sucharten)
                 ->with('mitglied', $mitglied)
                 ->with('hund', $hund);
     }

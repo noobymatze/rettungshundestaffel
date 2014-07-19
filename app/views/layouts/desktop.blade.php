@@ -9,16 +9,16 @@
 			<li class="sidebar-brand">
 				<a href="#">Rettungshundestaffel</a>
 			</li>
-			<li>
+			<li class="{{{ $menu == MenuEnum::DASHBOARD ? 'active' : '' }}}">
 				<a href=""><i class="glyphicon glyphicon-home"></i> Dashboard</a>
 			</li>
-			<li>
+			<li  class="{{{ $menu == MenuEnum::MITGLIEDER ? 'active' : '' }}}">
 				<a href="{{ URL::action('MitgliederDesktopController@uebersicht') }}"><i class="glyphicon glyphicon-user"></i> Mitglieder</a>
 			</li>
-			<li>
+			<li  class="{{{ $menu == MenuEnum::SUCHGEBIETE ? 'active' : '' }}}">
 				<a href="suchgebiete"><i class="glyphicon glyphicon-tree-conifer"></i> Suchgebiete</a>
 			</li>
-			<li>
+			<li  class="{{{ $menu == MenuEnum::TERMINE ? 'active' : '' }}}">
 				<a href="termine"><i class="glyphicon glyphicon-calendar"></i> Termine</a>
 			</li>
 			<hr>

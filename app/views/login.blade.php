@@ -1,37 +1,55 @@
-@extends('layouts.desktop')
+@extends('layouts.desktop-skeleton')
 
-{{-- Empty Title --}}
-@section('title')
-@stop
+@section('body')
 
-{{-- Die Sidebar überschreiben (entfernen), weil im Login nicht gebraucht wird. --}}
-@section('sidebar')
-    
-@stop
+<style>
+.login-div {
+    margin-left: auto;
+margin-right: auto;
+max-width: 20em;
+border-style: solid;
+border-color: #B4B4B4;
+background-color: #F5F8F8;
+border-radius: 0.3em;
+border-width: 2px;
+padding: 1em;
+}
+#login-header {
+    text-align: center;
+    margin: 2em 0;
+}
+#login-subtitle {
+    color: #666;
+    font-size: 1.6em;
+    margin: 0;
+}
+#login-headline {
+    font-size: 2.8em;
+    margin: 0;
+    margin-bottom: 0.2em;
+}
+</style>
+<header id="login-header">
+    <h1 id="login-headline" class="centered">Rettungshundestaffel</h1>
+    <h2 id="login-subtitle" class="centered">Flensburg - Tarp</h2>
+</header>
 
-@section('content')
-
-{{ Form::model($mitglied, array('action' => 'LoginController@login', 'class' => 'form-horizontal col-md-6')) }}
-    <section class="form-group row @hasError('email') has-feedback">
-        {{ Form::label('email', 'E-Mail:*', array('class' => 'col-md-2')) }}
-        <span class="col-md-6">
+<div class="login-div">
+    {{ Form::model($mitglied, array('action' => 'LoginController@login', 'role' => 'form')) }}
+        <legend>Anmeldung</legend>
+        <section class="form-group @hasError('email') has-feedback">
+            {{ Form::label('email', 'E-Mail:*') }}
             {{ Form::email('email', null, array('class' => 'form-control')) }}
             {{ Form::feedback($errors->has('email')) }}
-        </span>
-    </section>
-    <section class="form-group row @hasError('passwort') has-feedback">
-        {{ Form::label('passwort', 'Passwort:*', array('class' => 'col-md-2')) }}
-        <span class="col-md-6">
+        </section>
+        <section class="form-group @hasError('passwort') has-feedback">
+            {{ Form::label('passwort', 'Passwort:*') }}
             {{ Form::password('passwort', array('class' => 'form-control')) }}
             {{ Form::feedback($errors->has('passwort')) }}
-        </span>
-    </section>
+        </section>
 
-    <section class="form-group row">
-        <div class="col-md-8">
-            <button class="btn btn-primary col-md-12">Anmelden</button>
-        </div>
-    </section>
-{{ Form::close() }}
+        <button type="submit" class="btn btn-primary btn-block">Anmelden</button>
+    {{ Form::close() }}
+</div>
 
 @stop

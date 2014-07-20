@@ -43,6 +43,10 @@ body {
     display: block;
 }
 
+.btn-right {
+    float: right;
+}
+
 .control-label {
     font-weight: normal;
 }

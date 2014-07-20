@@ -14,6 +14,13 @@ Mitglieder
                 </div>
             </span>
         {{ Form::close() }}
+        @ifstaffelleitung
+        <div class="col-md-3 pull-right">
+            <a class="btn btn-primary btn-right" href="{{ URL::action('MitgliederDesktopController@renderErstelleMitglied') }}">
+                <i class="glyphicon glyphicon-plus"></i> Mitglied anlegen
+            </a>
+        </div>
+        @endif
     </section>
 
     <section class="mitglieder">

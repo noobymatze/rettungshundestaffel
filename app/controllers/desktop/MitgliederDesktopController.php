@@ -19,9 +19,9 @@ class MitgliederDesktopController extends Controller {
 	public function uebersicht()
 	{
 		return View::make('mitglieder.desktop.uebersicht')
+                        ->with('menu', MenuEnum::MITGLIEDER)
 						->with('suchbegriff', null)
-						->with('mitglieder', $this->mitgliederService->holeAlle())
-						->with('menu', MenuEnum::MITGLIEDER);
+						->with('mitglieder', $this->mitgliederService->holeAlle());
 	}
 
 	/**
@@ -33,6 +33,7 @@ class MitgliederDesktopController extends Controller {
 	{
 		$mitglied = new Mitglied;
 		return View::make('mitglieder.desktop.erstelle')
+                        ->with('menu', MenuEnum::MITGLIEDER)
 						->with('mitglied', $mitglied);
 	}
 

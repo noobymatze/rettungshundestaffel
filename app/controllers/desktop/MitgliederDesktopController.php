@@ -19,7 +19,6 @@ class MitgliederDesktopController extends Controller {
 	public function uebersicht()
 	{
 		return View::make('mitglieder.desktop.uebersicht')
-                        ->with('menu', MenuEnum::MITGLIEDER)
 						->with('suchbegriff', null)
 						->with('mitglieder', $this->mitgliederService->holeAlle());
 	}
@@ -33,7 +32,6 @@ class MitgliederDesktopController extends Controller {
 	{
 		$mitglied = new Mitglied;
 		return View::make('mitglieder.desktop.erstelle')
-                        ->with('menu', MenuEnum::MITGLIEDER)
 						->with('mitglied', $mitglied);
 	}
 
@@ -175,8 +173,7 @@ class MitgliederDesktopController extends Controller {
 	{
 		$mitglied = $this->mitgliederService->lade($id);
 		return View::make('mitglieder.desktop.details')
-						->with('mitglied', $mitglied)
-						->with('menu', MenuEnum::MITGLIEDER);
+						->with('mitglied', $mitglied);
 	}
 
 	/**
@@ -189,8 +186,7 @@ class MitgliederDesktopController extends Controller {
 
 		return View::make('mitglieder.desktop.uebersicht')
 						->with('suchbegriff', $suchbegriff)
-						->with('mitglieder', $this->mitgliederService->sucheNachVornameOderNachname($suchbegriff))
-						->with('menu', MenuEnum::MITGLIEDER);
+						->with('mitglieder', $this->mitgliederService->sucheNachVornameOderNachname($suchbegriff));
 	}
 
 	/**
@@ -201,8 +197,7 @@ class MitgliederDesktopController extends Controller {
 	{
 		$mitglied = $this->mitgliederService->lade($id);
 		return View::make('mitglieder.desktop.bearbeiten')
-						->with('mitglied', $mitglied)
-						->with('menu', MenuEnum::MITGLIEDER);
+						->with('mitglied', $mitglied);
 	}
 
     /**

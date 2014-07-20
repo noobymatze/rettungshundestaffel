@@ -12,7 +12,6 @@
 			"app/controllers",
 			"app/controllers/desktop",
 			"app/models",
-            "app/extensions/F.php",
             "app/services",
 			"app/database/migrations",
 			"app/database/seeds",

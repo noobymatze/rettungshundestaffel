@@ -132,7 +132,7 @@ class MitgliederDesktopController extends Controller {
 			{
 				return Redirect::action('MitgliederDesktopController@renderMitgliedBearbeiten', array('id' => $id))
 								->withErrors($validator)
-								->withInput(Input::except('passwort', 'passwort2'));
+								->withInput(Input::except('passwort', 'passwort2', 'profilbild'));
 			}
 			$mitglied->profilbild = File::get(Input::file('profilbild')->getRealPath());
 		}

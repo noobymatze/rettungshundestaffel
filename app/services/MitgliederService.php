@@ -115,7 +115,6 @@ class MitgliederService {
 	/**
 	 * 
 	 * @param array $mitglied
-	 * @return {boolean}, falls das Mitglied angelegt worden ist, ansonsten false.
 	 */
 	public function speichere($mitglied)
 	{

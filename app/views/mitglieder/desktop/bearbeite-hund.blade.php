@@ -33,7 +33,7 @@ Hund anlegen
 <section class="form-group">
     <label class="control-label col-md-5">Bild:</label>
     <span class="col-md-7">
-        {{ Form::file('bild', null, array('class' => 'form-control')) }}
+        {{ Form::file('bild', ['accept' => 'image/*']) }}
     </span>
 </section>
 

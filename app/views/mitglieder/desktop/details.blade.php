@@ -103,7 +103,7 @@ Benutzer
                         <span class="col-md-4">Sucharten:</span>
                         <span>
                             @foreach($hund->sucharten as $suchart)
-                            @if($suchart->pivot->geprueft == 1)
+                            @if($suchart->pivot->geprueft_bis >= date('Y-m-d'))
                             <span class="label label-success">{{ $suchart->name }}</span>
                             @else
                             <span class="label label-default">{{ $suchart->name }}</span>

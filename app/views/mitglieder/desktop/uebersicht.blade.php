@@ -22,5 +22,4 @@
     <section class="mitglieder">
         @include('mitglieder.desktop.liste', ['mitglieder' => $mitglieder])
     </section>
-    <script src="{{ URL::asset('javascripts/mitglieder.js') }}"></script>
 @stop

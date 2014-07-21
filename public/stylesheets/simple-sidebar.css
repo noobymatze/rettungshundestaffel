@@ -4,10 +4,14 @@
 }
 
 #sidebar-wrapper {
+    /* background: url(../images/wald-klein.jpg) no-repeat; */
+    background-color: white;
+    /* opacity: 0.8; */
   margin-left: -250px;
   left: 250px;
   width: 250px;
-  background-color: #2C4D63;
+  
+    background-color: #2C4D63;
   position: fixed;
   height: 100%;
   /* border-right: 1px solid #ccc; */
@@ -66,6 +70,8 @@
 
 .sidebar-nav > .sidebar-brand a {
   color: #DBDCE6;
+  /* background: white; */
+  opacity:;
 }
 
 .sidebar-nav > .sidebar-brand a:hover {

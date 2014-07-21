@@ -51,8 +51,12 @@ class HundeDesktopController extends Controller {
         // Default Einstellungen:
         $hund->name = Input::get('name');
         $hund->rasse = Input::get('rasse');
-        $hund->alter = Input::get('alter');
         $hund->mitglied_id = $mitglied_id;
+
+        if(Input::has('alter')) 
+        {
+            $hund->alter = Input::get('alter');
+        }
 
         if (Input::hasFile('bild')) 
         {
@@ -68,7 +72,7 @@ class HundeDesktopController extends Controller {
         $hund->sucharten()->sync($sucharten);
 
         foreach($hund->sucharten as $suchart) {
-            $suchart->pivot->geprueft_bis = Input::get($suchart->name . '_bis');
+            $suchart->pivot->geprueft_bis = DateTime::createFromFormat("d.m.Y", Input::get($suchart->name . '_bis'));
             $suchart->pivot->save();
         }
 

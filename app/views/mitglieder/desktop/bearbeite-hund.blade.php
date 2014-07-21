@@ -47,7 +47,7 @@ Hund anlegen
         <div class="col-md-3 input-group">
             {{ Form::text($suchart->name . '_bis', 
                         $hund->getSuchartGeprueftBis($suchart->id), 
-                        ['class' => 'form-control', 'placeholder' => 'Geprüft bis...']) }}
+                        ['class' => 'form-control', 'placeholder' => 'Format: dd.mm.jjjj']) }}
             <span class="glyphicon glyphicon-calendar input-group-addon"></span>
         </div>
     </section>

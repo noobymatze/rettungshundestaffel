@@ -29,12 +29,15 @@ class HundeDesktopController extends Controller {
         $regeln['alter'] = 'numeric';
         $regeln['bild'] = 'mimes:png,jpg,jpeg,gif';
 
+        $messages = [];
         foreach($sucharten_liste->toArray() as $suchart) {
-            $regeln[$suchart['name'] . '_bis'] = 'date_format:' . $datums_format;
+            $name = $suchart['name'] . '_bis';
+            $regeln[$name] = 'size:10|date_format:' . $datums_format;
+            $messages[$name . '.date_format'] = 'Datumsformat: dd.mm.jjjj (Tag des Monats.Monat des Jahres.vierstelliges Jahr)';
         }
 
         $mitglied_id = intval($mitglied_id);
-        $validator = Validator::make(Input::all(), $regeln);
+        $validator = Validator::make(Input::all(), $regeln, $messages);
         if ($validator->fails()) 
         {
             return Redirect::back()

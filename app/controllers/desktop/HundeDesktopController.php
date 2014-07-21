@@ -41,7 +41,7 @@ class HundeDesktopController extends Controller {
         if ($validator->fails()) 
         {
             return Redirect::back()
-                    ->withInput(Input::all())
+                    ->withInput(Input::except('bild'))
                     ->withErrors($validator);
         }
 

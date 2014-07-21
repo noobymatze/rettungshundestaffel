@@ -75,7 +75,14 @@ class HundeDesktopController extends Controller {
         $hund->sucharten()->sync($sucharten);
 
         foreach($hund->sucharten as $suchart) {
-            $suchart->pivot->geprueft_bis = DateTime::createFromFormat("d.m.Y", Input::get($suchart->name . '_bis'));
+            $feldName = $suchart->name . '_bis';
+            if(Input::has($feldName)) {
+                $suchart->pivot->geprueft_bis = DateTime::createFromFormat("d.m.Y", Input::get($feldName));
+            }
+            else {
+                $suchart->pivot->geprueft_bis = null;
+            }
+
             $suchart->pivot->save();
         }
 

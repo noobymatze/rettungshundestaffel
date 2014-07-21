@@ -42,7 +42,7 @@ class Hund extends Eloquent
                     return $suchart->id == $suchart_id;
                 })->first();
 
-        if(isset($suchart)) {
+        if(isset($suchart) && isset($suchart->pivot->geprueft_bis)) {
             return DateTime::createFromFormat("Y-m-d", $suchart->pivot->geprueft_bis)->format('d.m.Y');
         }
 

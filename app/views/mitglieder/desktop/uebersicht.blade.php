@@ -1,9 +1,5 @@
 @extends('layouts.desktop')
 
-@section('title')
-Mitglieder
-@stop
-
 @section('content')
     <section class="row">
         {{ Form::open(['action' => 'MitgliederDesktopController@uebersicht', 'name' => 'uebersicht-suche', 'class' => 'form col-md-6', 'method' => 'GET']) }}

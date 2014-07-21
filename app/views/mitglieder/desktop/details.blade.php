@@ -1,10 +1,9 @@
 @extends('layouts.desktop')
 
-@section('title')
-Benutzer
-@stop
-
 @section('content')
+<div class="content-header">
+        <a href="#"><a id="menu-toggle" href="#" class="btn btn-default"><i class="glyphicon glyphicon-resize-horizontal"></i></a>
+</div>
 <div class="row">
     <div class="col-md-6">
         <div class="panel panel-primary">
@@ -64,7 +63,7 @@ Benutzer
         <h1>
             Hunde
             <!-- Überprüfen, ob es sich um mein Profil handelt, oder ich der Admin bin -->
-            @if(Auth::user()->id === $mitglied->id || Auth::user()->rolle === "Staffelleitung")
+            @if(Auth::user()->id === $mitglied->id)
             <a href="{{ URL::action('HundeDesktopController@renderBearbeiten', [$mitglied->id]) }}" class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus"></span> Hund hinzufügen</a>
             @endif
         </h1>

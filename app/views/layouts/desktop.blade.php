@@ -55,14 +55,6 @@
 	</div><!-- /.modal -->
 	@show
 	<div id="page-content-wrapper">
-		<div class="content-header">
-			<h1>
-				<a href="#"><a id="menu-toggle" href="#" class="btn btn-default"><i class="glyphicon glyphicon-resize-horizontal"></i></a>
-				@section('title')
-				Titel
-				@show
-			</h1>
-		</div>
 		<!-- Der ganze Inhalt hier -->
 		<div class="page-content inset">
 			@yield('content')

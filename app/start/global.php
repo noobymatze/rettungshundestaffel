@@ -17,7 +17,7 @@ ClassLoader::addDirectories(array(
 	app_path().'/controllers',
 	app_path().'/models',
 	app_path().'/database/seeds',
-
+	app_path().'/classes', // Eigene Klasse
 ));
 
 /*
@@ -79,3 +79,29 @@ App::down(function()
 */
 
 require app_path().'/filters.php';
+
+/*
+|--------------------------------------------------------------------------
+| Require Blade and HTML extensions
+|--------------------------------------------------------------------------
+|
+| Here we will load extensions for the blade templating engine itself, as 
+| well as the HTML class for defining macros of our own.
+|
+*/
+require app_path().'/extensions/blade.php';
+require app_path().'/extensions/html.php';
+require app_path().'/extensions/forms.php';
+
+/*
+|--------------------------------------------------------------------------
+| Require services.
+|--------------------------------------------------------------------------
+|
+| Next up is the loading of all the services needed for our 
+| application.
+|
+*/
+require app_path().'/services.php';
+require app_path().'/composers.php';
+

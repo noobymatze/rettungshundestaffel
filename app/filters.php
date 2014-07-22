@@ -38,6 +38,11 @@ Route::filter('auth', function()
 	if (Auth::guest()) return Redirect::guest('login');
 });
 
+Route::filter('auth.mobile', function()
+{
+	if (Auth::guest()) return Redirect::guest('mobile/login');
+});
+
 
 Route::filter('auth.basic', function()
 {
@@ -77,4 +82,23 @@ Route::filter('csrf', function()
 	{
 		throw new Illuminate\Session\TokenMismatchException;
 	}
+});
+
+Route::filter('authentication', function () {
+    if(!Auth::check()) {
+        Redirect::to('/login');
+    }
+});
+
+Route::filter('staffelleitung', function () 
+{
+    if(Auth::user()->rolle != "Staffelleitung") 
+    {
+        return Redirect::back();
+    }
+});
+
+Route::filter('mitgliedMenu', function ($route, $request, $response) 
+{
+    $response->getContent()->with('menu', MenuEnum::MITGLIEDER);
 });

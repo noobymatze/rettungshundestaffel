@@ -149,6 +149,7 @@ class MitgliederService {
 	{
         if (!isset($suchbegriff)) 
         {
+            Log::info("test -------------------------------------------");
             return Mitglied::paginate(MitgliederService::SEITEN_GROESSE);
         }
 

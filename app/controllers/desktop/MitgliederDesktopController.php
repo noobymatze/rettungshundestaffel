@@ -18,9 +18,11 @@ class MitgliederDesktopController extends Controller {
 	 */
 	public function uebersicht()
 	{
+        $suchbegriff = Input::get('suchbegriff');
+
 		return View::make('mitglieder.desktop.uebersicht')
 						->with('suchbegriff', null)
-						->with('mitglieder', $this->mitgliederService->holeAlle());
+						->with('mitglieder', $this->mitgliederService->sucheNach($suchbegriff));
 	}
 
 	/**
@@ -174,19 +176,6 @@ class MitgliederDesktopController extends Controller {
 		$mitglied = $this->mitgliederService->lade($id);
 		return View::make('mitglieder.desktop.details')
 						->with('mitglied', $mitglied);
-	}
-
-	/**
-	 * Filtert die Uebersicht der Mitglieder nach den eingegebenen 
-	 * Kriterien.
-	 */
-	public function filtereUebersicht()
-	{
-		$suchbegriff = Input::get('suchbegriff');
-
-		return View::make('mitglieder.desktop.uebersicht')
-						->with('suchbegriff', $suchbegriff)
-						->with('mitglieder', $this->mitgliederService->sucheNachVornameOderNachname($suchbegriff));
 	}
 
 	/**

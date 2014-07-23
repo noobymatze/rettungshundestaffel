@@ -89,18 +89,18 @@ class MitgliederDesktopController extends Controller {
 		if (Auth::user()->id != $id && Auth::user()->rolle != "Staffelleitung")
 		{
 			// Fehlermeldung, keine Rechte
-			return;
+			return Redirect::action('MitgliederDesktopController@renderMitglied', array('id' => $id));
 		}
 		
-		$mitglied = $this->mitgliederService->lade($id);
+		$mitglied = $this->mitgliederService->lade(intval($id));
 
 		// die Rolle darf nur die Staffelleitung ändern
-		if ($mitglied->rolle != Input::get('rolle'))
+		if (Input::has('rolle') && $mitglied->rolle != Input::get('rolle'))
 		{
 			if (Auth::user()->rolle != "Staffelleitung")
 			{
 				// Fehlermeldung ausgeben, keine Rechte
-				return;
+                return Redirect::action('MitgliederDesktopController@renderMitglied', array('id' => $id));
 			}
 		}
 
@@ -158,12 +158,16 @@ class MitgliederDesktopController extends Controller {
 		$mitglied->email = Input::get('email');
 		$mitglied->vorname = Input::get('vorname');
 		$mitglied->nachname = Input::get('nachname');
-		$mitglied->rolle = Input::get('rolle');
 		$mitglied->telefon = Input::get('telefon');
 		$mitglied->mobil = Input::get('mobil');
 
+        if(Input::has('rolle')) {
+            $mitglied->rolle = Input::get('rolle');
+        }
+
 		$this->mitgliederService->speichere($mitglied);
 
+        Log::info("Hier bin ich.");
 		return View::make('mitglieder.desktop.details')
 						->with('mitglied', $mitglied);
 	}

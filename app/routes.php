@@ -57,4 +57,7 @@ Route::group(array('before' => 'auth.mobile'), function () {
 	Route::get('/mobile/mitglieder', 'MMitgliederController@renderMitglieder');
 	Route::get('/mobile/weiteres', 'MWeiteresController@renderWeiteres');
 	Route::get('/mobile/mitglieder/{id}', 'MMitgliederController@renderMitglied');
+
+	Route::get('/mobile/suchgebiete', 'SuchgebieteMobilController@index');
+
 });

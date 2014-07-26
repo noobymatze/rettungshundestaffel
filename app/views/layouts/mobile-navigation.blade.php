@@ -24,11 +24,11 @@
 				<i class="icon-calendar"></i>
 				<p>Termine</p>
 			</a>
-			<a href="{{ URL::action('MMitgliederController@renderMitglieder') }}" class="{{{ $menu == MenuEnum::MITGLIEDER ? 'active' : '' }}}">
+			<a href="{{ URL::action('MMitgliederController@renderMitglieder') }}" class="{{  }}">
 				<i class="icon-users"></i>
 				<p>Mitglieder</p>
 			</a>
-			<a href="#" class="{{{ $menu == MenuEnum::SUCHGEBIETE ? 'active' : '' }}}">
+			<a href="{{ URL::action('SuchgebieteMobilController@index') }}" class="{{ Request::is('mobile/suchgebiete') ? 'active' : '' }}">
 				<i class="icon-map"></i>
 				<p>Suchgebiete</p>
 			</a>

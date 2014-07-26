@@ -16,8 +16,7 @@ class SuchgebieteMobilController extends Controller {
         $suchgebiete = $this->suchgebieteService->all();
 
         return View::make('suchgebiete.mobile.uebersicht')
-                ->withSuchgebiete($suchgebiete)
-                ->withMenu(MenuEnum::SUCHGEBIETE);
+                ->withSuchgebiete($suchgebiete);
     }
 
 }

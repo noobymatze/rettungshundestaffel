@@ -28,7 +28,7 @@
 				<i class="icon-users"></i>
 				<p>Mitglieder</p>
 			</a>
-			<a href="#" class="@activeOnPath('mobile/suchgebiete*')">
+			<a href="{{ URL::action('SuchgebieteMobilController@index') }}" class="@activeOnPath('mobile/suchgebiete*')">
 				<i class="icon-map"></i>
 				<p>Suchgebiete</p>
 			</a>

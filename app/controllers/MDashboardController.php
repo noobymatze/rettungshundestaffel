@@ -7,7 +7,6 @@ class MDashboardController extends Controller {
 	
     public function renderDashboard() 
     {
-        return View::make('dashboard.mobile.dashboard')
-        	->with('menu', MenuEnum::DASHBOARD);
+        return View::make('dashboard.mobile.dashboard');
     }
 }

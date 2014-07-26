@@ -19,7 +19,6 @@ class MMitgliederController extends Controller {
     	$others = $this->mitgliederService->allGroupedExeptForOne($id, $suchbegriff);
 
         return View::make('mitglieder.mobile.mitglieder')
-        	->with('menu', MenuEnum::MITGLIEDER)
         	->with('me', $me)
         	->with('others', $others)
             ->with('suchbegriff', $suchbegriff);
@@ -30,7 +29,6 @@ class MMitgliederController extends Controller {
         $mitglied = $this->mitgliederService->lade($mitglied_id);
 
         return View::make('mitglieder.mobile.mitglied')
-            ->with('menu', MenuEnum::MITGLIEDER)
             ->with('mitglied', $mitglied);
     }
 }

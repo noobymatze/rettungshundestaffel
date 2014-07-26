@@ -27,7 +27,7 @@ class Hund extends Eloquent
 	
 	public function bild()
 	{
-		if ($this->bild) 
+		if (isset($this->bild)) 
         {
             return 'data:image;base64,' . base64_encode($this->bild);
         }
@@ -37,12 +37,13 @@ class Hund extends Eloquent
 
     public function getSuchartGeprueftBis($suchart_id) 
     {
-        $sucharten = $this->sucharten
+        $suchart = $this->sucharten
                 ->filter(function($suchart) use ($suchart_id) {
                     return $suchart->id == $suchart_id;
-                });
-        if($sucharten->count() > 0) {
-            return DateTime::createFromFormat("Y-m-d", $sucharten[0]->pivot->geprueft_bis)->format('d.m.Y');
+                })->first();
+
+        if(isset($suchart) && isset($suchart->pivot->geprueft_bis)) {
+            return DateTime::createFromFormat("Y-m-d", $suchart->pivot->geprueft_bis)->format('d.m.Y');
         }
 
         return null;

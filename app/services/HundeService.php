@@ -36,6 +36,11 @@ class HundeService {
      */
     public function loesche($id) 
     {
+        $hund = $this->lade($id);
+        foreach($hund->sucharten as $suchart) {
+            $hund->sucharten()->detach($suchart);
+        }
+
         Hund::destroy($id);
     }
 }

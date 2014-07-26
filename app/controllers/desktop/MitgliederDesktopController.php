@@ -18,10 +18,11 @@ class MitgliederDesktopController extends Controller {
 	 */
 	public function uebersicht()
 	{
+        $suchbegriff = Input::get('suchbegriff');
+
 		return View::make('mitglieder.desktop.uebersicht')
 						->with('suchbegriff', null)
-						->with('mitglieder', $this->mitgliederService->holeAlle())
-						->with('menu', MenuEnum::MITGLIEDER);
+						->with('mitglieder', $this->mitgliederService->sucheNach($suchbegriff));
 	}
 
 	/**
@@ -133,7 +134,7 @@ class MitgliederDesktopController extends Controller {
 			{
 				return Redirect::action('MitgliederDesktopController@renderMitgliedBearbeiten', array('id' => $id))
 								->withErrors($validator)
-								->withInput(Input::except('passwort', 'passwort2'));
+								->withInput(Input::except('passwort', 'passwort2', 'profilbild'));
 			}
 			$mitglied->profilbild = File::get(Input::file('profilbild')->getRealPath());
 		}
@@ -174,22 +175,7 @@ class MitgliederDesktopController extends Controller {
 	{
 		$mitglied = $this->mitgliederService->lade($id);
 		return View::make('mitglieder.desktop.details')
-						->with('mitglied', $mitglied)
-						->with('menu', MenuEnum::MITGLIEDER);
-	}
-
-	/**
-	 * Filtert die Uebersicht der Mitglieder nach den eingegebenen 
-	 * Kriterien.
-	 */
-	public function filtereUebersicht()
-	{
-		$suchbegriff = Input::get('suchbegriff');
-
-		return View::make('mitglieder.desktop.uebersicht')
-						->with('suchbegriff', $suchbegriff)
-						->with('mitglieder', $this->mitgliederService->sucheNachVornameOderNachname($suchbegriff))
-						->with('menu', MenuEnum::MITGLIEDER);
+						->with('mitglied', $mitglied);
 	}
 
 	/**
@@ -200,8 +186,7 @@ class MitgliederDesktopController extends Controller {
 	{
 		$mitglied = $this->mitgliederService->lade($id);
 		return View::make('mitglieder.desktop.bearbeiten')
-						->with('mitglied', $mitglied)
-						->with('menu', MenuEnum::MITGLIEDER);
+						->with('mitglied', $mitglied);
 	}
 
     /**

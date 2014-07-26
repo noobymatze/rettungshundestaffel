@@ -1,24 +1,30 @@
 @extends('layouts.desktop')
 
 @section('title')
-Benutzerdaten bearbeiten
 @stop
 
 @section('content')
+<div class="content-header">
+    <h1>
+        <a href="#"><a id="menu-toggle" href="#" class="btn btn-default"><i class="glyphicon glyphicon-resize-horizontal"></i></a>
+            Benutzerdaten bearbeiten
+    </h1>
+</div>
 <div class="row">
 	<div class="col-md-6">
 		{{ Form::model($mitglied, array('action' => array('MitgliederDesktopController@aktualisiere', $mitglied->id), 'class' => 'form-horizontal', 'files' => true)) }}
 		<section class="form-group">
 			<div class="col-sm-7 col-sm-offset-5">
-				<img class="media-object center-block img-responsive img-thumbnail" src="{{ $mitglied->profilbild() }}" alt="...">
+				<img class="media-object center-block img-responsive img-thumbnail" id="bildPreview" src="{{ $mitglied->profilbild() }}" alt="...">
 			</div>
 		</section>
 		<section class="form-group">
 			<label class="col-sm-5 control-label">Bild:</label>
 			<div class="col-sm-7">
-				{{ Form::file('profilbild', array('accept' => 'image/*')) }}
+				{{ Form::file('profilbild', ['id' => 'bild', 'accept' => 'image/*']) }}
 			</div>
 		</section>
+        <script src="{{ URL::asset('javascripts/image-change.js') }}"></script>
 		<section class="form-group">
 			<label class="col-sm-5 control-label">Rolle:</label>
 			<div class="col-sm-7">

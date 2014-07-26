@@ -41,3 +41,9 @@ Blade::extend(function($view, $compiler)
     return preg_replace($pattern, '<?php echo "data:image;base64,$1"; ?>', $view);
 });
 
+/**
+ */
+Blade::extend(function($view, $compiler) {
+    $pattern = $compiler->createMatcher('activeOnPath');
+    return preg_replace($pattern, '<?php echo Request::is$2 ? "active" : ""; ?>', $view);
+});

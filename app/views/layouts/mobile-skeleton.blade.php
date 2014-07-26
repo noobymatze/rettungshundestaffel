@@ -9,10 +9,10 @@
         <link rel="stylesheet" href="{{ URL::asset('stylesheets/mobile/mobile.css') }}">
         <!--<link rel="stylesheet" href="{{ URL::asset('stylesheets/mobile/pure-blue.css') }}">-->
         <link rel="stylesheet" href="{{ URL::asset('stylesheets/mobile/icons.css') }}">
+        @yield('css')
     </head>
     <!--<body class="pure-skin-blue">-->
     <body>
 		@yield('body')
-        @yield('css')
     </body>
 </html>

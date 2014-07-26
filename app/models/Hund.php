@@ -27,7 +27,7 @@ class Hund extends Eloquent
 	
 	public function bild()
 	{
-		if ($this->bild) 
+		if (isset($this->bild)) 
         {
             return 'data:image;base64,' . base64_encode($this->bild);
         }

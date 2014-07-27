@@ -1,0 +1,34 @@
+// Variables:
+$default-color: #333;
+$base-font-size: 16px;
+
+// Helpers:
+@function em($px, $base: $base-font-size) {
+    @return ($px / $base) * 1em;
+}
+
+// Klassen:
+.suchgebiet {
+    @extend .pure-g;
+
+    box-sizing: border-box;
+    color: $default-color;
+    line-height: 150%;
+    margin: em(10px) 0px;
+    padding: 0px em(10px);
+    text-decoration: none;
+}
+
+.suchgebiet__img {
+    @extend .pure-u-1-3;
+
+    box-sizing: border-box;
+    min-height: em(120px);
+}
+
+.suchgebiet__details {
+    @extend .pure-u-2-3;
+
+    box-sizing: border-box;
+    padding-left: em(14px);
+}

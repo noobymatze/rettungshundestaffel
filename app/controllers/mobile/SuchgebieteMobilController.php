@@ -8,15 +8,20 @@ class SuchgebieteMobilController extends Controller {
         $this->suchgebieteService = $suchgebieteService;
     }
 
-    /**
-     * Zeigt eine Übersicht aller Suchgebiete.
-     */
     public function index() 
     {
         $suchgebiete = $this->suchgebieteService->all();
 
         return View::make('suchgebiete.mobile.uebersicht')
                 ->withSuchgebiete($suchgebiete);
+    }
+
+    public function details($id)
+    {
+        $suchgebiet = $this->suchgebieteService->lade($id);
+
+        return View::make('suchgebiete.mobile.details')
+                ->withSuchgebiet($suchgebiet);
     }
 
 }

@@ -30,4 +30,9 @@ class Suchgebiet extends Eloquent
             'suchgebiet_id',
             'Landschaftseigenschaft_id');
     }
+
+    public function getAnsprechpartner()
+    {
+        return null;
+    }
 }

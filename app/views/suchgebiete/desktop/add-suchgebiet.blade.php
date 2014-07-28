@@ -1,9 +1,5 @@
 @extends('layouts.desktop')
 
-@section('title')
-Neues Suchgebiet {{ Form::text('bezeichnung', null, array('class' => 'holo', 'form' => 'suchgebiet-form')) }}{{ Form::feedback($errors->has('bezeichnung')) }}
-@stop
-
 @section('head')
 <style>
 #suchgebiet-form .has-feedback .form-control-feedback {
@@ -211,6 +207,8 @@ window.onload = function (event) {
     };
 };
 </script>
+<h1>Neues Suchgebiet {{ Form::text('bezeichnung', null, array('class' => 'holo', 'form' => 'suchgebiet-form')) }}{{ Form::feedback($errors->has('bezeichnung')) }}
+</h1>
 @if($errors->any())
 	<div class="alert alert-danger" role="alert">
 	@foreach ($errors->all() as $error)

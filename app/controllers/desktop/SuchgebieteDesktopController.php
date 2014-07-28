@@ -20,8 +20,7 @@ class SuchgebieteDesktopController extends Controller {
 	{
 		return View::make('suchgebiete.desktop.uebersicht')
 						->with('suchbegriff', null)
-						->with('suchgebiete', $this->suchgebieteService->all())
-						->with('menu', MenuEnum::SUCHGEBIETE);
+						->with('suchgebiete', $this->suchgebieteService->all());
 	}
 
 	/**
@@ -34,8 +33,7 @@ class SuchgebieteDesktopController extends Controller {
 		$suchgebiet = new Suchgebiet;
 
 		return View::make('suchgebiete.desktop.add-suchgebiet')
-						->with('suchgebiet', $suchgebiet)
-						->with('menu', MenuEnum::SUCHGEBIETE);
+						->with('suchgebiet', $suchgebiet);
 	}
 
 	/**

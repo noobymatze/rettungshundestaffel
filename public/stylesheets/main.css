@@ -16,6 +16,12 @@ body {
 	/*background-image: url('../images/background.png');*/
 }
 
+.page-content>h1 {
+    font-size: 2em;
+    margin: 0;
+    margin-bottom: 0.7em;
+}
+
 /* ================================================
    Bootstrap extensions:
    ================================================*/

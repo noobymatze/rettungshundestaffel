@@ -1,13 +1,6 @@
 @extends('layouts.desktop')
 
-@section('title')
-Suchgebiete 
-@if (Auth::user()->rolle == 'Staffelleitung')
-    <a href="{{ URL::action('SuchgebieteDesktopController@renderAddSuchgebiet') }}" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Neues Suchgebiet hinzufügen</a>
-@endif
-@stop
-
-@section('content')
+@section('head')
 <style>
 .suchgebiete-liste {
     list-style-type: none;
@@ -31,8 +24,11 @@ Suchgebiete
     margin: 2em 0;
 }
 </style>
+@stop
+
+@section('content')
 <script>
-    window.onload = function (event) {
+    /*window.onload = function (event) {
         var map = L.map('map').setView([51.505, -0.09], 13);
         L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpg', { maxZoom: 18, subdomains: '1234' }).addTo(map);
         //L.tileLayer('http://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', { maxZoom: 18 }).addTo(map);
@@ -56,9 +52,14 @@ Suchgebiete
             .setContent("I am a standalone popup.")
             .openOn(map);
 
-    };
+    };*/
 </script>
-<div id="map"></div>
+<h1>Suchgebiete 
+@if (Auth::user()->rolle == 'Staffelleitung')
+    <a href="{{ URL::action('SuchgebieteDesktopController@renderAddSuchgebiet') }}" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Neues Suchgebiet hinzufügen</a>
+@endif
+</h1>
+<!--<div id="map"></div>-->
 <ul class="suchgebiete-liste">
     <li>
         <img src="http://placehold.it/200x170">

@@ -101,6 +101,23 @@ window.onload = function (event) {
 	var drawnItems = new L.FeatureGroup();
 	map.addLayer(drawnItems);
 
+    var loadedPolygons = JSON.parse(document.getElementById("flaeche").value || "null");
+    console.log(loadedPolygons);
+
+    if (loadedPolygons !== null && $.isArray(loadedPolygons)) {
+        for (var i = 0; i < loadedPolygons.length; i++) {
+            console.log(loadedPolygons[i].geometry.type);
+            if (loadedPolygons[i].geometry.type == 'Polygon') {
+                var latlngArray = [];
+                var coordinates = loadedPolygons[i].geometry.coordinates[0];
+                for (var j = 0; j < coordinates.length; j++) {
+                    latlngArray[j] = L.latLng(coordinates[j][1], coordinates[j][0]);
+                }
+                drawnItems.addLayer(L.polygon(latlngArray));
+            }
+        }
+    }
+
 	var updateFlaecheHiddenField = function () {
 		var polygons = [];
 		drawnItems.eachLayer(function (layer) {
@@ -117,7 +134,10 @@ window.onload = function (event) {
 			polyline: false,
 			rectangle: false,
 			circle: false,
-			marker: false
+			marker: false,
+            polygon: {
+                showArea: true,
+            },
 		},
 	    edit: {
 	        featureGroup: drawnItems

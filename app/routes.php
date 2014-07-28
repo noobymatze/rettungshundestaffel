@@ -20,6 +20,7 @@ Route::get('/ausloggen', 'LoginController@ausloggen');
 Route::get('/suchgebiete', 'SuchgebieteDesktopController@renderSuchgebiete');
 Route::get('/suchgebiete/anlegen', 'SuchgebieteDesktopController@renderAddSuchgebiet');
 Route::post('/suchgebiete/anlegen', 'SuchgebieteDesktopController@add');
+Route::get('/', 'LoginController@renderLogin');
 
 Route::group(array('before' => 'auth'), function () 
 {
@@ -59,4 +60,7 @@ Route::group(array('before' => 'auth.mobile'), function () {
 	Route::get('/mobile/mitglieder', 'MMitgliederController@renderMitglieder');
 	Route::get('/mobile/weiteres', 'MWeiteresController@renderWeiteres');
 	Route::get('/mobile/mitglieder/{id}', 'MMitgliederController@renderMitglied');
+
+	Route::get('/mobile/suchgebiete', 'SuchgebieteMobilController@index');
+
 });

@@ -12,7 +12,6 @@ class MWeiteresController extends Controller {
 
     public function renderWeiteres()
     {
-         return View::make('weiteres')
-        	->with('menu', MenuEnum::WEITERES);
+         return View::make('weiteres');
     }
 }

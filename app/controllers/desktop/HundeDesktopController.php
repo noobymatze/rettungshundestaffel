@@ -29,16 +29,19 @@ class HundeDesktopController extends Controller {
         $regeln['alter'] = 'numeric';
         $regeln['bild'] = 'mimes:png,jpg,jpeg,gif';
 
+        $messages = [];
         foreach($sucharten_liste->toArray() as $suchart) {
-            $regeln[$suchart['name'] . '_bis'] = 'date_format:' . $datums_format;
+            $name = $suchart['name'] . '_bis';
+            $regeln[$name] = 'size:10|date_format:' . $datums_format;
+            $messages[$name . '.date_format'] = 'Datumsformat: dd.mm.jjjj (Tag des Monats.Monat des Jahres.vierstelliges Jahr)';
         }
 
         $mitglied_id = intval($mitglied_id);
-        $validator = Validator::make(Input::all(), $regeln);
+        $validator = Validator::make(Input::all(), $regeln, $messages);
         if ($validator->fails()) 
         {
             return Redirect::back()
-                    ->withInput(Input::all())
+                    ->withInput(Input::except('bild'))
                     ->withErrors($validator);
         }
 
@@ -51,8 +54,12 @@ class HundeDesktopController extends Controller {
         // Default Einstellungen:
         $hund->name = Input::get('name');
         $hund->rasse = Input::get('rasse');
-        $hund->alter = Input::get('alter');
         $hund->mitglied_id = $mitglied_id;
+
+        if(Input::has('alter')) 
+        {
+            $hund->alter = Input::get('alter');
+        }
 
         if (Input::hasFile('bild')) 
         {
@@ -68,7 +75,14 @@ class HundeDesktopController extends Controller {
         $hund->sucharten()->sync($sucharten);
 
         foreach($hund->sucharten as $suchart) {
-            $suchart->pivot->geprueft_bis = Input::get($suchart->name . '_bis');
+            $feldName = $suchart->name . '_bis';
+            if(Input::has($feldName)) {
+                $suchart->pivot->geprueft_bis = DateTime::createFromFormat("d.m.Y", Input::get($feldName));
+            }
+            else {
+                $suchart->pivot->geprueft_bis = null;
+            }
+
             $suchart->pivot->save();
         }
 

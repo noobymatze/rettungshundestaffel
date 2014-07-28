@@ -1,9 +1,5 @@
 @extends('layouts.desktop')
 
-@section('title')
-Mitglieder
-@stop
-
 @section('content')
     <section class="row">
         {{ Form::open(['action' => 'MitgliederDesktopController@uebersicht', 'name' => 'uebersicht-suche', 'class' => 'form col-md-6', 'method' => 'GET']) }}
@@ -14,10 +10,16 @@ Mitglieder
                 </div>
             </span>
         {{ Form::close() }}
+        @ifstaffelleitung
+        <div class="col-md-3 pull-right">
+            <a class="btn btn-primary btn-right" href="{{ URL::action('MitgliederDesktopController@renderErstelleMitglied') }}">
+                <i class="glyphicon glyphicon-plus"></i> Mitglied anlegen
+            </a>
+        </div>
+        @endif
     </section>
 
     <section class="mitglieder">
         @include('mitglieder.desktop.liste', ['mitglieder' => $mitglieder])
     </section>
-    <script src="{{ URL::asset('javascripts/mitglieder.js') }}"></script>
 @stop

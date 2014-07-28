@@ -9,16 +9,16 @@
 			<li class="sidebar-brand">
 				<a href="#">Rettungshundestaffel</a>
 			</li>
-			<li class="{{{ $menu == MenuEnum::DASHBOARD ? 'active' : '' }}}">
+			<li class="@activeOnPath('dashboard*')">
 				<a href=""><i class="glyphicon glyphicon-home"></i> Dashboard</a>
 			</li>
-			<li  class="{{{ $menu == MenuEnum::MITGLIEDER ? 'active' : '' }}}">
+			<li  class="@activeOnPath('mitglieder*')">
 				<a href="{{ URL::action('MitgliederDesktopController@uebersicht') }}"><i class="glyphicon glyphicon-user"></i> Mitglieder</a>
 			</li>
-			<li  class="{{{ $menu == MenuEnum::SUCHGEBIETE ? 'active' : '' }}}">
+			<li  class="@activeOnPath('suchgebiete*')">
 				<a href="{{ URL::action('SuchgebieteDesktopController@renderSuchgebiete') }}"><i class="glyphicon glyphicon-tree-conifer"></i> Suchgebiete</a>
 			</li>
-			<li  class="{{{ $menu == MenuEnum::TERMINE ? 'active' : '' }}}">
+			<li  class="@activeOnPath('termine*')">
 				<a href="termine"><i class="glyphicon glyphicon-calendar"></i> Termine</a>
 			</li>
 			<hr>
@@ -55,14 +55,6 @@
 	</div><!-- /.modal -->
 	@show
 	<div id="page-content-wrapper">
-		<div class="content-header">
-			<h1>
-				<a href="#"><a id="menu-toggle" href="#" class="btn btn-default"><i class="glyphicon glyphicon-resize-horizontal"></i></a>
-				@section('title')
-				Titel
-				@show
-			</h1>
-		</div>
 		<!-- Der ganze Inhalt hier -->
 		<div class="page-content inset">
 			@yield('content')

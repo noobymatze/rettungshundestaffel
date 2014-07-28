@@ -97,3 +97,8 @@ Route::filter('staffelleitung', function ()
         return Redirect::back();
     }
 });
+
+Route::filter('mitgliedMenu', function ($route, $request, $response) 
+{
+    $response->getContent()->with('menu', MenuEnum::MITGLIEDER);
+});

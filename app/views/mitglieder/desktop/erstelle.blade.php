@@ -1,10 +1,12 @@
 @extends('layouts.desktop')
 
-@section('title')
-Neues Mitglied anlegen
-@stop
-
 @section('content')
+<div class="content-header">
+    <h1>
+        <a href="#"><a id="menu-toggle" href="#" class="btn btn-default"><i class="glyphicon glyphicon-resize-horizontal"></i></a>
+            Neues Mitglied anlegen
+    </h1>
+</div>
 <div class="row">
 	<div class="col-md-12">
 		<p>Bitte geben Sie die Daten des neuen Benutzers ein.</p>

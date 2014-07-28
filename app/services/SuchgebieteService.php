@@ -22,12 +22,23 @@ class SuchgebieteService {
 	/**
 	 * 
 	 * @param array $suchgebiet
-	 * @return {boolean}, falls das Suchgebiet angelegt worden ist, ansonsten false.
+	 * @return {boolean}, true falls das Suchgebiet angelegt worden ist, ansonsten false.
 	 */
 	public function speichere($suchgebiet)
 	{
         $suchgebiet->save();
 	}
+
+    /**
+     * 
+     * @param $suchgebiet
+     * @param array $flaechen 
+     * @return {boolean}, true falls die zugehörigen Flächen zum Suchgebiet angelegt worden sind, ansonsten false.
+     */
+    public function speichereZugehoerigeFlaechen($suchgebiet, $flaechen)
+    {
+        $suchgebiet->flaechen()->saveMany($flaechen);
+    }
 
 	/**
 	 * Liefert ein Suchgebiet mit einer Id aus der Datenbank.

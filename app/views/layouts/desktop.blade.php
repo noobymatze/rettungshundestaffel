@@ -1,6 +1,6 @@
 @extends('layouts.desktop-skeleton')
 
-@section('body')       
+@section('body')
 <div id="wrapper">
 	<!-- Sidebar -->
 	@section('sidebar')

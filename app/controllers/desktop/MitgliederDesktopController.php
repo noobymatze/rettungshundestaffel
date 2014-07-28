@@ -45,7 +45,7 @@ class MitgliederDesktopController extends Controller {
 	{
 		$rules = array(
 			'email' => 'required|email|unique:mitglied,email',
-			'passwort' => 'required',
+			'passwort' => 'required',  // TODO: Statt 'passwort2' einfach 'passwort' => 'confirm' als Rule definieren, dann wird geprüft, ob das Feld 'passwort' und das Feld 'passwort_confirmation' übereinstimmen
 			'passwort2' => 'required'
 		);
 

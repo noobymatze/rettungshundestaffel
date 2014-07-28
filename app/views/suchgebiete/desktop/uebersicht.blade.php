@@ -60,42 +60,16 @@
 @endif
 </h1>
 <!--<div id="map"></div>-->
-<ul class="suchgebiete-liste">
-    <li>
-        <img src="http://placehold.it/200x170">
-        <h2>Tarper Wald</h2>
-    </li>
-    <li>
-        <img src="http://placehold.it/200x170">
-        <h2>Susis Wiese</h2>
-    </li>
-    <li>
-        <img src="http://placehold.it/200x170">
-        <h2>Flensburg City</h2>
-    </li>
-    <li>
-        <img src="http://placehold.it/200x170">
-        <h2>Tarper Wald</h2>
-    </li>
-    <li>
-        <img src="http://placehold.it/200x170">
-        <h2>Susis Wiese</h2>
-    </li>
-    <li>
-        <img src="http://placehold.it/200x170">
-        <h2>Flensburg City</h2>
-    </li>
-    <li>
-        <img src="http://placehold.it/200x170">
-        <h2>Tarper Wald</h2>
-    </li>
-    <li>
-        <img src="http://placehold.it/200x170">
-        <h2>Susis Wiese</h2>
-    </li>
-    <li>
-        <img src="http://placehold.it/200x170">
-        <h2>Flensburg City</h2>
-    </li>
-</ul>
+@if (sizeof($suchgebiete) < 1)
+    <p>Es wurden noch keine Suchgebiete eingetragen</p>
+@else
+    <ul class="suchgebiete-liste">
+    @foreach ($suchgebiete as $suchgebiet)
+        <li>
+            <img src="http://placehold.it/200x170">
+            <h2>{{{ $suchgebiet->name }}}</h2>
+        </li>
+    @endforeach
+    </ul>
+@endif
 @stop

@@ -19,7 +19,7 @@
 				<a href="{{ URL::action('SuchgebieteDesktopController@renderSuchgebiete') }}"><i class="glyphicon glyphicon-tree-conifer"></i> Suchgebiete</a>
 			</li>
 			<li  class="@activeOnPath('termine*')">
-				<a href="termine"><i class="glyphicon glyphicon-calendar"></i> Termine</a>
+				<a href="{{ URL::action('TermineDesktopController@uebersicht') }}"><i class="glyphicon glyphicon-calendar"></i> Termine</a>
 			</li>
 			<hr>
 			<li>

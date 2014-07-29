@@ -7,5 +7,10 @@ class Adresse extends Eloquent
     public $timestamps = false;
 
     protected $fillable = array('strasse', 'hausnummer', 'zusatz', 'ort', 'postleitzahl');
+	
+	public function adresseKurz() 
+    {
+        return $this->ort.' '.$this->strasse.' '.$this->hausnummer.' '.$this->zusatz;
+    }
 
 }

@@ -35,12 +35,19 @@ Route::group(array('before' => 'auth'), function ()
 	Route::get('/mitglieder/{id}', 'MitgliederDesktopController@renderMitglied')->where('id', '[0-9]+');
 	Route::post('/mitglieder/{id}', 'MitgliederDesktopController@aktualisiere')->where('id', '[0-9]+');
 	Route::get('/mitglieder/{id}/bearbeiten', 'MitgliederDesktopController@renderMitgliedBearbeiten');
+	
+	Route::get('/termine', 'TermineDesktopController@uebersicht');
 
 	Route::group(array('before' => 'staffelleitung'), function()
 	{
         Route::get('/mitglieder/{id}/loesche', 'MitgliederDesktopController@loesche');
 		Route::get('/mitglieder/anlegen', 'MitgliederDesktopController@renderErstelleMitglied');
 		Route::post('/mitglieder/anlegen', 'MitgliederDesktopController@erstelle');
+		
+		Route::get('/termine/anlegen', 'TermineDesktopController@renderErstelleTermin');
+		Route::get('/termine/bearbeiten/{id}', 'TermineDesktopController@renderBearbeiteTermin')
+				->where('id', '[0-9]+');
+		Route::post('/termine/anlegen', 'TermineDesktopController@speichere');
 	});
 
 });

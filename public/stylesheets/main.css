@@ -1,18 +1,25 @@
-@import "http://fonts.googleapis.com/css?family=Noto+Sans";
+/*@import "http://fonts.googleapis.com/css?family=Noto+Sans";*/
 
 /* ================================================
    Allgemeine Regeln:
    ================================================*/
 html {
-    font-size: 62.5%;
+    /*font-size: 62.5%;*/
 }
 
 body {
-    font-size: 1.6em;
-    font-family: 'Noto Sans', sans-serif;
-  line-height: 150%;
+    /*font-size: 1.6em;*/
+    /* font-family: 'Noto Sans', sans-serif;*/
+    /*font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
+  /*line-height: 150%;*/
 	background-color: #f9f9f9;
 	/*background-image: url('../images/background.png');*/
+}
+
+.page-content>h1 {
+    font-size: 2em;
+    margin: 0;
+    margin-bottom: 0.7em;
 }
 
 /* ================================================

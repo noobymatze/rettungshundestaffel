@@ -86,8 +86,10 @@
 .content-header h1 {
   margin: 0;
   margin-left: 20px;
-  line-height: 65px;
+ /*line-height: 65px;*/
   display: inline-block;
+  font-size: 2em;
+  color: #333;
 }
 
 #menu-toggle {

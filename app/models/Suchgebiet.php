@@ -9,12 +9,19 @@ class Suchgebiet extends Eloquent
 
     public function treffpunkt()
     {
-        return $this->hasOne('Koordinate', 'suchgebiet_id');
+        return $this->belongsTo('Adresse', 'treffpunkt');
     }
 
+    /*
     public function koordinaten()
     {
         return $this->belongsToMany('Koordinate', 'suchgebiet_hat_koordinaten', 'suchgebiet_id', 'koordinate_id');
+    }
+    */
+
+    public function flaechen()
+    {
+        return $this->hasMany('Flaeche', 'suchgebiet_id');
     }
 
     public function personen()

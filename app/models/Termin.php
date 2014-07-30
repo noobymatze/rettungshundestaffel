@@ -8,7 +8,7 @@ class Termin extends Eloquent {
 	public function mitglieder()
 	{
 		return $this->belongsToMany('Mitglied', 'mitglied_hat_termin', 'termin_id', 'mitglied_id')
-				->withPivot('status', 'status_geandert_am');
+				->withPivot('status', 'status_geaendert_am');
 	}
 
 	public function ersteller()

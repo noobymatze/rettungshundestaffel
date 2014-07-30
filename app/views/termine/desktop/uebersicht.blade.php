@@ -96,7 +96,6 @@
 				@endif
 			</td>
 			<td>
-<!--				{{ $termin->mitgliederAbgesagt() }}-->
 			</td>
 		</tr>
 		@endforeach

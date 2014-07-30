@@ -29,18 +29,19 @@ class TermineDesktopController extends Controller {
 		$regeln['datum'] = 'required|date_format:' . $datumFormat;
 		$regeln['art'] = 'required';
 
-		if (Input::get('id') != null)
+		if (Input::has('id'))
 		{
 			$termin = $this->termineService->lade(Input::get('id'));
 		} else
 		{
 			$termin = new Termin;
 		}
+
 		$termin->mitglied_id = Auth::user()->id;
-		$termin->fill(Input::all());
 		$termin->datum = DateTime::createFromFormat($datumFormat, Input::get('datum'));
 		$termin->aktiv = true;
 		$termin->abgesagt_am = null;
+
 		if (Input::get('suchgebiet_id') == 0)
 		{
 			$termin->suchgebiet_id = null;

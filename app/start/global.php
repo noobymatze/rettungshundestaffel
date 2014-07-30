@@ -103,5 +103,4 @@ require app_path().'/extensions/forms.php';
 |
 */
 require app_path().'/services.php';
-require app_path().'/composers.php';
 

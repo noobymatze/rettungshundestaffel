@@ -16,23 +16,23 @@
 	@show
 	@section('nav-bar')
 		<nav id="nav-bar">
-			<a href="{{ URL::action('MDashboardController@renderDashboard') }}" class="{{{ $menu == MenuEnum::DASHBOARD ? 'active' : '' }}}">
+			<a href="{{ URL::action('MDashboardController@renderDashboard') }}" class="@activeOnPath('mobile/dashboard*')">
 				<i class="icon-th-large"></i>
 				<p>Dashboard</p>
 			</a>
-			<a href="#" class="{{{ $menu == MenuEnum::TERMINE ? 'active' : '' }}}">
+			<a href="#" class="@activeOnPath('mobile/termine*')">
 				<i class="icon-calendar"></i>
 				<p>Termine</p>
 			</a>
-			<a href="{{ URL::action('MMitgliederController@renderMitglieder') }}" class="{{{ $menu == MenuEnum::MITGLIEDER ? 'active' : '' }}}">
+			<a href="{{ URL::action('MMitgliederController@renderMitglieder') }}" class="@activeOnPath('mobile/mitglieder*')">
 				<i class="icon-users"></i>
 				<p>Mitglieder</p>
 			</a>
-			<a href="#" class="{{{ $menu == MenuEnum::SUCHGEBIETE ? 'active' : '' }}}">
+			<a href="#" class="@activeOnPath('mobile/suchgebiete*')">
 				<i class="icon-map"></i>
 				<p>Suchgebiete</p>
 			</a>
-			<a href="{{ URL::action('MWeiteresController@renderWeiteres') }}" class="{{{ $menu == MenuEnum::WEITERES ? 'active' : '' }}}">
+			<a href="{{ URL::action('MWeiteresController@renderWeiteres') }}" class="@activeOnPath('mobile/weiteres')">
 				<i class="icon-ellipsis"></i>
 				<p>Weiteres</p>
 			</a>

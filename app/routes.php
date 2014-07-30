@@ -35,12 +35,24 @@ Route::group(array('before' => 'auth'), function ()
 	Route::get('/mitglieder/{id}', 'MitgliederDesktopController@renderMitglied')->where('id', '[0-9]+');
 	Route::post('/mitglieder/{id}', 'MitgliederDesktopController@aktualisiere')->where('id', '[0-9]+');
 	Route::get('/mitglieder/{id}/bearbeiten', 'MitgliederDesktopController@renderMitgliedBearbeiten');
+	
+	Route::get('/termine', 'TermineDesktopController@uebersicht');
+	Route::get('/termine/{id}/zusage', 'TermineDesktopController@zusage')->where('id', '[0-9]+');
+	Route::get('/termine/{id}/absage', 'TermineDesktopController@absage')->where('id', '[0-9]+');
+	Route::get('/termine/{id}', 'TermineDesktopController@renderDetailansicht')->where('id', '[0-9]+');
 
 	Route::group(array('before' => 'staffelleitung'), function()
 	{
         Route::get('/mitglieder/{id}/loesche', 'MitgliederDesktopController@loesche');
 		Route::get('/mitglieder/anlegen', 'MitgliederDesktopController@renderErstelleMitglied');
 		Route::post('/mitglieder/anlegen', 'MitgliederDesktopController@erstelle');
+		
+		Route::get('/termine/anlegen', 'TermineDesktopController@renderErstelleTermin');
+		Route::get('/termine/{id}/bearbeiten', 'TermineDesktopController@renderBearbeiteTermin')
+				->where('id', '[0-9]+');
+		Route::post('/termine/anlegen', 'TermineDesktopController@speichere');
+		Route::get('/termine/{id}/deaktiviere', 'TermineDesktopController@deaktiviereTermin')->where('id', '[0-9]+');
+		Route::get('/termine/{id}/aktiviere', 'TermineDesktopController@aktiviereTermin')->where('id', '[0-9]+');
 	});
 
 });

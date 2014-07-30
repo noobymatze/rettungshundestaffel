@@ -17,15 +17,18 @@ class TermineService {
 	 */
 	public function holeAlle($datumAb = null)
 	{
-		if($datumAb == null)
+		if(!date_create_from_format('d.m.Y', $datumAb))
 		{
 			$datumAb = date('Y-m-d');
+		} else 
+		{
+			$datumAb = date_format(date_create_from_format('d.m.Y', $datumAb), 'Y-m-d');
 		}
 		return Termin::where('datum', '>=', $datumAb . ' 00:00:00')
-//				->sortBy('datum')
-				->paginate(TermineService::SEITEN_GROESSE);
+						->orderBy('datum', 'asc')
+						->paginate(TermineService::SEITEN_GROESSE);
 	}
-	
+
 	public function speichere($termin)
 	{
 		$termin->save();
@@ -43,9 +46,9 @@ class TermineService {
 
 	public function holeAlleAdressenAlsArray()
 	{
-		$neueAdresseWert = -1;
+		$neueAdresse = -1;
 		$keineAdresse = 0;
-		$array = array($keineAdresse => 'Nicht angegeben', $neueAdresseWert => 'Neue anlegen...');
+		$array = array($keineAdresse => 'Nicht angegeben', $neueAdresse => 'Neue anlegen...');
 		$adressen = Adresse::all();
 		foreach ($adressen as $adresse)
 		{
@@ -53,7 +56,7 @@ class TermineService {
 		}
 		return $array;
 	}
-	
+
 	public function holeAlleSuchgebieteAlsArray()
 	{
 		$keineAdresse = 0;
@@ -61,8 +64,39 @@ class TermineService {
 		$suchgebiete = Suchgebiet::all();
 		foreach ($suchgebiete as $suchgebiet)
 		{
-		$array[$suchgebiet->id] =  $suchgebiet->name;
+			$array[$suchgebiet->id] = $suchgebiet->name;
 		}
 		return $array;
 	}
+
+	public function zusagen($mitglied, $termin)
+	{
+		$termin->mitglieder()->attach($mitglied);
+		$termin->mitglieder()->whereMitglied_id($mitglied->id)->first()->pivot->status = 'Zugesagt';
+		$termin->mitglieder()->whereMitglied_id($mitglied->id)->first()->pivot->status_geandert_am = new DateTime;
+		$this->speichere($termin);
+	}
+
+	public function absagen($mitglied, $termin)
+	{
+		$termin->mitglieder()->attach($mitglied);
+		$termin->mitglieder()->whereMitglied_id($mitglied->id)->first()->pivot->status = 'Abgesagt';
+		$termin->mitglieder()->whereMitglied_id($mitglied->id)->first()->pivot->status_geandert_am = new DateTime;
+		$this->speichere($termin);
+	}
+
+	public function deaktivieren($termin)
+	{
+		$termin->aktiv = false;
+		$termin->abgesagt_am = new DateTime;
+		$this->speichere($termin);
+	}
+
+	public function aktivieren($termin)
+	{
+		$termin->aktiv = true;
+		$termin->abgesagt_am = null;
+		$this->speichere($termin);
+	}
+
 }

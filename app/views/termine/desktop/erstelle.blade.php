@@ -4,11 +4,11 @@
 <div class="content-header">
     <h1>
         <a href="#"><a id="menu-toggle" href="#" class="btn btn-default"><i class="glyphicon glyphicon-resize-horizontal"></i></a>
-			@if($termin->id == null)
-            Neuen Termin erstellen
-			@else
-			Termin bearbeiten
-			@endif
+		@if($termin->id == null)
+		Neuen Termin erstellen
+		@else
+		Termin bearbeiten
+		@endif
     </h1>
 </div>
 <div class="row">
@@ -27,7 +27,7 @@
 		<section class="form-group">
 			<label class="col-sm-5 control-label">Art:*</label>
 			<div class="col-sm-7">
-				{{ Form::select('art', array('Allgemein' => 'Allgemein', 'Training' => 'Training'), 'Allgemein', array('class' => 'form-control')) }}
+				{{ Form::select('art', array('Allgemein' => 'Allgemein', 'Training' => 'Training'), $termin->art, array('class' => 'form-control')) }}
 			</div>
 		</section>
 		<section class="form-group">

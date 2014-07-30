@@ -14,25 +14,45 @@
 	</div>
 	@endif
 </div>
-{{ $termine->links() }}
 
+<div class="row">
+	<div class="col-md-6">
+		<form class="form-horizontal" id="datumForm" action="#" method="GET">
+			<section class="form-group">
+				<label class="col-sm-6 control-label">Termine anzeigen ab:</label>
+				<div class="col-sm-6">
+					<div class='input-group date' id='datetimepicker' data-date-format="DD.MM.YYYY">
+						<input type="text" class="form-control" id="eingabe">
+						<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+					</div>
+				</div>
+			</section>
+		</form>
+	</div>
+</div>
+<hr>
 <table class="table table-responsive">
 	<thead>
 		<tr>
 			<th>Datum</th>
-			<th>Art</th>
+			<!--<th>Art</th>-->
 			<th>Beschreibung</th>
 			<th>Erstellt von</th>
 <!--			<th>Suchgebiet</th>
--->			<th>Adresse</th>
+			-->			<th>Adresse</th>
 			<th>Aktionen</th>
+			<th>Status</th>
 		</tr>
 	</thead>
 	<tbody>
 		@foreach($termine as $termin)
+		@if($termin->aktiv)
+		<tr class="active">
+		@else
 		<tr>
-			<td>{{ date_format(date_create_from_format('Y-m-d H:i:s', $termin->datum), 'd.m.Y - H:i') }}</td>
-			<td>{{ $termin->art }}</td>
+		@endif
+			<td><a href="{{ URL::action('TermineDesktopController@renderDetailansicht', [$termin->id]) }}">{{ date_format(date_create_from_format('Y-m-d H:i:s', $termin->datum), 'd.m.Y - H:i') }}</a></td>
+			<!--<td>{{ $termin->art }}</td>-->
 			<td>{{ $termin->beschreibung }}</td>
 			<td>{{ $termin->ersteller->vollerName() }}</td>
 			<!--			@if($termin->suchgebiet != null)
@@ -40,34 +60,63 @@
 						@else
 						<td></td>
 						@endif
-						-->
-			@if($termin->adresse != null)
-			<td>{{ $termin->adresse->adresseKurz() }}</td>
-			@else
-			<td></td>
-			@endif
+			-->
 			<td>
+				@if($termin->adresse != null)
+				{{ $termin->adresse->adresseKurz() }}
+				@endif
+			</td>
+			<td>
+				@if($termin->aktiv)
 				<div class="btn-group">
-					<a href="#" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i></a>
-					<a href="#" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+					<a href="{{ URL::action('TermineDesktopController@zusage', [$termin->id]) }}" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i></a>
+					<a href="{{ URL::action('TermineDesktopController@absage', [$termin->id]) }}" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
 				</div>
-				
+				@else
+				<div class="btn-group">
+					<a href="#" class="btn btn-default disabled"><i class="glyphicon glyphicon-ok"></i></a>
+					<a href="#" class="btn btn-default disabled"><i class="glyphicon glyphicon-remove"></i></a>
+				</div>
+				@endif
+
 				@ifstaffelleitung
 				<div class="btn-group">
-					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+					<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
 						<i class="glyphicon glyphicon-wrench"></i> <span class="caret"></span>
 					</button>
 					<ul class="dropdown-menu" role="menu">
 						<li><a href="{{ URL::action('TermineDesktopController@renderBearbeiteTermin', [$termin->id]) }}"><i class="glyphicon glyphicon-edit"></i> Bearbeiten</a></li>
-						<li><a href="#"><i class="glyphicon glyphicon-minus-sign"></i> Absagen</a></li>
-						<li><a href="#"><i class="glyphicon glyphicon-ban-circle"></i> Löschen</a></li>
+						@if($termin->aktiv)
+						<li><a href="{{ URL::action('TermineDesktopController@deaktiviereTermin', [$termin->id]) }}"><i class="glyphicon glyphicon-minus-sign"></i> Absagen</a></li>
+						@else
+						<li><a href="{{ URL::action('TermineDesktopController@aktiviereTermin', [$termin->id]) }}"><i class="glyphicon glyphicon-ok-sign"></i> Termin wieder aktivieren</a></li>
+						@endif
 					</ul>
 				</div>
 				@endif
+			</td>
+			<td>
+<!--				{{ $termin->mitgliederAbgesagt() }}-->
 			</td>
 		</tr>
 		@endforeach
 	</tbody>
 </table>
+{{ $termine->appends(Input::all())->links() }}
+
+<script type="text/javascript">
+	window.addEventListener("DOMContentLoaded", function() {
+		$(function() {
+			var dp = $('#datetimepicker').datetimepicker({
+				language: 'de',
+				pickTime: false
+			});
+
+			dp.change(function() {
+				$('#datumForm').submit();
+			});
+		});
+	});
+</script>
 
 @stop

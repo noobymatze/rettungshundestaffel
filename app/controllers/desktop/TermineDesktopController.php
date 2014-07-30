@@ -9,7 +9,15 @@ class TermineDesktopController extends Controller {
 
 	public function uebersicht()
 	{
-		$termine = $this->termineService->holeAlle(date('Y-m-d'));
+		$datum = Input::get('datum');
+//		if($datum == null)
+//		{
+//			$datum = date('Y-m-d');
+//		} else
+//		{
+//			$datum = Input::get('datum');
+//		}
+		$termine = $this->termineService->holeAlle($datum);
 		return View::make('termine.desktop.uebersicht')
 						->with('termine', $termine);
 	}
@@ -108,6 +116,39 @@ class TermineDesktopController extends Controller {
 						->with('termin', $termin)
 						->with('adressenArray', $this->termineService->holeAlleAdressenAlsArray())
 						->with('suchgebieteArray', $this->termineService->holeAlleSuchgebieteAlsArray());
+	}
+	
+	public function renderDetailansicht($id)
+	{
+		$termin = $this->termineService->lade($id);
+		return View::make('termine.desktop.details')
+						->with('termin', $termin);
+	}
+	
+	public function zusage($id)
+	{
+		$this->termineService->zusagen(Auth::user(), $this->termineService->lade($id));
+		return Redirect::back();
+	}
+	
+	public function absage($id)
+	{
+		$this->termineService->absagen(Auth::user(), $this->termineService->lade($id));
+		return Redirect::back();
+	}
+	
+	public function deaktiviereTermin($id)
+	{
+		$termin = $this->termineService->lade($id);
+		$this->termineService->deaktivieren($termin);
+		return Redirect::back();
+	}
+	
+	public function aktiviereTermin($id)
+	{
+		$termin = $this->termineService->lade($id);
+		$this->termineService->aktivieren($termin);
+		return Redirect::back();
 	}
 
 }

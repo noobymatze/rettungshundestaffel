@@ -12,7 +12,7 @@
 </div>
 <div class="row">
 	<div class="col-md-6">
-		{{ Form::model($mitglied, array('action' => array('MitgliederDesktopController@aktualisiere', $mitglied->id), 'class' => 'form-horizontal', 'files' => true)) }}
+		{{ Form::model($mitglied, array('action' => array('MitgliederDesktopController@aktualisiere', $mitglied->id), 'class' => 'form-horizontal', 'files' => true, 'autocomplete' => 'off')) }}
 		<section class="form-group">
 			<div class="col-sm-7 col-sm-offset-5">
 				<img class="media-object center-block img-responsive img-thumbnail" id="bildPreview" src="{{ $mitglied->profilbild() }}" alt="...">
@@ -40,35 +40,35 @@
 		<section class="form-group">
 			<label class="col-sm-5 control-label">Vorname:</label>
 			<div class="col-sm-7">
-				{{ Form::text('vorname', null, array('class' => 'form-control')) }}
+				{{ Form::text('vorname', null, array('class' => 'form-control', 'autocomplete' => 'off')) }}
 			</div>
 		</section>
 
 		<section class="form-group">
 			<label class="col-sm-5 control-label">Nachname:</label>
 			<div class="col-sm-7">
-				{{ Form::text('nachname', null, array('class' => 'form-control')) }}
+				{{ Form::text('nachname', null, array('class' => 'form-control', 'autocomplete' => 'off')) }}
 			</div>
 		</section>
 
 		<section class="form-group @hasError('email')">
 			<label class="col-sm-5 control-label">E-Mail:*</label>
 			<div class="col-sm-7">
-				{{ Form::text('email', null, array('class' => 'form-control')) }}
+				{{ Form::text('email', null, array('class' => 'form-control', 'autocomplete' => 'off')) }}
 			</div>
 		</section>
 
 		<section class="form-group">
 			<label class="col-sm-5 control-label">Telefon:</label>
 			<div class="col-sm-7">
-				{{ Form::text('telefon', null, array('class' => 'form-control')) }}
+				{{ Form::text('telefon', null, array('class' => 'form-control', 'autocomplete' => 'off')) }}
 			</div>
 		</section>
 
 		<section class="form-group">
 			<label class="col-sm-5 control-label">Mobil:</label>
 			<div class="col-sm-7">
-				{{ Form::text('mobil', null, array('class' => 'form-control')) }}
+				{{ Form::text('mobil', null, array('class' => 'form-control', 'autocomplete' => 'off')) }}
 			</div>
 		</section>
 
@@ -81,13 +81,13 @@
 		<section class="form-group @hasError('passwort')">
 			<label class="col-sm-5 control-label">Passwort:</label>
 			<div class="col-sm-7">
-				{{ Form::password('passwort', array('class' => 'form-control')) }}
+				{{ Form::password('passwort', array('class' => 'form-control', 'autocomplete' => 'off')) }}
 			</div>
 		</section>
 		<section class="form-group @hasError('passwort2')">
 			<label class="col-sm-5 control-label">Passwort wiederholen:</label>
 			<div class="col-sm-7">
-				{{ Form::password('passwort2', array('class' => 'form-control')) }}
+				{{ Form::password('passwort2', array('class' => 'form-control', 'autocomplete' => 'off')) }}
 			</div>
 		</section>
 		<hr>

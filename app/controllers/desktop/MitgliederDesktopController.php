@@ -85,6 +85,8 @@ class MitgliederDesktopController extends Controller {
 
 	public function aktualisiere($id)
 	{
+        $exclusions = ['passwort', 'passwort2', 'profilbild'];
+
 		// Überprüfen, ob der Benutzer sein eigenes Profil ändert, oder es der Admin tut
 		if (Auth::user()->id != $id && Auth::user()->rolle != "Staffelleitung")
 		{
@@ -117,7 +119,7 @@ class MitgliederDesktopController extends Controller {
 			{
 				return Redirect::action('MitgliederDesktopController@renderMitgliedBearbeiten', array('id' => $id))
 								->withErrors($validator)
-								->withInput(Input::except('passwort', 'passwort2'));
+								->withInput(Input::except($exclusions));
 			}
 		}
 		
@@ -134,7 +136,7 @@ class MitgliederDesktopController extends Controller {
 			{
 				return Redirect::action('MitgliederDesktopController@renderMitgliedBearbeiten', array('id' => $id))
 								->withErrors($validator)
-								->withInput(Input::except('passwort', 'passwort2', 'profilbild'));
+								->withInput(Input::except($exclusions));
 			}
 			$mitglied->profilbild = File::get(Input::file('profilbild')->getRealPath());
 		}
@@ -149,7 +151,7 @@ class MitgliederDesktopController extends Controller {
 								->withErrors(array(
 									'passwort' => 'Passwörter stimmen nicht überein',
 									'passwort2' => null))
-								->withInput(Input::except('passwort', 'passwort2'));
+								->withInput(Input::except($exclusions));
 			}
 			$mitglied->passwort = Input::get('passwort');
 		}

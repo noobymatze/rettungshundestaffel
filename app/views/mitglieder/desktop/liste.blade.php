@@ -14,4 +14,4 @@
 </section>
 @endfor
 
-{{ $mitglieder->links() }}
+{{ $mitglieder->appends(Input::all())->links() }}

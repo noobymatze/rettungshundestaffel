@@ -10,16 +10,14 @@ class TermineDesktopController extends Controller {
 	public function uebersicht()
 	{
 		$datum = Input::get('datum');
-//		if($datum == null)
-//		{
-//			$datum = date('Y-m-d');
-//		} else
-//		{
-//			$datum = Input::get('datum');
-//		}
+		if(!date_create_from_format('d.m.Y', $datum))
+		{
+			$datum = date('d.m.Y');
+		}
 		$termine = $this->termineService->holeAlle($datum);
 		return View::make('termine.desktop.uebersicht')
-						->with('termine', $termine);
+						->with('termine', $termine)
+						->with('datum', $datum);
 	}
 
 	public function speichere()
@@ -38,6 +36,7 @@ class TermineDesktopController extends Controller {
 		}
 
 		$termin->mitglied_id = Auth::user()->id;
+		$termin->fill(Input::all());
 		$termin->datum = DateTime::createFromFormat($datumFormat, Input::get('datum'));
 		$termin->aktiv = true;
 		$termin->abgesagt_am = null;

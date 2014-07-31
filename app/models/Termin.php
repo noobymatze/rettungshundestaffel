@@ -21,6 +21,15 @@ class Termin extends Eloquent {
 
 		return $this->hasOne('Adresse', 'id', 'adresse_id');
 	}
+	
+	public function kurzeBeschreibung()
+	{
+		$maxLaenge = 20;
+		$laenge = $maxLaenge - 3; // -3 wegen '...'
+		$string = $this->beschreibung;
+		$string = (strlen($string) > $maxLaenge) ? substr($string, 0, $laenge).'...' : $string;
+		return $string;
+	}
 
 	public function suchgebiet()
 	{

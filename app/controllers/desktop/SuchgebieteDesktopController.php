@@ -218,6 +218,118 @@ class SuchgebieteDesktopController extends Controller {
 		return Response::json(array('success' => true, 'data' => Input::all()));
 	}
 
+	public function editKarte($id = null)
+	{
+		Validator::extend('json', function($attribute, $value, $parameters)
+		{
+
+			$decoded = json_decode($value);
+
+			if ($decoded === null)
+				return false;
+			else
+				return true;
+		});
+
+		Validator::extend('geojsonarray', function($attribute, $value, $parameters = array())
+		{
+			switch ($parameters[0]) {
+				case 'polygon':
+					$geometryType = $parameters[0];
+					break;
+				default:
+					$geometryType = null;
+					break;
+			}
+
+			$geometries = json_decode($value);
+
+			if ($geometries === null || !is_array($geometries))
+				return false;
+
+			foreach ($geometries as $geometry)
+			{
+				if (!isset($geometry->geometry))
+					return false;
+				if (isset($geometryType))
+					if (!isset($geometry->geometry->type) || $geometry->geometry->type !== $geometryType)
+						return false;
+			}
+
+			return true;
+		});
+
+		$rules = array(
+			'flaeche' => 'required|sometimes|json',
+		);
+
+		$messages = array(
+		    'flaeche.json' => 'Die übertragenen Flächendaten sind fehlerhaft.',
+		);
+
+		$validator = Validator::make(Input::all(), $rules, $messages);
+
+		if ($validator->fails())
+		{
+			return Response::json(array(
+				'success' => false,
+				'error' => $validator->messages()->first(),
+				'data' => Input::all(),
+			));
+		}
+
+
+		$geoJsonFlaechen = json_decode(Input::get('flaeche'));
+
+		if ($geoJsonFlaechen === null)
+		{
+			return Response::json(array(
+				'success' => false,
+				'error' => 'Fehler bei Auswerten der Flächen-Koordinaten.',
+				'data' => Input::all(),
+			));
+		}
+
+		$flaechen = array();
+
+		foreach ($geoJsonFlaechen as $geoJsonFlaeche)
+		{
+			$polygon = geoPHP::load(json_encode($geoJsonFlaeche), 'json');
+			$polygonWkt = $polygon->out('wkt');
+			//Log::debug('WKT vom Polygon: ');
+			//Log::debug($polygonWkt);
+			$flaeche = new Flaeche;
+			$flaeche->polygon = $polygonWkt;
+
+			array_push($flaechen, $flaeche);
+		}
+
+		$suchgebiet = $this->suchgebieteService->lade($id);
+		Flaeche::where('suchgebiet_id', '=', $suchgebiet->id)->delete();
+
+		$this->suchgebieteService->speichereZugehoerigeFlaechen($suchgebiet, $flaechen);
+
+		// Falls alles geklappt hat, auf die Suchgebieteübersicht umleiten
+		//return Redirect::to('suchgebiete');
+
+		/*$suchgebiet = $this->suchgebieteService->lade($id);
+
+		$adresse = ($suchgebiet->adresse != null) ? $suchgebiet->adresse : new Adresse;
+
+		$adresse->strasse = Input::get('strasse');
+		$adresse->hausnummer = Input::get('hausnummer');
+		$adresse->zusatz = Input::get('zusatz');
+		$adresse->postleitzahl = Input::get('plz');
+		$adresse->ort = Input::get('ort');
+		$adresse->save();
+
+		$suchgebiet->treffpunkt = $adresse->id;
+
+		$this->suchgebieteService->speichere($suchgebiet);*/
+
+		return Response::json(array('success' => true, 'data' => Input::all()));
+	}
+
 
 	/**
 	 * Fügt ein neues Suchgebiet hinzu

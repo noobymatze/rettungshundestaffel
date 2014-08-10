@@ -24,7 +24,7 @@ class SuchgebieteDesktopController extends Controller {
 		return View::make('suchgebiete.desktop.uebersicht')
 						->with('suchbegriff', null)
 						->with('suchgebiet', $suchgebiet)
-						->with('suchgebiete', $this->suchgebieteService->all());
+						->with('suchgebiete', Suchgebiet::all());
 	}
 
 	/**
@@ -75,7 +75,7 @@ class SuchgebieteDesktopController extends Controller {
 			$this->suchgebieteService->speichere($suchgebiet);
 
 			// Falls alles geklappt hat, auf die Suchgebieteübersicht umleiten
-			return Redirect::to('suchgebiete/' . Str::slug($suchgebiet->name, '_'));
+			return Redirect::to('suchgebiete' . '/' . $suchgebiet->id . '/' . Str::slug($suchgebiet->name, '_'));
 		}
 	}
 

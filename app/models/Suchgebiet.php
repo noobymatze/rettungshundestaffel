@@ -66,11 +66,59 @@ class Suchgebiet extends Eloquent
         return null !== $this->getAnsprechpartner();
     }
 
-    public function getFlaechenAlsArray() 
+    public function getFlaechenAlsArray()
     {
         return $this->flaechen->map(function($flaeche) {
             $flaeche->koordinaten = $flaeche->getPolygonAlsArray();
             return $flaeche;
         });
+    }
+
+    /**
+     * Liefert ein JSON Array aus geoJSON kodierten Flaechen (Polygone) 
+     * 
+     * @param Suchgebiet $suchgebiet das Suchgebiet Model
+     * 
+     * @return Suchgebiet
+     */
+    public function ladeFlaechenAsGeoJson()
+    {
+        $flaechen = array();
+        foreach ($this->flaechen as $flaeche)
+        {
+            $wktPolygon = $flaeche->polygon;
+            $polygon = geoPHP::load($wktPolygon,'wkt');
+            $geoJsonObj = json_decode($polygon->out('json'));
+            array_push($flaechen, $geoJsonObj);
+        }
+
+        if (sizeof($flaechen) < 1)
+            return null;
+
+        return json_encode($flaechen);
+    }
+
+    public function getBoundingBox()
+    {
+        if (sizeof($this->flaechen) > 0)
+        {
+            $polygons = array();
+
+            foreach ($this->flaechen as $flaeche)
+            {
+                $wktPolygon = $flaeche->polygon;
+                $polygon = geoPHP::load($wktPolygon,'wkt');
+
+                array_push($polygons, $polygon);
+            }
+
+
+            //$multipolygon = new geoPHP::MultiPolygon($polygons);
+            $boundingBox = $polygons[0]->getBBox();
+
+            return $boundingBox;
+        }
+        else
+            return null;
     }
 }

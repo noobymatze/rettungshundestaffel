@@ -9,11 +9,14 @@
 }
 .suchgebiete-liste li {
     display: inline-block;
-    border-width: 2px;
-    border-radius: 0.3em;
     margin: 0 0.5em;
     margin-bottom: 1em;
     text-align: center;
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #d3d6db;
+    background-color: white;
 }
 .suchgebiete-liste h2 {
     font-size: 1em;
@@ -22,6 +25,18 @@
 #map {
     height: 20em;
     margin: 2em 0;
+}
+.thumbnail-map, .no-map-thumbnail {
+    height: 170px;
+    width: 200px;
+    background-color: #f6f3f3;
+}
+
+.no-map-thumbnail {
+    line-height: 170px;
+    vertical-align: middle;
+    text-decoration: none;
+    color: #aaa;
 }
 </style>
 @stop
@@ -100,14 +115,65 @@
     <p>Es wurden noch keine Suchgebiete eingetragen</p>
 @else
     <ul class="suchgebiete-liste">
-    @foreach ($suchgebiete as $suchgebiet)
-    <a href="{{ URL::action('SuchgebieteDesktopController@renderSuchgebiet', array('id' => $suchgebiet->id, 'name' => Str::slug($suchgebiet->name, '_'))) }}">
-        <li>
-            <img src="http://placehold.it/200x170">
-            <h2>{{{ $suchgebiet->name }}}</h2>
-        </li>
-    </a>
-    @endforeach
+
+    @for ($i = 0; $i < sizeof($suchgebiete); $i++)
+        <a href="{{ URL::action('SuchgebieteDesktopController@renderSuchgebiet', array('id' => $suchgebiete[$i]->id, 'name' => Str::slug($suchgebiete[$i]->name, '_'))) }}">
+            <li>
+                <!--<img src="http://placehold.it/200x170">-->
+                @if (sizeof($suchgebiete[$i]->flaechen) > 0)
+                    <div id="map{{$i}}" class="thumbnail-map"></div>
+                @else
+                    <div class="no-map-thumbnail">
+                        Keine Karteninformationen
+                    </div>
+                @endif
+                <h2>{{{ $suchgebiete[$i]->name }}}</h2>
+            </li>
+        </a>
+        @if (sizeof($suchgebiete[$i]->flaechen) > 0)
+            <script type="text/javascript">
+                document.addEventListener('DOMContentLoaded', function (evt) {
+                    var loadedPolygons = JSON.parse('{{$suchgebiete[$i]->ladeFlaechenAsGeoJson()}}' || "null");
+                    var boundingBox = JSON.parse('{{json_encode($suchgebiete[$i]->getBoundingBox())}}' || "null");
+
+                    var map = L.map('map{{$i}}', {
+                        scrollWheelZoom: false,
+                        zoomControl: false,
+                        attributionControl: false,
+                    });
+
+                    L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpg', { maxZoom: 18, subdomains: '1234' }).addTo(map);
+
+                    if (boundingBox !== null) {
+                        map.fitBounds([
+                            [boundingBox.miny, boundingBox.minx],
+                            [boundingBox.maxy, boundingBox.maxx]
+                        ])
+                    }
+
+                    // Initialise the FeatureGroup to store editable layers
+                    var drawnItems = new L.FeatureGroup();
+                    map.addLayer(drawnItems);
+
+                    console.log(loadedPolygons);
+
+                    if (loadedPolygons !== null && $.isArray(loadedPolygons)) {
+                        for (var i = 0; i < loadedPolygons.length; i++) {
+                            console.log(loadedPolygons[i].type);
+                            if (loadedPolygons[i].type == 'Polygon') {
+                                var latlngArray = [];
+                                var coordinates = loadedPolygons[i].coordinates[0];
+                                for (var j = 0; j < coordinates.length; j++) {
+                                    latlngArray[j] = L.latLng(coordinates[j][1], coordinates[j][0]);
+                                }
+                                drawnItems.addLayer(L.polygon(latlngArray));
+                            }
+                        }
+                    }
+                });
+            </script>
+        @endif
+    @endfor
     </ul>
 @endif
 @stop

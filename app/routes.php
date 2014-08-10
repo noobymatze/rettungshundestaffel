@@ -18,7 +18,7 @@ Route::get('/login', 'LoginController@renderLogin');
 Route::post('/login', 'LoginController@login');
 Route::get('/ausloggen', 'LoginController@ausloggen');
 Route::get('/suchgebiete', 'SuchgebieteDesktopController@renderSuchgebiete');
-Route::get('/suchgebiete/anlegen', 'SuchgebieteDesktopController@renderAddSuchgebiet');
+//Route::get('/suchgebiete/anlegen', 'SuchgebieteDesktopController@renderAddSuchgebiet');
 Route::post('/suchgebiete/anlegen', 'SuchgebieteDesktopController@add');
 Route::get('/', 'LoginController@renderLogin');
 

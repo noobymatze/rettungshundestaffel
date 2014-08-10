@@ -100,6 +100,11 @@
     top: 0;
 }
 
+.btn-area {
+    text-align: center;
+    padding: 1em;
+    background-color: #fff;
+}
 </style>
 @yield('suchgebiet-head')
 @stop

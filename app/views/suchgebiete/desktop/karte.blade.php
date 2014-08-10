@@ -59,6 +59,10 @@ width: 16em;
     position: relative;
 }
 
+#karte-form {
+
+}
+
 </style>
 @stop
 
@@ -261,7 +265,7 @@ width: 16em;
             <div id="read-map">
                 <div class="search-overlay">
                     <form class="search-wrapper" id="read-geocode-form">
-                        <input id="read-geocode-input" placeholder="Gehe zu..." class="holo" type="text" class="geocode-input">
+                        <input id="read-geocode-input" placeholder="Gehe zu..." class="holo geocode-input" type="text">
                         <button id="read-geocode-button" class="btn geocode-button"><i class="glyphicon glyphicon-search"></i></button>
                     </form>
                 </div>
@@ -273,7 +277,7 @@ width: 16em;
             <div id="edit-map">
                 <div class="search-overlay">
                     <form class="search-wrapper" id="edit-geocode-form">
-                        <input id="edit-geocode-input" placeholder="Gehe zu..." class="holo" type="text" class="geocode-input">
+                        <input id="edit-geocode-input" placeholder="Gehe zu..." class="holo geocode-input" type="text">
                         <button id="edit-geocode-button" class="btn geocode-button"><i class="glyphicon glyphicon-search"></i></button>
                     </form>
                 </div>
@@ -286,6 +290,7 @@ width: 16em;
         </section>
     @endif
 </section>
+@if ($flaechen != null)
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function(evt) {
         var loadedPolygons = JSON.parse('{{$flaechen}}' || "null");
@@ -322,6 +327,38 @@ width: 16em;
                 }
             }
         }
+
+        $("#read-geocode-form").submit(function(evt) {
+            updateMap();
+            return false; // avoid to execute the actual submit of the form.
+        });
+
+        var updateMap = function () {
+            var address = $('#read-geocode-input').val();
+            console.log(address);
+            var geocoder = new google.maps.Geocoder();
+            if (geocoder) {
+                geocoder.geocode({ 'address': address}, function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        console.log(results);
+                        document.getElementById('read-geocode-input').value = results[0].formatted_address;
+                        var lat = results[0].geometry.location.k;
+                        var lng = results[0].geometry.location.B;
+                        var center = L.latLng(lat, lng)
+                        
+                        var southWest = L.latLng(results[0].geometry.viewport.xa.j, results[0].geometry.viewport.pa.j),
+                        northEast = L.latLng(results[0].geometry.viewport.xa.k, results[0].geometry.viewport.pa.k),
+                        bounds = L.latLngBounds(southWest, northEast);
+
+                        readMap.fitBounds(bounds);
+                        readMap.setView(center);
+                    }
+                    else
+                        console.log("Geocoding failed: " + status);
+                });
+            }
+        };
     });
 </script>
+@endif
 @stop

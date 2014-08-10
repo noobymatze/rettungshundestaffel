@@ -40,6 +40,31 @@ class SuchgebieteService {
         $suchgebiet->flaechen()->saveMany($flaechen);
     }
 
+    /**
+     * 
+     * @param $suchgebiet
+     * @param array $eigenschaften
+     * @return {boolean}, true falls die Eigenschaften angelegt worden sind, ansonsten false.
+     */
+    public function speichereEigenschaften($suchgebiet, $eigenschaften)
+    {
+        $ids = array();
+        foreach ($eigenschaften as $eigenschaft)
+        {
+            $record = Eigenschaft::where('name', '=', $eigenschaft)->first();
+            if ($record == null)
+            {
+                $record = new Eigenschaft;
+                $record->name = $eigenschaft;
+                $record->save();
+            }
+            $id = $record->id;
+            array_push($ids, $id);
+        }
+
+        $suchgebiet->landschaftseigenschaften()->sync($ids);
+    }
+
 	/**
 	 * Liefert ein Suchgebiet mit einer Id aus der Datenbank.
      * 

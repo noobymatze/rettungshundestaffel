@@ -30,7 +30,6 @@ Route::post('suchgebiete/{id}/ansprechpartner', 'SuchgebieteDesktopController@ed
 Route::post('suchgebiete/{id}/karte', 'SuchgebieteDesktopController@editKarte')->where('id', '[0-9]+');
 Route::post('suchgebiete/{id}/eigenschaften', 'SuchgebieteDesktopController@editEigenschaften')->where('id', '[0-9]+');
 
-
 Route::group(array('before' => 'auth'), function () 
 {
     Route::get('/mitglieder', 'MitgliederDesktopController@uebersicht');

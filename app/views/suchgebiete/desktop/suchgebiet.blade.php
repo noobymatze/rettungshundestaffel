@@ -97,13 +97,6 @@ text-align: right;
 margin-right: 1em;
 }
 
-.vertical-form .btn-area {
-    text-align: center;
-padding: 1em;
-background-color: #fff;
-
-}
-
 .edit-error {
     text-align: center;
 border-radius: 0.5em;
@@ -117,6 +110,14 @@ background-color: #F3A0A0;
 #beschreibung-area {
     width: 100%;
     min-height: 8em;
+}
+
+#eigenschaften-section>ul {
+    padding: 0;
+}
+
+#eigenschaften-section>ul>li {
+    list-style: none;
 }
 </style>
 @stop
@@ -227,7 +228,7 @@ background-color: #F3A0A0;
             </div>
             <div>
                 <header class="editable">
-                    <h3>Landschaft</h3>
+                    <h3>Eigenschaften</h3>
                     @if (Auth::user()->rolle == 'Staffelleitung')
                         <a href="#" class="edit" id="edit-eigenschaften-button">bearbeiten</a>
                     @endif
@@ -240,73 +241,85 @@ background-color: #F3A0A0;
                             @endforeach
                         </ul>
                     @else
-                        <p>Keine Landschaftseigenschaften.</p>
+                        <p>Keine Eigenschaften.</p>
                     @endif
                 </section>
 
                 @if (Auth::user()->rolle == 'Staffelleitung')
-                <script type="text/javascript">
-                            document.addEventListener("DOMContentLoaded", function (evt) {
-                                var editEigenschaftenButton = document.getElementById("edit-eigenschaften-button");
-                                var editEigenschaftenSection = document.getElementById("edit-eigenschaften-section");
-                                var eigenschaftenSection = document.getElementById("eigenschaften-section");
-                                var eigenschaftenAbbrechenButton = document.getElementById("eigenschaften-abbrechen-button");
+                    <script type="text/javascript">
+                        document.addEventListener("DOMContentLoaded", function (evt) {
 
-                                var hideEditSection = function () {
-                                    editEigenschaftenSection.style.display = "none";
-                                    editEigenschaftenButton.style.display = "block";
-                                    eigenschaftenSection.style.display = "block";
-                                };
+                            var eigenschaften = ('{{{$suchgebiet->landschaftseigenschaftenAsString()}}}').split(',');
 
-                                var showEditSection = function () {
-                                    eigenschaftenSection.style.display = "none";
-                                    editEigenschaftenButton.style.display = "none";
-                                    editEigenschaftenSection.style.display = "block";
-                                    return false;
-                                };
+                            console.log(eigenschaften);
 
-                                $(editEigenschaftenButton).on("click", function(event) {
-                                    event.preventDefault();
-                                    showEditSection();
+                            for (var i = 0; i < eigenschaften.length; i++) {
+                                $('#eigenschaften-input').tagsinput('add', eigenschaften[i]);
+                            }
+
+                            var editEigenschaftenButton = document.getElementById("edit-eigenschaften-button");
+                            var editEigenschaftenSection = document.getElementById("edit-eigenschaften-section");
+                            var eigenschaftenSection = document.getElementById("eigenschaften-section");
+                            var eigenschaftenAbbrechenButton = document.getElementById("eigenschaften-abbrechen-button");
+
+                            var hideEditSection = function () {
+                                editEigenschaftenSection.style.display = "none";
+                                editEigenschaftenButton.style.display = "block";
+                                eigenschaftenSection.style.display = "block";
+                            };
+
+                            var showEditSection = function () {
+                                eigenschaftenSection.style.display = "none";
+                                editEigenschaftenButton.style.display = "none";
+                                editEigenschaftenSection.style.display = "block";
+                                return false;
+                            };
+
+                            $(editEigenschaftenButton).on("click", function(event) {
+                                event.preventDefault();
+                                showEditSection();
+                            });
+
+                            eigenschaftenAbbrechenButton.addEventListener('click', hideEditSection);
+
+
+
+                            $("#eigenschaften-form").submit(function() {
+                                var url = "{{ URL::action('SuchgebieteDesktopController@editEigenschaften', array('id' => $suchgebiet->id)) }}"; // the script where you handle the form input.
+
+                                console.log($('#eigenschaften-select').val());
+
+                                $.ajax({
+                                    type: "POST",
+                                    url: url,
+                                    data: $("#eigenschaften-form").serialize(), // serializes the form's elements.
+                                    success: function(data) {
+                                        if (data.success === true) {
+                                            location.reload();
+                                        } else if (data.success === false) {
+                                            console.log(data);
+                                            var eigenschaftenError = document.getElementById('eigenschaften-error');
+                                            eigenschaftenError.innerHTML = data.error;
+                                            eigenschaftenError.style.display = "block";
+                                        } else {
+                                            console.log("Unbekannter Fehler.");
+                                        }
+                                    }
                                 });
 
-                                eigenschaftenAbbrechenButton.addEventListener('click', hideEditSection);
-
-
-
-                                /*$("#adresse-form").submit(function() {
-                                    var url = "{{ URL::action('SuchgebieteDesktopController@editAdresse', array('id' => $suchgebiet->id)) }}"; // the script where you handle the form input.
-
-                                    $.ajax({
-                                           type: "POST",
-                                           url: url,
-                                           data: $("#adresse-form").serialize(), // serializes the form's elements.
-                                           success: function(data) {
-                                                if (data.success === true) {
-                                                    location.reload();
-                                                } else if (data.success === false) {
-                                                    console.log(data);
-                                                    var adresseError = document.getElementById('adresse-error');
-                                                    adresseError.innerHTML = data.error;
-                                                    adresseError.style.display = "block";
-                                                } else {
-
-                                                }
-                                           }
-                                         });
-
-                                    return false; // avoid to execute the actual submit of the form.
-                                });*/
+                                return false; // avoid to execute the actual submit of the form.
                             });
-                        </script>
+                        });
+                    </script>
                     <section id="edit-eigenschaften-section" style="display:none;">
                         {{Form::open(array('action' => array('SuchgebieteDesktopController@editEigenschaften', $suchgebiet->id), 'id' => 'eigenschaften-form', 'class' => 'vertical-form'))}}
                             <div>
-                                <input style="width: 100%;" data-role="tagsinput" type="text" id="eigenschaften-select" name="eigenschaften">
+                                <input style="width: 100%;" data-role="tagsinput" type="text" id="eigenschaften-input" name="eigenschaften">
                             </div>
                             <button class="btn btn-primary btn-xs">Änderungen speichern</button>
                             <button type="button" class="btn btn-default btn-xs" id="eigenschaften-abbrechen-button">Abbrechen</button>
                         {{Form::close()}}
+                        <p id="eigenschaften-error" class="edit-error" style="display: none;"></p>
                     </section>
                 @endif
             </div>

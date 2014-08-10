@@ -163,6 +163,32 @@ class SuchgebieteDesktopController extends Controller {
 		return Response::json(array('success' => true, 'data' => Input::all()));
 	}
 
+	public function editEigenschaften($id = null)
+	{
+		$rules = array(
+			'eigenschaften' => '',
+		);
+
+		$messages = array(
+		);
+
+		$validator = Validator::make(Input::all(), $rules, $messages);
+
+		if ($validator->fails())
+		{
+			return Response::json(array(
+				'success' => false,
+				'error' => $validator->messages()->first(),
+				'data' => Input::all(),
+			));
+		}
+
+		$suchgebiet = $this->suchgebieteService->lade($id);
+		$this->suchgebieteService->speichereEigenschaften($suchgebiet, explode(",", Input::get('eigenschaften')));
+
+		return Response::json(array('success' => true, 'data' => Input::all()));
+	}
+
 	public function editAnsprechpartner($id = null)
 	{
 		$rules = array(

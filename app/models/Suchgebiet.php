@@ -12,13 +12,6 @@ class Suchgebiet extends Eloquent
         return $this->belongsTo('Adresse', 'treffpunkt');
     }
 
-    /*
-    public function koordinaten()
-    {
-        return $this->belongsToMany('Koordinate', 'suchgebiet_hat_koordinaten', 'suchgebiet_id', 'koordinate_id');
-    }
-    */
-
     public function flaechen()
     {
         return $this->hasMany('Flaeche', 'suchgebiet_id');
@@ -35,11 +28,35 @@ class Suchgebiet extends Eloquent
             'Landschaftseigenschaft', 
             'suchgebiet_hat_landschaftseigenschaft',
             'suchgebiet_id',
-            'Landschaftseigenschaft_id');
+            'landschaftseigenschaft_id');
     }
 
-    public function getAnsprechpartner()
+    public function landschaftseigenschaftenAsString($delimiter = ',') 
     {
-        return null;
+        return join($delimiter, $this->landschaftseigenschaften->map(function($eigenschaft) {
+            return $eigenschaft->name;
+        })->toArray());
+    }
+
+    public function getAnsprechpartner() 
+    {
+        if(!isset($this->ansprechpartner)) {
+            $this->ansprechpartner = $this->personen()->whereTyp('Ansprechpartner')->first();
+        }
+
+        return $this->ansprechpartner;
+    }
+
+    public function hatAnsprechpartner() 
+    {
+        return null !== $this->getAnsprechpartner();
+    }
+
+    public function getFlaechenAlsArray() 
+    {
+        return $this->flaechen->map(function($flaeche) {
+            $flaeche->koordinaten = $flaeche->getPolygonAlsArray();
+            return $flaeche;
+        });
     }
 }

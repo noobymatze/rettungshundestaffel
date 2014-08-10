@@ -92,6 +92,7 @@ require app_path().'/filters.php';
 require app_path().'/extensions/blade.php';
 require app_path().'/extensions/html.php';
 require app_path().'/extensions/forms.php';
+require app_path().'/extensions/str.php';
 
 /*
 |--------------------------------------------------------------------------

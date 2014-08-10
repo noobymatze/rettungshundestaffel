@@ -16,4 +16,10 @@ class Person extends Eloquent
     {
         return $this->hasOne('Adresse');
     }
+
+    public function vollerName()
+    {
+        return $this->vorname . ' ' . $this->nachname;
+    }
+
 }

@@ -44,4 +44,33 @@ class Suchgebiet extends Eloquent
             'suchgebiet_id',
             'eigenschaft_id');
     }
+
+    public function landschaftseigenschaftenAsString($delimiter = ',') 
+    {
+        return join($delimiter, $this->landschaftseigenschaften->map(function($eigenschaft) {
+            return $eigenschaft->name;
+        })->toArray());
+    }
+
+    public function getAnsprechpartner() 
+    {
+        if(!isset($this->ansprechpartner)) {
+            $this->ansprechpartner = $this->personen()->whereTyp('Ansprechpartner')->first();
+        }
+
+        return $this->ansprechpartner;
+    }
+
+    public function hatAnsprechpartner() 
+    {
+        return null !== $this->getAnsprechpartner();
+    }
+
+    public function getFlaechenAlsArray() 
+    {
+        return $this->flaechen->map(function($flaeche) {
+            $flaeche->koordinaten = $flaeche->getPolygonAlsArray();
+            return $flaeche;
+        });
+    }
 }

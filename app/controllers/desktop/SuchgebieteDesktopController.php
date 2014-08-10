@@ -6,9 +6,10 @@
  */
 class SuchgebieteDesktopController extends Controller {
 
-	public function __construct(SuchgebieteService $suchgebieteService)
+	public function __construct(SuchgebieteService $suchgebieteService, MitgliederService $mitgliederService)
 	{
 		$this->suchgebieteService = $suchgebieteService;
+		$this->mitgliederService = $mitgliederService;
 	}
 
 	/**
@@ -18,8 +19,11 @@ class SuchgebieteDesktopController extends Controller {
 	 */
 	public function renderSuchgebiete()
 	{
+		$suchgebiet = new Suchgebiet;
+
 		return View::make('suchgebiete.desktop.uebersicht')
 						->with('suchbegriff', null)
+						->with('suchgebiet', $suchgebiet)
 						->with('suchgebiete', $this->suchgebieteService->all());
 	}
 
@@ -33,7 +37,7 @@ class SuchgebieteDesktopController extends Controller {
 		$suchgebiet = new Suchgebiet;
 
 		return View::make('suchgebiete.desktop.add-suchgebiet')
-						->with('suchgebiet', $suchgebiet);
+			->with('suchgebiet', $suchgebiet);
 	}
 
 	/**
@@ -42,6 +46,185 @@ class SuchgebieteDesktopController extends Controller {
 	 * @return {View} 
 	 */
 	public function add()
+	{
+		$rules = array(
+			'bezeichnung' => 'required|min:3|max:20|unique:suchgebiet,name',
+		);
+
+		$messages = array(
+		    'bezeichnung.required' => 'Das Suchgebiet muss eine Bezeichnung haben.',
+		    'bezeichnung.max' => 'Das Suchgebiet darf nur maximal aus 20 Zeichen bestehen.',
+		    'bezeichnung.min' => 'Das Suchgebiet muss mindestens aus 3 Zeichen bestehen.',
+		    'bezeichnung.unique' => 'Ein Suchgebiet mit diesem Namen gibt es schon.'
+		);
+
+		$validator = Validator::make(Input::all(), $rules, $messages);
+
+		if ($validator->fails())
+		{
+			return Redirect::back()
+				->withErrors($validator)
+				->withInput(Input::all());
+		}
+		else
+		{
+			// neues Suchgebiet erstellen
+			$suchgebiet = new Suchgebiet;
+			$suchgebiet->name = Input::get('bezeichnung');
+
+			$this->suchgebieteService->speichere($suchgebiet);
+
+			// Falls alles geklappt hat, auf die Suchgebieteübersicht umleiten
+			return Redirect::to('suchgebiete/' . Str::slug($suchgebiet->name, '_'));
+		}
+	}
+
+	/**
+	 * Zeigt ein Suchgebiet mit Infos an
+	 *
+	 * @return {View} 
+	 */
+	public function renderSuchgebiet($id = null)
+	{
+		//Log::debug(str_replace('_', ' ', $name));
+		$suchgebiet = $this->suchgebieteService->lade($id);
+
+		$flaechen = $this->suchgebieteService->ladeFlaechenAsGeoJson($suchgebiet);
+		$boundingBox = $this->suchgebieteService->getBoundingBox($suchgebiet);
+		$mitglieder = Mitglied::all();
+
+		return View::make('suchgebiete.desktop.suchgebiet')
+			->with('suchgebiet', $suchgebiet)
+			->with('flaechen', $flaechen)
+			->with('boundingBox', json_encode($boundingBox))
+			->with('mitglieder', $mitglieder);
+	}
+
+	/**
+	 * Zeigt ein Suchgebiet mit der Karte an
+	 *
+	 * @return {View} 
+	 */
+	public function renderKarte($id = null)
+	{
+		//Log::debug(str_replace('_', ' ', $name));
+		$suchgebiet = $this->suchgebieteService->lade($id);
+
+		$flaechen = $this->suchgebieteService->ladeFlaechenAsGeoJson($suchgebiet);
+		$boundingBox = $this->suchgebieteService->getBoundingBox($suchgebiet);
+		$mitglieder = Mitglied::all();
+
+		return View::make('suchgebiete.desktop.karte')
+			->with('suchgebiet', $suchgebiet)
+			->with('flaechen', $flaechen)
+			->with('boundingBox', json_encode($boundingBox));
+	}
+
+	public function editAdresse($id = null)
+	{
+		$rules = array(
+			'strasse' => 'min:3|max:30',
+			'hausnummer' => 'digits_between:1,10|numeric',
+			'zusatz' => 'min:1|max:30',
+			'ort' => 'min:2|max:30',
+			'plz' => 'digits_between:4,6|numeric',
+		);
+
+		$messages = array(
+		    'strasse' => 'Die Straße muss zwischen 3 und 30 Zeichen haben.',
+		);
+
+		$validator = Validator::make(Input::all(), $rules, $messages);
+
+		if ($validator->fails())
+		{
+			return Response::json(array(
+				'success' => false,
+				'error' => $validator->messages()->first(),
+				'data' => Input::all(),
+			));
+		}
+
+		$suchgebiet = $this->suchgebieteService->lade($id);
+
+		$adresse = ($suchgebiet->adresse != null) ? $suchgebiet->adresse : new Adresse;
+
+		$adresse->strasse = Input::get('strasse');
+		$adresse->hausnummer = Input::get('hausnummer');
+		$adresse->zusatz = Input::get('zusatz');
+		$adresse->postleitzahl = Input::get('plz');
+		$adresse->ort = Input::get('ort');
+		$adresse->save();
+
+		$suchgebiet->treffpunkt = $adresse->id;
+
+		$this->suchgebieteService->speichere($suchgebiet);
+
+		return Response::json(array('success' => true, 'data' => Input::all()));
+	}
+
+	public function editAnsprechpartner($id = null)
+	{
+		$rules = array(
+			'ansprechpartner' => 'numeric',
+		);
+
+		$messages = array(
+		    'ansprechpartner' => 'Den Ansprechpartner gibt es nicht.',
+		);
+
+		$validator = Validator::make(Input::all(), $rules, $messages);
+
+		if ($validator->fails())
+		{
+			return Response::json(array(
+				'success' => false,
+				'error' => $validator->messages()->first(),
+				'data' => Input::all(),
+			));
+		}
+
+		$suchgebiet = $this->suchgebieteService->lade($id);
+
+		$suchgebiet->ansprechpartner = Input::get('ansprechpartner');
+
+		$this->suchgebieteService->speichere($suchgebiet);
+
+		return Response::json(array('success' => true, 'data' => Input::all()));
+	}
+
+	public function editBeschreibung($id = null)
+	{
+		$rules = array(
+			'beschreibung' => '',
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails())
+		{
+			return Response::json(array(
+				'success' => false,
+				'error' => $validator->messages()->first(),
+				'data' => Input::all(),
+			));
+		}
+
+		$suchgebiet = $this->suchgebieteService->lade($id);
+		$suchgebiet->beschreibung = Input::get('beschreibung');
+
+		$this->suchgebieteService->speichere($suchgebiet);
+
+		return Response::json(array('success' => true, 'data' => Input::all()));
+	}
+
+
+	/**
+	 * Fügt ein neues Suchgebiet hinzu
+	 *
+	 * @return {View} 
+	 */
+	/*public function add()
 	{
 		Validator::extend('json', function($attribute, $value, $parameters)
 		{
@@ -139,5 +322,5 @@ class SuchgebieteDesktopController extends Controller {
 
 		// Falls alles geklappt hat, auf die Suchgebieteübersicht umleiten
 		return Redirect::to('suchgebiete');
-	}
+	}*/
 }

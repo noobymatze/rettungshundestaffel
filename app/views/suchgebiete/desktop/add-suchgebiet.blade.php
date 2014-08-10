@@ -23,28 +23,6 @@ label {
 	margin: auto 0;
 	position: relative;
 }
-
-input.holo[type='text']:before {
-	content:"Achtung!";color:#ff0000;
-}
-
-input.holo[type='text'], textarea.holo {
-    /*width: 200px; */
-/* font-family: "Roboto", "Droid Sans", sans-serif; */
-/* font-size: 16px; */
-/* margin: 0; */
-padding: 2px 8px 2px 8px;
-/* position: relative; */
-/* display: block; */
-outline: none;
-border: none;
-background: bottom left linear-gradient(#a9a9a9, #a9a9a9) no-repeat, bottom center linear-gradient(#a9a9a9, #a9a9a9) repeat-x, bottom right linear-gradient(#a9a9a9, #a9a9a9) no-repeat;
-background-size: 1px 6px, 1px 1px, 1px 6px;
-}
-input.holo[type='text']:hover, textarea.holo:hover, input.holo[type='text']:focus, textarea.holo:focus {
-	background: bottom left linear-gradient(#0099cc, #0099cc) no-repeat, bottom center linear-gradient(#0099cc, #0099cc) repeat-x, bottom right linear-gradient(#0099cc, #0099cc) no-repeat;
-	background-size: 1px 6px, 1px 1px, 1px 6px;	
-} 
 .search-overlay {
 	position: absolute;
 top: 0;
@@ -227,8 +205,11 @@ window.onload = function (event) {
     };
 };
 </script>
-<h1>Neues Suchgebiet {{ Form::text('bezeichnung', null, array('class' => 'holo', 'form' => 'suchgebiet-form')) }}{{ Form::feedback($errors->has('bezeichnung')) }}
+
+<h1>Neues Suchgebiet {{ Form::text('bezeichnung', null, array('class' => 'holo', 'form' => 'suchgebiet-form')) }}
+{{ Form::feedback($errors->has('bezeichnung')) }}
 </h1>
+
 @if($errors->any())
 	<div class="alert alert-danger" role="alert">
 	@foreach ($errors->all() as $error)

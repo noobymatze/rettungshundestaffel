@@ -7,10 +7,24 @@ class Suchgebiet extends Eloquent
 
     protected $fillable = array('name', 'beschreibung', 'treffpunkt', 'created_at', 'updated_at');
 
-    public function treffpunkt()
+    // funktion darf nicht heißen, wie Tabellenspalte, deswegen "adresse"
+    public function adresse()
     {
-        return $this->belongsTo('Adresse', 'treffpunkt');
+        return $this->belongsTo('Adresse', 'treffpunkt', 'id');
     }
+
+    // funktion darf nicht heißen, wie Tabellenspalte, deswegen "ansprechperson"
+    public function ansprechperson()
+    {
+        return $this->belongsTo('Mitglied', 'ansprechpartner', 'id');
+    }
+
+    /*
+    public function koordinaten()
+    {
+        return $this->belongsToMany('Koordinate', 'suchgebiet_hat_koordinaten', 'suchgebiet_id', 'koordinate_id');
+    }
+    */
 
     public function flaechen()
     {
@@ -25,10 +39,10 @@ class Suchgebiet extends Eloquent
     public function landschaftseigenschaften()
     {
         return $this->belongsToMany(
-            'Landschaftseigenschaft', 
-            'suchgebiet_hat_landschaftseigenschaft',
+            'Eigenschaft', 
+            'suchgebiet_eigenschaft',
             'suchgebiet_id',
-            'landschaftseigenschaft_id');
+            'eigenschaft_id');
     }
 
     public function landschaftseigenschaftenAsString($delimiter = ',') 

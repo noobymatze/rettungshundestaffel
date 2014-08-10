@@ -12,7 +12,9 @@ body {
     /* font-family: 'Noto Sans', sans-serif;*/
     /*font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
   /*line-height: 150%;*/
-	background-color: #f9f9f9;
+	/*background-color: #f9f9f9;*/
+    background-color: #eee;
+
 	/*background-image: url('../images/background.png');*/
 }
 
@@ -115,4 +117,43 @@ body {
 
 .login__btn {
     margin-top: 3em;
+}
+
+
+input.holo[type='text']:before {
+    content:"Achtung!";color:#ff0000;
+}
+
+input.holo[type='text'], textarea.holo {
+padding: 2px 8px 2px 8px;
+
+outline: none;
+border: none;
+background: bottom left linear-gradient(#a9a9a9, #a9a9a9) no-repeat, bottom center linear-gradient(#a9a9a9, #a9a9a9) repeat-x, bottom right linear-gradient(#a9a9a9, #a9a9a9) no-repeat;
+background-size: 1px 6px, 1px 1px, 1px 6px;
+}
+input.holo[type='text']:hover, textarea.holo:hover, input.holo[type='text']:focus, textarea.holo:focus {
+    background: bottom left linear-gradient(#0099cc, #0099cc) no-repeat, bottom center linear-gradient(#0099cc, #0099cc) repeat-x, bottom right linear-gradient(#0099cc, #0099cc) no-repeat;
+    background-size: 1px 6px, 1px 1px, 1px 6px; 
+} 
+
+#add-suchgebiet-form {
+    display: inline-block;
+}
+
+#suchgebiete-uebersicht-header {
+    vertical-align: middle;
+    margin-bottom: 1.5em;
+}
+
+#suchgebiete-uebersicht-header h1 {
+    display: inline-block;
+    margin: 0;
+    margin-right: 0.5em;
+    font-size: 2em;
+    vertical-align: middle;
+}
+
+#add-section {
+    display: inline-block;
 }

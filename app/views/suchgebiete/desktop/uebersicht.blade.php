@@ -54,21 +54,59 @@
 
     };*/
 </script>
-<h1>Suchgebiete 
-@if (Auth::user()->rolle == 'Staffelleitung')
-    <a href="{{ URL::action('SuchgebieteDesktopController@renderAddSuchgebiet') }}" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Neues Suchgebiet hinzufügen</a>
-@endif
-</h1>
+<header id="suchgebiete-uebersicht-header">
+    <h1>Suchgebiete</h1>
+    @if (Auth::user()->rolle == 'Staffelleitung')
+        <button class="btn btn-primary" id="add-suchgebiet-button" {{{ $errors->has('bezeichnung') ? 'style=display:none;' : '' }}}>
+            <i class="glyphicon glyphicon-plus"></i> Neues Suchgebiet anlegen
+        </button>
+        <section id="add-section" {{{ $errors->has('bezeichnung') ? '' : 'style=display:none;' }}}>
+            {{ Form::model($suchgebiet, array('action' => 'SuchgebieteDesktopController@add', 'role' => 'form', 'id' => 'add-suchgebiet-form')) }}
+                {{ Form::text('bezeichnung', null, array('class' => 'holo', 'id' => 'name-input', 'placeholder' => 'Name des Suchgebiets')) }}
+                <button type='submit' class='btn btn-primary'>
+                    <i class='glyphicon glyphicon-ok'></i>
+                </button>
+            {{ Form::close() }}
+            <button id='cancel-button' class='btn'>Abbrechen</button>
+            @if ($errors->has('bezeichnung'))
+                <span>{{{$errors->first('bezeichnung')}}}</span>
+            @endif
+        </section>
+
+        <script type="text/javascript">
+            window.onload = function () {
+                var addButton = document.getElementById('add-suchgebiet-button');
+                var cancelButton = document.getElementById('cancel-button');
+                var addSection = document.getElementById('add-section');
+                var nameInput = document.getElementById('name-input');
+                
+                addButton.addEventListener('click', function (evt) {
+                    addSection.style.display = 'inline-block';
+                    addButton.style.display = 'none';
+                    nameInput.focus();
+                });
+
+                cancelButton.addEventListener('click', function (evt) {
+                    addButton.style.display = 'inline-block';
+                    addSection.style.display = 'none';
+                });
+            };
+        </script>
+    @endif
+</header>
+
 <!--<div id="map"></div>-->
 @if (sizeof($suchgebiete) < 1)
     <p>Es wurden noch keine Suchgebiete eingetragen</p>
 @else
     <ul class="suchgebiete-liste">
     @foreach ($suchgebiete as $suchgebiet)
+    <a href="{{ URL::action('SuchgebieteDesktopController@renderSuchgebiet', array('id' => $suchgebiet->id, 'name' => Str::slug($suchgebiet->name, '_'))) }}">
         <li>
             <img src="http://placehold.it/200x170">
             <h2>{{{ $suchgebiet->name }}}</h2>
         </li>
+    </a>
     @endforeach
     </ul>
 @endif

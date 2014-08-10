@@ -31,4 +31,12 @@ class Adresse extends Eloquent
     {
         $this->attributes['koordinate'] = DB::raw("PointFromText('" . $value . "')");
     }
+
+    public function setHausnummerAttribute($value)
+    {
+        if ($value === '' || is_null($value))
+            $this->attributes['hausnummer'] = null;
+        else
+            $this->attributes['hausnummer'] = $value;
+    }
 }

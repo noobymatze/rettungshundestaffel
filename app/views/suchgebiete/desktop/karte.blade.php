@@ -169,6 +169,9 @@ width: 16em;
 
                     var loadEditMap = function () {
                         if (editMap == null) {
+                            var loadedPolygons = JSON.parse('{{$flaechen}}' || "null");
+                            var boundingBox = JSON.parse('{{$boundingBox}}' || "null");
+
                             editMap = L.map('edit-map', {
                                 scrollWheelZoom: false,
                             }).setView([54.7803950, 9.4357070], 13);
@@ -176,11 +179,17 @@ width: 16em;
                             //L.tileLayer('http://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', { maxZoom: 18 }).addTo(map);
                             //L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18 }).addTo(map);
 
+                            if (boundingBox !== null) {
+                                editMap.fitBounds([
+                                    [boundingBox.miny, boundingBox.minx],
+                                    [boundingBox.maxy, boundingBox.maxx]
+                                ])
+                            }
+
                             // Initialise the FeatureGroup to store editable layers
                             drawnItems = new L.FeatureGroup();
                             editMap.addLayer(drawnItems);
 
-                            var loadedPolygons = JSON.parse('{{$flaechen or null}}');
                             console.log(loadedPolygons);
 
                             if (loadedPolygons !== null && $.isArray(loadedPolygons)) {
@@ -277,4 +286,42 @@ width: 16em;
         </section>
     @endif
 </section>
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function(evt) {
+        var loadedPolygons = JSON.parse('{{$flaechen}}' || "null");
+        var boundingBox = JSON.parse('{{$boundingBox}}' || "null");
+
+        var readMap = L.map('read-map', {
+            scrollWheelZoom: false,
+        });
+
+        L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpg', { maxZoom: 18, subdomains: '1234' }).addTo(readMap);
+
+        if (boundingBox !== null) {
+            readMap.fitBounds([
+                [boundingBox.miny, boundingBox.minx],
+                [boundingBox.maxy, boundingBox.maxx]
+            ])
+        }
+
+        // Initialise the FeatureGroup to store editable layers
+        var drawnItems = new L.FeatureGroup();
+        readMap.addLayer(drawnItems);
+        console.log("poly");
+
+        if (loadedPolygons !== null && $.isArray(loadedPolygons)) {
+            for (var i = 0; i < loadedPolygons.length; i++) {
+                console.log(loadedPolygons[i].type);
+                if (loadedPolygons[i].type == 'Polygon') {
+                    var latlngArray = [];
+                    var coordinates = loadedPolygons[i].coordinates[0];
+                    for (var j = 0; j < coordinates.length; j++) {
+                        latlngArray[j] = L.latLng(coordinates[j][1], coordinates[j][0]);
+                    }
+                    drawnItems.addLayer(L.polygon(latlngArray));
+                }
+            }
+        }
+    });
+</script>
 @stop

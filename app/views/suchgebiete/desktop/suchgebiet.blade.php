@@ -316,12 +316,22 @@ background-color: #F3A0A0;
                             <div>
                                 <input style="width: 100%;" data-role="tagsinput" type="text" id="eigenschaften-input" name="eigenschaften">
                             </div>
-                            <button class="btn btn-primary btn-xs">Änderungen speichern</button>
-                            <button type="button" class="btn btn-default btn-xs" id="eigenschaften-abbrechen-button">Abbrechen</button>
+                            <div class="btn-area">
+                                <button class="btn btn-primary btn-xs">Änderungen speichern</button>
+                                <button type="button" class="btn btn-default btn-xs" id="eigenschaften-abbrechen-button">Abbrechen</button>
+                            </div>
                         {{Form::close()}}
                         <p id="eigenschaften-error" class="edit-error" style="display: none;"></p>
                     </section>
                 @endif
+            </div>
+            <div>
+                <header>
+                    <h3>Fläche</h3>
+                </header>
+                <section id="flaeche-section">
+                    <p>{{{$suchgebiet->getArea()}}} qm</p>
+                </section>
             </div>
         </section>
         <section class="info-spalte">

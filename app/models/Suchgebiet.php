@@ -74,6 +74,19 @@ class Suchgebiet extends Eloquent
         });
     }
 
+    public function getArea()
+    {
+        $area = 0;
+        foreach ($this->flaechen as $flaeche)
+        {
+            $wktPolygon = $flaeche->polygon;
+            $polygon = geoPHP::load($wktPolygon,'wkt');
+            $polygon->setSRID(4326);
+            $area += $polygon->getArea();
+        }
+        return $area;
+    }
+
     /**
      * Liefert ein JSON Array aus geoJSON kodierten Flaechen (Polygone) 
      * 

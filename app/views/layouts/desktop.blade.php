@@ -7,23 +7,21 @@
 	<div id="sidebar-wrapper">
 		<nav class="sidebar-nav nav pills">
 			<li class="sidebar-brand">
-				<a href="#">Rettungshundestaffel</a>
+				<img class="me-thumbnail" src="{{ Auth::user()->profilbild() }}"/>
+				<a href="#">{{{Auth::user()->vorname}}}</a>
+				<a class="logout-button" href="#" data-toggle="modal" data-target="#modalAusloggen"><i class="glyphicon glyphicon-off"></i></a>
 			</li>
 			<li class="@activeOnPath('dashboard*')">
-				<a href=""><i class="glyphicon glyphicon-home"></i> Dashboard</a>
+				<a href=""><i class="icon-th-large"></i> Dashboard</a>
 			</li>
 			<li  class="@activeOnPath('mitglieder*')">
-				<a href="{{ URL::action('MitgliederDesktopController@uebersicht') }}"><i class="glyphicon glyphicon-user"></i> Mitglieder</a>
+				<a href="{{ URL::action('MitgliederDesktopController@uebersicht') }}"><i class="icon-users"></i> Mitglieder</a>
 			</li>
 			<li  class="@activeOnPath('suchgebiete*')">
-				<a href="{{ URL::action('SuchgebieteDesktopController@renderSuchgebiete') }}"><i class="glyphicon glyphicon-tree-conifer"></i> Suchgebiete</a>
+				<a href="{{ URL::action('SuchgebieteDesktopController@renderSuchgebiete') }}"><i class="icon-map"></i> Suchgebiete</a>
 			</li>
 			<li  class="@activeOnPath('termine*')">
-				<a href="termine"><i class="glyphicon glyphicon-calendar"></i> Termine</a>
-			</li>
-			<hr>
-			<li>
-				<a href="#" data-toggle="modal" data-target="#modalAusloggen"><i class="glyphicon glyphicon-off"></i> Ausloggen</a>
+				<a href="termine"><i class="icon-calendar"></i> Termine</a>
 			</li>
 		</nav>
 	</div>

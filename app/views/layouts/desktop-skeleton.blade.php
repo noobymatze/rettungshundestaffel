@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="{{ URL::asset('stylesheets/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ URL::asset('stylesheets/main.css') }}">
         <link rel="stylesheet" href="{{ URL::asset('stylesheets/simple-sidebar.css') }}">
+        <link rel="stylesheet" href="{{ URL::asset('stylesheets/icons.css') }}">
         <link rel="stylesheet" href="{{ URL::asset('javascripts/leaflet-draw/leaflet.draw.css') }}">
         <script src="{{ URL::asset('javascripts/jquery-2.1.1.min.js') }}"></script>
         <script src="{{ URL::asset('javascripts/bootstrap.min.js') }}"></script>
@@ -15,7 +16,7 @@
         <script src="{{ URL::asset('javascripts/leaflet-draw/leaflet.draw.js') }}"></script>
         @yield('head')
     </head>
-    <body>
+    <body class="background-forest">
     	@yield('body')
     </body>
 </html>

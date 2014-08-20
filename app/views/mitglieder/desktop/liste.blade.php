@@ -1,4 +1,4 @@
-@for ($i = 0; $i < $mitglieder->count(); $i+=3) 
+<!--/*@for ($i = 0; $i < $mitglieder->count(); $i+=3) 
 <section class="row">
     @foreach($mitglieder->slice($i, 3) as $mitglied) 
     <section class="media mitglied col-md-4">
@@ -13,5 +13,18 @@
     @endforeach
 </section>
 @endfor
+
+{{ $mitglieder->links() }}*/-->
+
+@foreach ($mitglieder as $mitglied)
+    <section class="mitglied">
+        <img class="pull-left col-md-4 media-object" src="{{ $mitglied->profilbild() }}"/>
+        <section class="media-body">
+            <a href="{{ URL::action('MitgliederDesktopController@renderMitglied', [$mitglied->id]) }}"><h3 class="media-heading">{{ $mitglied->vollerName() }}</h3></a>
+            <span class="row col-md-12">{{ $mitglied->email }}</span>
+            <span class="row col-md-12"><span class="glyphicon glyphicon-earphone"></span> {{ $mitglied->telefon }}</span>
+        </section>
+    </section>
+@endforeach
 
 {{ $mitglieder->links() }}

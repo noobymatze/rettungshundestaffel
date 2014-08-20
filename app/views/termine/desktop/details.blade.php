@@ -38,8 +38,10 @@
 						<span class="col-md-4 text-right"><strong>Adresse:</strong></span>
 						<span class="col-md-8">
 							<adress>
+								@if($termin->adresse != null)
 								{{ $termin->adresse->postleitzahl }} {{ $termin->adresse->ort }}<br>
 								{{ $termin->adresse->strasse }} {{ $termin->adresse->hausnummer }} {{ $termin->adresse->zusatz }}<br>
+								@endif
 							</adress>
 						</span>
 					</div>

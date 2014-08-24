@@ -14,7 +14,7 @@ class Person extends Eloquent
 
     public function adresse() 
     {
-        return $this->hasOne('Adresse');
+        return $this->hasOne('Adresse', 'id', 'adresse_id');
     }
 
     public function vollerName()

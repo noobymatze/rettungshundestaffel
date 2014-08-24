@@ -34,9 +34,20 @@ class Adresse extends Eloquent
 
     public function setHausnummerAttribute($value)
     {
-        if ($value === '' || is_null($value))
+        if ($value === '' || is_null($value)) {
             $this->attributes['hausnummer'] = null;
-        else
+        }
+        else {
             $this->attributes['hausnummer'] = $value;
+        }
+    }
+
+    public function __toString() {
+        $string = $this->strasse.' '.$this->hausnummer;
+        if($this->zusatz) {
+            $string .= ' '.$this->zusatz.',';
+        }
+
+        return $string.' '.$this->postleitzahl.' '.$this->ort;
     }
 }

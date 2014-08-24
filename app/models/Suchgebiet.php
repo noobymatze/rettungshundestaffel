@@ -45,7 +45,7 @@ class Suchgebiet extends Eloquent
             'eigenschaft_id');
     }
 
-    public function landschaftseigenschaftenAsString($delimiter = ',') 
+    public function eigenschaftenAsString($delimiter = ', ') 
     {
         return join($delimiter, $this->landschaftseigenschaften->map(function($eigenschaft) {
             return $eigenschaft->name;
@@ -66,16 +66,16 @@ class Suchgebiet extends Eloquent
         return null !== $this->getAnsprechpartner();
     }
 
-    public function getFlaechenAlsArray()
-    {
-        return $this->flaechen->map(function($flaeche) {
-            $flaeche->koordinaten = $flaeche->getPolygonAlsArray();
-            return $flaeche;
-        });
-    }
-
     public function getArea()
     {
+        // Proposal:
+//        return $this->flaechen
+//                ->map(function($flaeche) { return geoPHP::load($flaeche->polygon, 'wkt'); })
+//                ->reduce(function($area, $flaeche) {
+//                    $polygon->setSRID(4326);
+//                    return $area + $polygon->getArea();
+//                });
+
         $area = 0;
         foreach ($this->flaechen as $flaeche)
         {
@@ -113,6 +113,13 @@ class Suchgebiet extends Eloquent
 
     public function getBoundingBox()
     {
+        // Proposal:
+//        return $this->flaechen
+//                ->map(function($flaeche) { return $flaeche->polygon; })
+//                ->map(function($polygon) { return geoPHP::load($polygon, 'wkt'); })
+//                ->map(function($polygon) { return $polygon->getBBox(); })
+//                ->first(); // Liefert null zurück, wenn nicht gefunden.
+
         if (sizeof($this->flaechen) > 0)
         {
             $polygons = array();

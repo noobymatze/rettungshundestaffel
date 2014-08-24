@@ -8,9 +8,11 @@
     config.center = config.center || FLENSBURG;
     config.zoom = config.zoom || 15;
 
+    console.log(config.flaechen);
+
     if(config.flaechen.length > 0) {
-        var koordinate = config.flaechen[0].koordinaten[0];
-        config.center = [koordinate.latitude, koordinate.longitude];
+        var koordinate = config.flaechen[0].coordinates[0][0];
+        config.center = [koordinate[1], koordinate[0]];
     }
 
     // Karteninitialisierung:
@@ -21,7 +23,8 @@
     L.tileLayer(tileURL, { maxZoom: 18, subdomains: '1234' }).addTo(map);
 
     var flaechen = config.flaechen
-            .map(get('koordinaten'))
+            .map(get('coordinates'))
+            .map(get(0))
             .map(function(k) { return k.map(koordinateZuLatLng); })
             .map(L.polygon);
 
@@ -31,7 +34,7 @@
     // Helper Funktionen:
     // =========================================================================
     function koordinateZuLatLng(koordinate) {
-        return L.latLng(koordinate.latitude, koordinate.longitude);
+        return L.latLng(koordinate[1], koordinate[0]);
     }
 
     function get(prop) {

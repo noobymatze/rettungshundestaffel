@@ -5,15 +5,23 @@
 @stop
 
 @section('content')
-    @foreach($suchgebiete as $suchgebiet) 
-        <a class="suchgebiet" href="{{ URL::action('SuchgebieteMobilController@details', [$suchgebiet->id]) }}">
-            <img class="suchgebiet__img" src=""/>
-            <section class="suchgebiet__details">
-                <b>{{ $suchgebiet->name }}</b>
-                @if($suchgebiet->hatAnsprechpartner())
-                    <i class="">{{ $suchgebiet->ansprechpartner->vollerName() }}</i>
+<section class="suchgebiet-liste pure-g">
+    @foreach($suchgebiete as $index => $suchgebiet) 
+        <a href="{{ URL::action('SuchgebieteMobilController@details', [$suchgebiet->id]) }}" class="suchgebiet__details pure-u-24-24">
+            <b>{{ $suchgebiet->name }}</b>
+            @if($suchgebiet->hatAnsprechpartner())
+                <p>{{ $suchgebiet->ansprechpartner->vollerName() }}
+                @if($suchgebiet->ansprechpartner->mobil)
+                    <span data-href="tel:{{$suchgebiet->ansprechpartner->mobil}}" class="icon-phone--small">{{ $suchgebiet->ansprechpartner->mobil }}</span>
+                @elseif($suchgebiet->ansprechpartner->telefon)
+                    <span data-href="tel:{{$suchgebiet->ansprechpartner->telefon}}" class="icon-phone--small">{{ $suchgebiet->ansprechpartner->telefon }}</span>
                 @endif
-            </section>
+                </p>
+            @endif
+            <p>{{ $suchgebiet->getArea() }}</p>
+            <p>{{ $suchgebiet->eigenschaftenAsString() }}</p>
         </a>
     @endforeach
+</section>
+<script src="{{ URL::asset('javascripts/mobile/suchgebiete-uebersicht.js') }}"></script>
 @stop

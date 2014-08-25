@@ -3,12 +3,12 @@
 class Termin extends Eloquent {
 
 	protected $table = 'termin';
-	protected $fillable = array('id', 'datum', 'art', 'beschreibung', 'adresse_id', 'suchgebiet_id', 'mitglied_id');
+	protected $fillable = array('datum', 'art', 'beschreibung', 'adresse_id', 'suchgebiet_id', 'mitglied_id');
 
 	public function mitglieder()
 	{
 		return $this->belongsToMany('Mitglied', 'mitglied_hat_termin', 'termin_id', 'mitglied_id')
-				->withPivot('status', 'status_geandert_am');
+				->withPivot('status', 'status_geaendert_am');
 	}
 
 	public function ersteller()
@@ -20,6 +20,15 @@ class Termin extends Eloquent {
 	{
 
 		return $this->hasOne('Adresse', 'id', 'adresse_id');
+	}
+	
+	public function kurzeBeschreibung()
+	{
+		$maxLaenge = 20;
+		$laenge = $maxLaenge - 3; // -3 wegen '...'
+		$string = $this->beschreibung;
+		$string = (strlen($string) > $maxLaenge) ? substr($string, 0, $laenge).'...' : $string;
+		return $string;
 	}
 
 	public function suchgebiet()

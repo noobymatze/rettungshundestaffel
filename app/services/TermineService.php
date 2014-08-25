@@ -71,19 +71,32 @@ class TermineService {
 
 	public function zusagen($mitglied, $termin)
 	{
-		$termin->mitglieder()->attach($mitglied);
-		$termin->mitglieder()->whereMitglied_id($mitglied->id)->first()->pivot->status = 'Zugesagt';
-		$termin->mitglieder()->whereMitglied_id($mitglied->id)->first()->pivot->status_geandert_am = new DateTime;
-		$this->speichere($termin);
+        $this->zusagenOderAbsagen($mitglied, $termin);
 	}
 
 	public function absagen($mitglied, $termin)
 	{
-		$termin->mitglieder()->attach($mitglied);
-		$termin->mitglieder()->whereMitglied_id($mitglied->id)->first()->pivot->status = 'Abgesagt';
-		$termin->mitglieder()->whereMitglied_id($mitglied->id)->first()->pivot->status_geandert_am = new DateTime;
-		$this->speichere($termin);
+        $this->zusagenOderAbsagen($mitglied, $termin, false);
 	}
+
+    public function zusagenOderAbsagen($mitglied, $termin, $zusage = true) 
+    {
+        $status = $zusage ? 'Zugesagt' : 'Abgesagt';
+
+        try {
+            $mitglied = $termin->mitglieder()
+                    ->whereTermin_id($termin->id)
+                    ->whereMitglied_id($mitglied->id)
+                    ->firstOrFail();
+
+            $mitglied->pivot->status = $status;
+            $mitglied->pivot->status_geaendert_am = new DateTime;
+            $mitglied->pivot->save();
+        } catch (Exception $ex) {
+            Log::error($ex->getTrace());
+            $termin->mitglieder()->save($mitglied, ['status' => $status, 'status_geaendert_am' => new DateTime]);
+        }
+    }
 
 	public function deaktivieren($termin)
 	{

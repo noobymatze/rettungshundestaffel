@@ -1,0 +1,87 @@
+// Variables:
+$default-color: #333;
+$base-font-size: 16px;
+
+// Helpers:
+@function em($px, $base: $base-font-size) {
+    @return ($px / $base) * 1em;
+}
+
+// Klassen:
+.suchgebiet {
+    box-sizing: border-box;
+    color: $default-color;
+    line-height: 150%;
+    margin: em(10px) 0px;
+    padding: 0px em(10px);
+    text-decoration: none;
+    margin-bottom: 3.2em;
+}
+
+.suchgebiet__titel {
+    @extend .pure-u-24-24;
+
+    margin: 0.4em 0;
+}
+
+.suchgebiet-karte {
+    width: 100%;
+    height: 40%;
+    border-bottom: 1px solid #ddd;
+    border-right: none;
+
+    @media screen and (max-height: 500px) {
+        display: none;
+    }
+
+}
+
+.suchgebiet__img {
+    @extend .pure-u-1-3;
+
+    box-sizing: border-box;
+    min-height: em(120px);
+}
+
+.suchgebiet__details {
+    @extend .pure-u-2-3;
+
+    border-bottom: 1px solid #eee;
+    box-sizing: border-box;
+    padding: em(10px) 0;
+    padding-left: em(14px);
+    line-height: 150%;
+    text-decoration: none;
+    color: $default-color;
+
+    p {
+        margin: 0;
+
+    }
+}
+
+
+.suchgebiet__personen,
+.suchgebiet__treffpunkt,
+.suchgebiet__beschreibung {
+    @extend .pure-u-24-24;
+
+    margin: 0.3em 0;
+}
+
+.icon-phone--small {
+    @extend .icon-phone;
+
+    text-decoration: none;
+    color: $default-color;
+
+    &:before {
+        font-size: 1em !important;
+    }
+}
+
+@each $name in "flaeche", "landschaft" {
+    .suchgebiet__#{$name} { @extend .pure-u-1-2; }
+} 
+
+

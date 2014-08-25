@@ -6,8 +6,6 @@ class Suchgebiet extends Eloquent
 
     protected $table = 'suchgebiet';
 
-    public $ansprechpartner = false;
-
     protected $fillable = array('name', 'beschreibung', 'treffpunkt', 'created_at', 'updated_at');
 
     // funktion darf nicht heißen, wie Tabellenspalte, deswegen "adresse"

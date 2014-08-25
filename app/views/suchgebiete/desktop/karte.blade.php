@@ -148,9 +148,11 @@ width: 16em;
                                     var lng = results[0].geometry.location.B;
                                     var center = L.latLng(lat, lng)
                                     
-                                    var southWest = L.latLng(results[0].geometry.viewport.xa.j, results[0].geometry.viewport.pa.j),
-                                    northEast = L.latLng(results[0].geometry.viewport.xa.k, results[0].geometry.viewport.pa.k),
-                                    bounds = L.latLngBounds(southWest, northEast);
+                                    //var southWest = L.latLng(results[0].geometry.viewport.xa.j, results[0].geometry.viewport.pa.j);
+                                    var southWest = L.latLng(results[0].geometry.viewport.getSouthWest().lat(), results[0].geometry.viewport.getSouthWest().lng());
+                                    //var northEast = L.latLng(results[0].geometry.viewport.xa.k, results[0].geometry.viewport.pa.k);
+                                    var northEast = L.latLng(results[0].geometry.viewport.getNorthEast().lat(), results[0].geometry.viewport.getNorthEast().lng());
+                                    var bounds = L.latLngBounds(southWest, northEast);
 
                                     editMap.fitBounds(bounds);
                                     editMap.setView(center);
@@ -346,8 +348,10 @@ width: 16em;
                         var lng = results[0].geometry.location.B;
                         var center = L.latLng(lat, lng)
                         
-                        var southWest = L.latLng(results[0].geometry.viewport.xa.j, results[0].geometry.viewport.pa.j),
-                        northEast = L.latLng(results[0].geometry.viewport.xa.k, results[0].geometry.viewport.pa.k),
+                        //var southWest = L.latLng(results[0].geometry.viewport.xa.j, results[0].geometry.viewport.pa.j);
+                        var southWest = L.latLng(results[0].geometry.viewport.getSouthWest().lat(), results[0].geometry.viewport.getSouthWest().lng());
+                        //var northEast = L.latLng(results[0].geometry.viewport.xa.k, results[0].geometry.viewport.pa.k);
+                        var northEast = L.latLng(results[0].geometry.viewport.getNorthEast().lat(), results[0].geometry.viewport.getNorthEast().lng());
                         bounds = L.latLngBounds(southWest, northEast);
 
                         readMap.fitBounds(bounds);

@@ -18,7 +18,6 @@
                 @endif
                 </p>
             @endif
-            <p>{{ $suchgebiet->getArea() }}</p>
             <p>{{ $suchgebiet->eigenschaftenAsString() }}</p>
         </a>
     @endforeach

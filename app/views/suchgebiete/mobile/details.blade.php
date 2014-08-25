@@ -8,9 +8,6 @@
 <div id="map" class="suchgebiet-karte"></div>
 <section class="suchgebiet">
     <h4 class="suchgebiet__titel">Daten</h4>
-    <section class="suchgebiet__flaeche">
-        Flaeche: {{ $suchgebiet->getArea() }}&sup2;
-    </section>
     <section class="suchgebiet__landschaft">
         {{ $suchgebiet->eigenschaftenAsString() }}
     </section>

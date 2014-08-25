@@ -7,11 +7,16 @@ class Adresse extends Eloquent
     public $timestamps = false;
 
     protected $fillable = array('strasse', 'hausnummer', 'zusatz', 'ort', 'postleitzahl', 'koordinate');
+	
+	public function adresseKurz() 
+    {
+        return $this->ort.' '.$this->strasse.' '.$this->hausnummer.' '.$this->zusatz;
+    }
 
     /**
      * Get-Accessor zum auslesen des Feldes "koordinate" vom Typ POINT
      * 
-     * @return WKT-Repr√§sentation des Point
+     * @return WKT-Repr‰sentation des Point
      * 
      */
     public function getKoordinateAttribute()
@@ -24,7 +29,7 @@ class Adresse extends Eloquent
 
     /**
      * Set-Mutator zum setzten des Feldes "koordinate" vom Typ POINT
-     * @param $value WKT-Repr√§sentation eines Point
+     * @param $value WKT-Repr‰sentation eines Point
      * 
      */
     public function setKoordinateAttribute($value)

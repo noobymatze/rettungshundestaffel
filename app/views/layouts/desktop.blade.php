@@ -21,7 +21,7 @@
 				<a href="{{ URL::action('SuchgebieteDesktopController@renderSuchgebiete') }}"><i class="icon-map"></i> Suchgebiete</a>
 			</li>
 			<li  class="@activeOnPath('termine*')">
-				<a href="termine"><i class="icon-calendar"></i> Termine</a>
+				<a href="{{ URL::action('TermineDesktopController@uebersicht') }}"><i class="glyphicon glyphicon-calendar"></i> Termine</a>
 			</li>
 		</nav>
 	</div>

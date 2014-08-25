@@ -30,7 +30,13 @@
 				<li class="list-group-item">
 					<div class="row">
 						<span class="col-md-4 text-right"><strong>Suchgebiet:</strong></span>
-						<span class="col-md-8">{{ $termin->suchgebiet }}</span>
+						@if($termin->suchgebiet != null)
+						<span class="col-md-8">
+							<a href="{{ URL::action('SuchgebieteDesktopController@renderSuchgebiet', ['id' => $termin->suchgebiet->id, 'name' => Str::slug($termin->suchgebiet->name, '_')]) }}">
+								{{ $termin->suchgebiet->name }}
+							</a>
+						</span>
+						@endif
 					</div>
 				</li>
 				<li class="list-group-item">

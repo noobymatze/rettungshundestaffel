@@ -9,7 +9,8 @@
 
     Array.prototype.slice.call(D.getElementsByClassName('icon-phone--small'))
             .forEach(function(span) {
-                span.addEventListener('click', openTelephone(span.dataset.href), false);
-                span.addEventListener('touch', openTelephone(span.dataset.href), false);
+                ['click', 'touch'].forEach(function(event) {
+                    span.addEventListener(event, openTelephone(span.dataset.href));
+                });
             });
 }(window, window.document);

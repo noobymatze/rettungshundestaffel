@@ -249,7 +249,7 @@ background-color: #F3A0A0;
                     <script type="text/javascript">
                         document.addEventListener("DOMContentLoaded", function (evt) {
 
-                            var eigenschaften = ('{{{$suchgebiet->landschaftseigenschaftenAsString()}}}').split(',');
+                            var eigenschaften = ('{{{$suchgebiet->eigenschaftenAsString()}}}').split(',');
 
                             console.log(eigenschaften);
 

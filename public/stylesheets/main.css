@@ -168,15 +168,21 @@ color: #333;
 .mitglied {
     color: #333 !important;
 padding: 1em;
-width: 25em;
+
+    width: 25em;
 margin-right: 1em;
-margin-bottom: 1em;
+
+    margin-bottom: 1em;
 font-weight: 300;
-display: inline-block;
+
+    display: inline-block;
 margin-top: 0px;
-box-shadow: rgb(0, 0, 0) 0px 0px 10px 0px;
-background-color: rgba(249, 249, 249, 0.972549);
-border-radius: 5px;
+
+    /* box-shadow: rgb(0, 0, 0) 0px 0px 10px 0px; */
+
+    /* background-color: rgba(249, 249, 249, 0.972549); */
+
+    /* border-radius: 5px; */
 }
 
 .mitglied .btn {

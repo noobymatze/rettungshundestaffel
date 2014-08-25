@@ -120,6 +120,31 @@ class SuchgebieteDesktopController extends Controller {
 			->with('boundingBox', json_encode($boundingBox));
 	}
 
+    /**
+     * Zeigt die Personen des Suchgebietes an.
+     * 
+     * @return View
+     */
+    public function renderPersonen($id) 
+    {
+        $suchgebiet = $this->suchgebieteService->lade($id);
+		$flaechen = $this->suchgebieteService->ladeFlaechenAsGeoJson($suchgebiet);
+		$boundingBox = $this->suchgebieteService->getBoundingBox($suchgebiet);
+
+        return View::make('suchgebiete.desktop.personen')
+                ->with('boundingBox', json_encode($boundingBox))
+                ->withFlaechen($flaechen)
+                ->withSuchgebiet($suchgebiet);
+
+    }
+
+    public function editPerson() 
+    {
+
+        return "haha";
+
+    }
+
 	public function editAdresse($id = null)
 	{
 		$rules = array(

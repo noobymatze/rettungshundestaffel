@@ -24,10 +24,12 @@ Route::get('/', 'LoginController@renderLogin');
 
 Route::get('suchgebiete/{id}/{name?}', 'SuchgebieteDesktopController@renderSuchgebiet')->where('id', '[0-9]+')->where('name', '[\w-]+');
 Route::get('suchgebiete/{id}/{name?}/karte', 'SuchgebieteDesktopController@renderKarte')->where('id', '[0-9]+')->where('name', '[\w-]+');
+Route::get('suchgebiete/{id}/{name?}/personen', 'SuchgebieteDesktopController@renderPersonen')->where('id', '[0-9]+')->where('name', '[\w-]+');
 Route::post('suchgebiete/{id}/adresse', 'SuchgebieteDesktopController@editAdresse')->where('id', '[0-9]+');
 Route::post('suchgebiete/{id}/beschreibung', 'SuchgebieteDesktopController@editBeschreibung')->where('id', '[0-9]+');
 Route::post('suchgebiete/{id}/ansprechpartner', 'SuchgebieteDesktopController@editAnsprechpartner')->where('id', '[0-9]+');
 Route::post('suchgebiete/{id}/karte', 'SuchgebieteDesktopController@editKarte')->where('id', '[0-9]+');
+Route::post('suchgebiete/{id}/person', 'SuchgebieteDesktopController@editPerson')->where('id', '[0-9]+');
 Route::post('suchgebiete/{id}/eigenschaften', 'SuchgebieteDesktopController@editEigenschaften')->where('id', '[0-9]+');
 
 Route::group(array('before' => 'auth'), function () 

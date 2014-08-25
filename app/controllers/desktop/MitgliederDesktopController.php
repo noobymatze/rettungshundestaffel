@@ -85,22 +85,24 @@ class MitgliederDesktopController extends Controller {
 
 	public function aktualisiere($id)
 	{
+        $exclusions = ['passwort', 'passwort2', 'profilbild'];
+
 		// Überprüfen, ob der Benutzer sein eigenes Profil ändert, oder es der Admin tut
 		if (Auth::user()->id != $id && Auth::user()->rolle != "Staffelleitung")
 		{
 			// Fehlermeldung, keine Rechte
-			return;
+			return Redirect::action('MitgliederDesktopController@renderMitglied', array('id' => $id));
 		}
 		
-		$mitglied = $this->mitgliederService->lade($id);
+		$mitglied = $this->mitgliederService->lade(intval($id));
 
 		// die Rolle darf nur die Staffelleitung ändern
-		if ($mitglied->rolle != Input::get('rolle'))
+		if (Input::has('rolle') && $mitglied->rolle != Input::get('rolle'))
 		{
 			if (Auth::user()->rolle != "Staffelleitung")
 			{
 				// Fehlermeldung ausgeben, keine Rechte
-				return;
+                return Redirect::action('MitgliederDesktopController@renderMitglied', array('id' => $id));
 			}
 		}
 
@@ -117,7 +119,7 @@ class MitgliederDesktopController extends Controller {
 			{
 				return Redirect::action('MitgliederDesktopController@renderMitgliedBearbeiten', array('id' => $id))
 								->withErrors($validator)
-								->withInput(Input::except('passwort', 'passwort2'));
+								->withInput(Input::except($exclusions));
 			}
 		}
 		
@@ -134,7 +136,7 @@ class MitgliederDesktopController extends Controller {
 			{
 				return Redirect::action('MitgliederDesktopController@renderMitgliedBearbeiten', array('id' => $id))
 								->withErrors($validator)
-								->withInput(Input::except('passwort', 'passwort2', 'profilbild'));
+								->withInput(Input::except($exclusions));
 			}
 			$mitglied->profilbild = File::get(Input::file('profilbild')->getRealPath());
 		}
@@ -149,7 +151,7 @@ class MitgliederDesktopController extends Controller {
 								->withErrors(array(
 									'passwort' => 'Passwörter stimmen nicht überein',
 									'passwort2' => null))
-								->withInput(Input::except('passwort', 'passwort2'));
+								->withInput(Input::except($exclusions));
 			}
 			$mitglied->passwort = Input::get('passwort');
 		}
@@ -158,12 +160,16 @@ class MitgliederDesktopController extends Controller {
 		$mitglied->email = Input::get('email');
 		$mitglied->vorname = Input::get('vorname');
 		$mitglied->nachname = Input::get('nachname');
-		$mitglied->rolle = Input::get('rolle');
 		$mitglied->telefon = Input::get('telefon');
 		$mitglied->mobil = Input::get('mobil');
 
+        if(Input::has('rolle')) {
+            $mitglied->rolle = Input::get('rolle');
+        }
+
 		$this->mitgliederService->speichere($mitglied);
 
+        Log::info("Hier bin ich.");
 		return View::make('mitglieder.desktop.details')
 						->with('mitglied', $mitglied);
 	}

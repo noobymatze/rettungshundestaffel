@@ -6,6 +6,8 @@ class Suchgebiet extends Eloquent
 
     protected $table = 'suchgebiet';
 
+    public $ansprechpartner = false;
+
     protected $fillable = array('name', 'beschreibung', 'treffpunkt', 'created_at', 'updated_at');
 
     // funktion darf nicht heißen, wie Tabellenspalte, deswegen "adresse"
@@ -49,7 +51,7 @@ class Suchgebiet extends Eloquent
 
     public function getAnsprechpartner()
     {
-        if(!isset($this->ansprechpartner)) {
+        if(!$this->ansprechpartner) {
             $this->ansprechpartner = $this->personen()->whereTyp('Ansprechpartner')->first();
             //$ansprechpartner = $this->personen()->whereTyp('Ansprechpartner')->first();
         }

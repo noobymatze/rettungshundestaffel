@@ -12,7 +12,7 @@
 		<p>Bitte geben Sie die Daten des neuen Benutzers ein.</p>
 	</div>
 	<div class="col-md-6">
-		{{ Form::model($mitglied, array('action' => 'MitgliederDesktopController@erstelle', 'class' => 'form-horizontal')) }}
+		{{ Form::model($mitglied, array('action' => 'MitgliederDesktopController@erstelle', 'class' => 'form-horizontal', 'autocomplete' => 'off')) }}
 
 		<section class="form-group">
 			<label class="col-sm-5 control-label">Rolle:*</label>

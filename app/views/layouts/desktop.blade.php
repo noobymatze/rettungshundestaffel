@@ -11,9 +11,6 @@
 				<a href="#">{{{Auth::user()->vorname}}}</a>
 				<a class="logout-button" href="#" data-toggle="modal" data-target="#modalAusloggen"><i class="glyphicon glyphicon-off"></i></a>
 			</li>
-			<li class="@activeOnPath('dashboard*')">
-				<a href=""><i class="icon-th-large"></i> Dashboard</a>
-			</li>
 			<li  class="@activeOnPath('mitglieder*')">
 				<a href="{{ URL::action('MitgliederDesktopController@uebersicht') }}"><i class="icon-users"></i> Mitglieder</a>
 			</li>

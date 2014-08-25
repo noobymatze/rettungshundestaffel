@@ -192,11 +192,19 @@ class SuchgebieteDesktopController extends Controller {
 	public function editAnsprechpartner($id = null)
 	{
 		$rules = array(
-			'ansprechpartner' => 'numeric',
+			'vorname' => 'min:1|max:30',
+			'nachname' =>'min:1|max:30',
+			'telefon' =>'min:1|max:30',
+			'mobil' =>'min:1|max:30',
+			'strasse' => 'min:3|max:30',
+			'hausnummer' => 'digits_between:1,10|numeric',
+			'zusatz' => 'min:1|max:30',
+			'ort' => 'min:2|max:30',
+			'plz' => 'digits_between:4,6|numeric',
 		);
 
 		$messages = array(
-		    'ansprechpartner' => 'Den Ansprechpartner gibt es nicht.',
+		    //'strasse' => 'Die Straße muss zwischen 3 und 30 Zeichen haben.',
 		);
 
 		$validator = Validator::make(Input::all(), $rules, $messages);
@@ -212,7 +220,25 @@ class SuchgebieteDesktopController extends Controller {
 
 		$suchgebiet = $this->suchgebieteService->lade($id);
 
-		$suchgebiet->ansprechpartner = Input::get('ansprechpartner');
+		$adresse = new Adresse;
+
+		$adresse->strasse = Input::get('strasse');
+		$adresse->hausnummer = Input::get('hausnummer');
+		$adresse->zusatz = Input::get('zusatz');
+		$adresse->postleitzahl = Input::get('plz');
+		$adresse->ort = Input::get('ort');
+		$adresse->save();
+
+		$person = ($suchgebiet->hatAnsprechpartner()) ? $suchgebiet->getAnsprechpartner() : new Person;
+
+		$person->vorname = Input::get('vorname');
+		$person->nachname = Input::get('nachname');
+		$person->telefon = Input::get('telefon');
+		$person->mobil = Input::get('mobil');
+		$person->typ = 'Ansprechpartner';
+		$person->adresse_id = $adresse->id;
+		$person->suchgebiet_id = $suchgebiet->id;
+		$person->save();
 
 		$this->suchgebieteService->speichere($suchgebiet);
 

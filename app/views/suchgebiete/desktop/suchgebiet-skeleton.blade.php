@@ -170,7 +170,7 @@
         </section>
         <nav id="suchgebiet-nav">
             <ul>
-                <a href="{{URL::action('SuchgebieteDesktopController@renderSuchgebiet', array('id' => $suchgebiet->id))}}"><li>Info</li></a><a href="{{URL::action('SuchgebieteDesktopController@renderKarte', array('id' => $suchgebiet->id, 'name' => Str::slug($suchgebiet->name, '_')))}}"><li>Karte</li></a><li>Training</li><li>Personen</li><li>POI</li>
+                <a href="{{URL::action('SuchgebieteDesktopController@renderSuchgebiet', array('id' => $suchgebiet->id))}}"><li>Info</li></a><a href="{{URL::action('SuchgebieteDesktopController@renderKarte', array('id' => $suchgebiet->id, 'name' => Str::slug($suchgebiet->name, '_')))}}"><li>Karte</li></a><!--<li>Training</li><li>Personen</li><li>POI</li>-->
             </ul>
         </nav>
     </header>

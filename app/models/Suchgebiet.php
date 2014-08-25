@@ -2,6 +2,7 @@
 
 class Suchgebiet extends Eloquent
 {
+    public $ansprechpartner = null;
 
     protected $table = 'suchgebiet';
 
@@ -11,12 +12,6 @@ class Suchgebiet extends Eloquent
     public function adresse()
     {
         return $this->belongsTo('Adresse', 'treffpunkt', 'id');
-    }
-
-    // funktion darf nicht heißen, wie Tabellenspalte, deswegen "ansprechperson"
-    public function ansprechperson()
-    {
-        return $this->belongsTo('Mitglied', 'ansprechpartner', 'id');
     }
 
     /*
@@ -45,20 +40,22 @@ class Suchgebiet extends Eloquent
             'eigenschaft_id');
     }
 
-    public function eigenschaftenAsString($delimiter = ', ') 
+    public function eigenschaftenAsString($delimiter = ', ')
     {
         return join($delimiter, $this->landschaftseigenschaften->map(function($eigenschaft) {
             return $eigenschaft->name;
         })->toArray());
     }
 
-    public function getAnsprechpartner() 
+    public function getAnsprechpartner()
     {
         if(!isset($this->ansprechpartner)) {
             $this->ansprechpartner = $this->personen()->whereTyp('Ansprechpartner')->first();
+            //$ansprechpartner = $this->personen()->whereTyp('Ansprechpartner')->first();
         }
 
         return $this->ansprechpartner;
+        //return $ansprechpartner;
     }
 
     public function hatAnsprechpartner() 

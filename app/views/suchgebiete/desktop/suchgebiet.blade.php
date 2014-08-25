@@ -325,14 +325,14 @@ background-color: #F3A0A0;
                     </section>
                 @endif
             </div>
-            <div>
+            <!--<div>
                 <header>
                     <h3>Fläche</h3>
                 </header>
                 <section id="flaeche-section">
                     <p>{{{$suchgebiet->getArea()}}} qm</p>
                 </section>
-            </div>
+            </div>-->
         </section>
         <section class="info-spalte">
             <div>
@@ -477,8 +477,12 @@ background-color: #F3A0A0;
                     @endif
                 </header>
                 <section id="ansprechpartner-section">
-                    @if ($suchgebiet->ansprechperson != null)
-                        <p><a href="{{ URL::action('MitgliederDesktopController@renderMitglied', [$suchgebiet->ansprechperson->id]) }}">{{{$suchgebiet->ansprechperson->vorname}}} {{{$suchgebiet->ansprechperson->nachname}}}</a></p>
+                    @if ($suchgebiet->hatAnsprechpartner())
+                        <p>{{{$suchgebiet->getAnsprechpartner()->vorname}}} {{{$suchgebiet->getAnsprechpartner()->nachname}}}</p>
+                        <p>{{{$suchgebiet->getAnsprechpartner()->telefon}}}</p>
+                        <p>{{{$suchgebiet->getAnsprechpartner()->mobil}}}</p>
+                        <p>{{{$suchgebiet->getAnsprechpartner()->adresse->strasse}}} {{{$suchgebiet->getAnsprechpartner()->adresse->hausnummer}}}{{{$suchgebiet->getAnsprechpartner()->adresse->zusatz}}}</p>
+                        <p>{{{$suchgebiet->getAnsprechpartner()->adresse->postleitzahl}}} {{{$suchgebiet->getAnsprechpartner()->adresse->ort}}}</p>
                     @else
                         <p>Kein Ansprechpartner</p>
                     @endif
@@ -486,22 +490,47 @@ background-color: #F3A0A0;
                 <section id="edit-ansprechpartner-section" style="display: none;">
                     {{Form::open(array('action' => array('SuchgebieteDesktopController@editAnsprechpartner', $suchgebiet->id), 'id' => 'ansprechpartner-form', 'class' => 'vertical-form'))}}
                         <div>
-                            <select id="ansprechpartner-select" name="ansprechpartner">
-                                @foreach ($mitglieder as $mitglied)
-                                    <option value="{{{$mitglied->id}}}"
-                                        @if (isset($suchgebiet->ansprechperson) && $mitglied->id === $suchgebiet->ansprechperson->id)
-                                            selected
-                                        @endif
-                                    >{{{$mitglied->vorname}}} {{{$mitglied->nachname}}}</option>
-                                @endforeach
-                            </select>
+                            <label>Vorname</label>
+                            <input class="holo" type="text" placeholder="Vorname" name="vorname" value="{{{ $suchgebiet->getAnsprechpartner()->vorname or ''}}}">
+                        </div>
+                        <div>
+                            <label>Nachname</label>
+                            <input class="holo" type="text" placeholder="Nachname" name="nachname" value="{{{ $suchgebiet->getAnsprechpartner()->nachname or ''}}}">
+                        </div>
+                        <div>
+                            <label>Telefon</label>
+                            <input class="holo" type="text" placeholder="Telefon" name="telefon" value="{{{ $suchgebiet->getAnsprechpartner()->telefon or ''}}}">
+                        </div>
+                        <div>
+                            <label>Mobil</label>
+                            <input class="holo" type="text" placeholder="Mobil" name="mobil" value="{{{ $suchgebiet->getAnsprechpartner()->mobil or ''}}}">
+                        </div>
+                        <div>
+                            <label>Straße</label>
+                            <input class="holo" type="text" placeholder="Straße" name="strasse" value="{{{ $suchgebiet->getAnsprechpartner()->adresse->strasse or ''}}}">
+                        </div>
+                        <div>
+                            <label>Hausnummer</label>
+                            <input class="holo" type="text" placeholder="Hausnummer" name="hausnummer" value="{{{ $suchgebiet->getAnsprechpartner()->adresse->hausnummer or ''}}}">
+                        </div>
+                        <div>
+                            <label>Zusatz</label>
+                            <input class="holo" type="text" placeholder="Zusatz" name="zusatz" value="{{{ $suchgebiet->getAnsprechpartner()->adresse->zusatz or ''}}}">
+                        </div>
+                        <div>
+                            <label>Postleitzahl</label>
+                            <input class="holo" type="text" placeholder="Postleitzahl" name="plz" value="{{{ $suchgebiet->getAnsprechpartner()->adresse->postleitzahl or ''}}}">
+                        </div>
+                        <div>
+                            <label>Ort</label>
+                            <input class="holo" type="text" placeholder="Ort" name="ort" value="{{{ $suchgebiet->getAnsprechpartner()->adresse->ort or ''}}}">
                         </div>
                         <div class="btn-area">
                             <button class="btn btn-primary btn-xs">Änderungen speichern</button>
-                            <button type="button" class="btn btn-default btn-xs" id="ansprechpartner-abbrechen-button">Abbrechen</button>
+                            <button class="btn btn-default btn-xs" type="button" id="ansprechpartner-abbrechen-button">Abbrechen</button>
                         </div>
-                        {{Form::close()}}
-                        <p id="ansprechpartner-error" class="edit-error" style="display: none;"></p>
+                    {{ Form::close() }}
+                    <p id="ansprechpartner-error" class="edit-error" style="display: none;"></p>
                 </section>
             </div>
         </section>

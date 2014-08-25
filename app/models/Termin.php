@@ -3,7 +3,7 @@
 class Termin extends Eloquent {
 
 	protected $table = 'termin';
-	protected $fillable = array('id', 'datum', 'art', 'beschreibung', 'adresse_id', 'suchgebiet_id', 'mitglied_id');
+	protected $fillable = array('datum', 'art', 'beschreibung', 'adresse_id', 'suchgebiet_id', 'mitglied_id');
 
 	public function mitglieder()
 	{

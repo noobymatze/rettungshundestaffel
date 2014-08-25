@@ -14,14 +14,12 @@ html {
 }
 
 body {
-    /*font-size: 1.6em;*/
-    /* font-family: 'Noto Sans', sans-serif;*/
-    /*font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
-  /*line-height: 150%;*/
-	/*background-color: #f9f9f9;*/
-    background-color: #eee;
-
-	/*background-image: url('../images/background.png');*/
+    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  
+    line-height: 150%;
+	
+    /* background-image: url('../images/background.png'); */
 }
 
 body.login-body, html.login-html {
@@ -43,7 +41,7 @@ body.login-body:before {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center top;
-    position: fixed;
+    /* position: fixed; */
     top: 0;
     bottom: 0;
     left: 0;
@@ -162,18 +160,29 @@ color: #333;
 /* ================================================
    Eigene Klassen:
    ================================================*/
+
+.mitglieder {
+    margin-top: 50px;
+}
+
 .mitglied {
     color: #333 !important;
 padding: 1em;
-width: 25em;
+
+    width: 25em;
 margin-right: 1em;
-margin-bottom: 1em;
+
+    margin-bottom: 1em;
 font-weight: 300;
-display: inline-block;
+
+    display: inline-block;
 margin-top: 0px;
-box-shadow: rgb(0, 0, 0) 0px 0px 10px 0px;
-background-color: rgba(249, 249, 249, 0.972549);
-border-radius: 5px;
+
+    /* box-shadow: rgb(0, 0, 0) 0px 0px 10px 0px; */
+
+    /* background-color: rgba(249, 249, 249, 0.972549); */
+
+    /* border-radius: 5px; */
 }
 
 .mitglied .btn {
